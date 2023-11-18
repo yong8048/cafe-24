@@ -4,8 +4,8 @@ import UserProfile from "./UserProfile";
 
 const Header = () => {
   return (
-    <header className="bg-white h-[74px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between">
-      <div className="flex gap-4">
+    <header className="bg-white h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between">
+      <div className="pl-4 flex gap-10 text-2xl">
         <HamburgerMenu />
         <h1>로고</h1>
         <h1>전체</h1>
