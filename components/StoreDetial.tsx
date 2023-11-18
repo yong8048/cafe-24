@@ -1,6 +1,6 @@
 import React from "react";
 
-function StoreDetial() {
+const StoreDetial = () => {
   return (
     <section className="w-full">
       <div className="bg-gray-500 h-[220px]">StoreDetial</div>
@@ -40,6 +40,6 @@ function StoreDetial() {
       </div>
     </section>
   );
-}
+};
 
 export default StoreDetial;

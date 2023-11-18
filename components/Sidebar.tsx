@@ -2,7 +2,7 @@ import { useSidebarStore } from "@/store/sidebarStore";
 import React from "react";
 import StoreDetial from "./StoreDetial";
 
-export default function Sidebar() {
+const Sidebar = () => {
   const { isOpen } = useSidebarStore();
   const temp = "카페만월경 안양점";
 
@@ -15,4 +15,6 @@ export default function Sidebar() {
       {temp ? <StoreDetial></StoreDetial> : "포폴이에연"}
     </aside>
   );
-}
+};
+
+export default Sidebar;
