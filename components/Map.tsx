@@ -24,7 +24,6 @@ const Map = () => {
   return (
     <div>
       <div id="map" className="w-screen h-screen"></div>
-      <script></script>
     </div>
   );
 };
