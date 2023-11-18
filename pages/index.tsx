@@ -1,4 +1,4 @@
-import Layout from "../components/layout";
+import Layout from "./layout";
 import "tailwindcss/tailwind.css";
 export default function Home() {
   return (
