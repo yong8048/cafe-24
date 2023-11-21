@@ -17,8 +17,13 @@ const Map = () => {
       center: new window.naver.maps.LatLng(37.3595704, 127.105399),
       zoom: 16,
     };
+    const map = new window.naver.maps.Map("map", mapOptions);
 
-    new window.naver.maps.Map("map", mapOptions);
+    const marker = {
+      position: new window.naver.maps.LatLng(37.3595704, 127.105399),
+      map: map,
+    };
+    new window.naver.maps.Marker(marker);
   };
 
   return (
