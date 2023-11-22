@@ -1,4 +1,5 @@
 import { useSelectedStore } from "@/store/selectedStore";
+import { useSidebarStore } from "@/store/sidebarStore";
 import { IMarkerInfo } from "@/types/Map";
 import GetStoreInfo from "@/utils/firebase";
 import { useEffect, useRef } from "react";
@@ -6,6 +7,7 @@ import { useEffect, useRef } from "react";
 const Map = () => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
+  const { setOpen } = useSidebarStore();
   const { setData } = useSelectedStore();
 
   useEffect(() => {
@@ -84,6 +86,7 @@ const Map = () => {
     markerRef.current.map(marker => {
       window.naver.maps.Event.addListener(marker, "click", () => {
         setData(marker.data);
+        setOpen();
       });
     });
   };
