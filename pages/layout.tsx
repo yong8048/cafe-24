@@ -12,7 +12,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchData = async () => {
       const storeInfo = await GetStoreInfo();
-      console.log(storeInfo);
     };
 
     fetchData();

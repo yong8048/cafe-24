@@ -1,3 +1,4 @@
+import { IStoreInfo } from "@/types/firebase";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
@@ -14,15 +15,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const GetStoreInfo = async (): Promise<StoreInfo[]> => {
+const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
   const querySnapshot = await getDocs(collection(db, "StoreInfo"));
-  const users: StoreInfo[] = [];
+  const users: IStoreInfo[] = [];
 
   querySnapshot.forEach(doc => {
     users.push({
       id: doc.id,
       ...doc.data(),
-    } as StoreInfo);
+    } as IStoreInfo);
   });
 
   return users; // 배열 반환
