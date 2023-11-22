@@ -4,7 +4,7 @@ import StoreDetial from "./StoreDetial";
 import { useSelectedStore } from "@/store/selectedStore";
 import Intro from "./Intro";
 
-export default function Sidebar() {
+const Sidebar = () => {
   const { isOpen } = useSidebarStore();
   const { data } = useSelectedStore();
   return (
@@ -16,4 +16,6 @@ export default function Sidebar() {
       {data.id ? <StoreDetial /> : <Intro />}
     </aside>
   );
-}
+};
+
+export default Sidebar;
