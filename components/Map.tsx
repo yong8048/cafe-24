@@ -1,3 +1,4 @@
+"use client";
 import { useSelectedStore } from "@/store/selectedStore";
 import { IMarkerInfo } from "@/types/Map";
 import GetStoreInfo from "@/utils/firebase";
