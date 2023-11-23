@@ -6,7 +6,7 @@ import GetStoreInfo from "@/utils/firebase";
 import "tailwindcss/tailwind.css";
 import localFont from "next/font/local";
 import "./globals.css";
-export const Pretendard = localFont({
+const Pretendard = localFont({
   src: "../styles/PretendardVariable.woff2",
 });
 
