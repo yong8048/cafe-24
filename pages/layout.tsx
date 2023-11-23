@@ -8,7 +8,7 @@ export const Pretendard = localFont({
   src: "../styles/PretendardVariable.woff2",
 });
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchData = async () => {
       const storeInfo = await GetStoreInfo();
