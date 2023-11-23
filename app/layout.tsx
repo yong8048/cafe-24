@@ -6,19 +6,20 @@ import GetStoreInfo from "@/utils/firebase";
 import "tailwindcss/tailwind.css";
 import localFont from "next/font/local";
 import "./globals.css";
-const Pretendard = localFont({
+const pretendard = localFont({
   src: "../styles/PretendardVariable.woff2",
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="ko">
       <head></head>
       <body>
-        <main className={Pretendard.className}>
+        <main className={pretendard.className}>
           <Header />
           <Sidebar />
-          <Map />
+
+          <div>{children}</div>
         </main>
       </body>
     </html>

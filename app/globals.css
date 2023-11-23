@@ -17,7 +17,4 @@
 }
 
 body {
-  /* color: rgb(var(--foreground-rgb)); */
-  /* width: 1100px; */
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Layout from "./layout";
 import "tailwindcss/tailwind.css";
 import GetStoreInfo from "@/utils/firebase";
+import Map from "@/components/Map";
 export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
@@ -12,8 +13,8 @@ export default function Home() {
     fetchData();
   }, []);
   return (
-    <Layout>
-      <div></div>
-    </Layout>
+    <div>
+      <Map />
+    </div>
   );
 }
