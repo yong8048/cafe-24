@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import UserProfile from "./UserProfile";
@@ -61,7 +62,7 @@ const Header = () => {
           </div>
         </div>
       ) : (
-        <h1 className="px-4 cursor-pointer" onClick={() => handleLogin()}>
+        <h1 className="px-4 cursor-pointer" onClick={handleLogin}>
           로그인
         </h1>
       )}
