@@ -1,3 +1,4 @@
+"use client";
 import { useSelectedStore } from "@/store/selectedStore";
 import { useSidebarStore } from "@/store/sidebarStore";
 import { IMarkerInfo } from "@/types/Map";
