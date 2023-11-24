@@ -1,3 +1,4 @@
+"use client";
 import { useSidebarStore } from "@/store/sidebarStore";
 import React from "react";
 import StoreDetial from "./StoreDetial";

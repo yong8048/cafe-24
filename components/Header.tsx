@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import UserProfile from "./UserProfile";
@@ -8,26 +9,26 @@ const Header = () => {
   const [isLogined, setIsLogined] = useState(false);
 
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
+  // const auth = getAuth();
 
-  const handleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then(result => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential?.accessToken) {
-          const token = credential.accessToken;
+  // const handleLogin = () => {
+  //   signInWithPopup(auth, provider)
+  //     .then(result => {
+  //       const credential = GoogleAuthProvider.credentialFromResult(result);
+  //       if (credential?.accessToken) {
+  //         const token = credential.accessToken;
 
-          const user = result.user;
-          console.log(user);
-        }
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-      });
-  };
+  //         const user = result.user;
+  //         console.log(user);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       const email = error.customData.email;
+  //       const credential = GoogleAuthProvider.credentialFromError(error);
+  //     });
+  // };
 
   return (
     <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between fixed z-50 ">
@@ -61,9 +62,8 @@ const Header = () => {
           </div>
         </div>
       ) : (
-        <h1 className="px-4 cursor-pointer" onClick={() => handleLogin()}>
-          로그인
-        </h1>
+        // <h1 className="px-4 cursor-pointer" onClick={handleLogin}>
+        <h1 className="px-4 cursor-pointer">로그인</h1>
       )}
     </header>
   );
