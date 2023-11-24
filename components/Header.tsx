@@ -5,6 +5,7 @@ import UserProfile from "./UserProfile";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { auth } from "@/utils/firebase";
+import Image from "next/image";
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -45,9 +46,9 @@ const Header = () => {
 
   return (
     <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between fixed z-50 ">
-      <div className="pl-4 flex gap-10 text-l font-semibold first-of-type:cursor-pointer leading-8">
+      <div className="flex gap-10 text-l font-semibold first-of-type:cursor-pointer leading-[66.8px]">
         <HamburgerMenu />
-        <h1>로고</h1>
+        <Image src="/Logo.png" alt="Logo" width={150} height={32} className="-ml-6" />
         <h1>전체</h1>
         <h1>무인카페</h1>
         <h1>일반카페</h1>
