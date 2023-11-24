@@ -12,10 +12,9 @@ const firebaseConfig = {
   appId: "1:651313538644:web:0611ae6b0c4279dc816fc1",
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
   const querySnapshot = await getDocs(collection(db, "StoreInfo"));
   const users: IStoreInfo[] = [];
 
