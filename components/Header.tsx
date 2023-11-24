@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import UserProfile from "./UserProfile";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { auth } from "@/utils/firebase";
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isLogined, setIsLogined] = useState(false);
 
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
 
   const [userData, setUserData] = useState({
     name: "이름",
@@ -17,7 +18,7 @@ const Header = () => {
   });
 
   const handleLogin = () => {
-    signInWithPopup(auth, provider)
+    signInWithPopup(auth(), provider)
       .then(result => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         if (credential?.accessToken) {

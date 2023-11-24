@@ -1,5 +1,6 @@
 import { IStoreInfo } from "@/types/firebase";
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -11,7 +12,11 @@ const firebaseConfig = {
   messagingSenderId: "651313538644",
   appId: "1:651313538644:web:0611ae6b0c4279dc816fc1",
 };
-initializeApp(firebaseConfig);
+
+export const auth = () => {
+  initializeApp(firebaseConfig);
+  return getAuth();
+};
 const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
