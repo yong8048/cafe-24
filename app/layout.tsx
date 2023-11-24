@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import Map from "../components/Map";
-import GetStoreInfo from "@/utils/firebase";
 import "tailwindcss/tailwind.css";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -18,7 +15,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className={pretendard.className}>
           <Header />
           <Sidebar />
-
           <div>{children}</div>
         </main>
       </body>
