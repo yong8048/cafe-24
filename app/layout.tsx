@@ -10,7 +10,10 @@ const pretendard = localFont({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <head></head>
+      <head>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <title>새벽 감성 - 24시 카페</title>
+      </head>
       <body>
         <main className={pretendard.className}>
           <Header />
