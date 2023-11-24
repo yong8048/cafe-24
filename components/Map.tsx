@@ -27,7 +27,11 @@ const Map = () => {
       center: new window.naver.maps.LatLng(37.3595704, 127.105399),
       zoom: 10,
     };
-    mapRef.current = new window.naver.maps.Map("map", mapOptions);
+
+    if (mapRef.current === null) {
+      mapRef.current = new window.naver.maps.Map("map", mapOptions);
+    }
+
     setMarker();
   };
 
