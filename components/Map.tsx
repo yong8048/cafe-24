@@ -1,16 +1,20 @@
 "use client";
+import { useGetImages } from "@/hooks/useGetImages";
+import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { useSidebarStore } from "@/store/sidebarStore";
 import { IMarkerInfo } from "@/types/Map";
-import GetStoreInfo from "@/utils/firebase";
+import { GetStoreInfo, getStoreImages } from "@/utils/firebase";
 import { useEffect, useRef } from "react";
 import { IoMdRefresh } from "react-icons/io";
+import "@/styles/marker.css";
 
 const Map = () => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
   const { setOpen } = useSidebarStore();
   const { setData } = useSelectedStore();
+  const { setUrl, resetUrl } = useImageStore();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -52,37 +56,11 @@ const Map = () => {
         map: mapRef.current,
         icon: {
           content: `
-          <div style="
-            white-space:nowrap; 
-            position:relative; 
-            background:white; 
-            border-radius:25px; 
-            margin-left:20px; 
-            padding-left:10px; 
-            padding-right:10px; 
-            padding-top:5px; 
-            padding-bottom:5px; 
-            border: 1px solid #3b82f6; 
-            font-weight:bold; 
-            font-size: 12px">
-              ${data.name}
-              <div style="
-                position: absolute;
-                bottom: -11px;
-                left: 9px;
-                border-width: 11px 11px 0;
-                border-style: solid;
-                border-color: #3b82f6 transparent transparent transparent;
-              "></div>
-              <div style="
-                position: absolute;
-                bottom: -10px;
-                left: 10px;
-                border-width: 11px 10px 0;
-                border-style: solid;
-                border-color: white transparent transparent transparent;
-              "></div>
-            </div>`,
+          <div class="marker-container">
+          ${data.name}
+            <div class="marker-arrow-border"></div>
+            <div class="marker-arrow"></div>
+          </div>`,
           size: new window.naver.maps.Size(128, 40),
           anchor: new window.naver.maps.Point(32, 32),
         },
@@ -91,9 +69,12 @@ const Map = () => {
       markerRef.current.push(marker);
     });
     markerRef.current.map(marker => {
-      window.naver.maps.Event.addListener(marker, "click", () => {
+      window.naver.maps.Event.addListener(marker, "click", async () => {
+        resetUrl();
         setData(marker.data);
         setOpen();
+        const image = await getStoreImages(marker.data.id);
+        setUrl(image as string[]);
       });
     });
   };
