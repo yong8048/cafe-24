@@ -1,0 +1,7 @@
+.swiper-pagination-bullets {
+  width: 25% !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+}

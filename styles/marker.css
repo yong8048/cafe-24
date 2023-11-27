@@ -1,0 +1,32 @@
+.marker-container {
+  white-space: nowrap;
+  position: relative;
+  background-color: white;
+  border-radius: 25px;
+  margin-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #3b82f6;
+  font-weight: bold;
+  font-size: 12px
+}
+
+.marker-arrow {
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+  border-width: 11px 10px 0;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+.marker-arrow-border {
+  position: absolute;
+  bottom: -11px;
+  left: 9px;
+  border-width: 11px 11px 0;
+  border-style: solid;
+  border-color: #3b82f6 transparent transparent transparent;
+}
