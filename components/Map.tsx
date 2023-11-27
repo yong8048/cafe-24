@@ -73,7 +73,7 @@ const Map = () => {
         resetUrl();
         setData(marker.data);
         setOpen();
-        const image = await getStoreImages(marker.data.id);
+        const image = await getStoreImages(marker.data.id as string);
         setUrl(image as string[]);
       });
     });
