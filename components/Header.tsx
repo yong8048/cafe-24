@@ -6,6 +6,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { auth } from "@/utils/firebase";
 import Image from "next/image";
+import LoginStatus from "./LoginStatus";
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -14,7 +15,7 @@ const Header = () => {
   const provider = new GoogleAuthProvider();
 
   const [userData, setUserData] = useState({
-    name: "이름",
+    name: " ",
     email: "이메일",
   });
 
@@ -55,26 +56,7 @@ const Header = () => {
       </div>
 
       {isLogined ? (
-        <div className="flex gap-1 items-center">
-          <UserProfile name={userData.name} />
-
-          <div
-            className="flex gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg"
-            onClick={() => setIsClicked(!isClicked)}
-          >
-            {isClicked ? (
-              <>
-                <h1 className="text-base">{userData.name}</h1>
-                <span className=" relative absolute top-2 left-0 w-2 h-2 border-t-2 border-r-2 border-black rotate-[315deg]"></span>
-              </>
-            ) : (
-              <>
-                <h1 className="text-base">{userData.name}</h1>
-                <span className=" relative absolute top-1 left-0 w-2 h-2 border-t-2 border-r-2 border-black rotate-[135deg]"></span>
-              </>
-            )}
-          </div>
-        </div>
+        <LoginStatus name={userData.name} />
       ) : (
         <h1
           className="px-4 cursor-pointer"
