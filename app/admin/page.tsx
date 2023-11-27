@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 
-function Home() {
-  return <>home</>;
-}
+const DashBoard = () => {
+  return <div>DashBoard</div>;
+};
 
-export default Home;
+export default DashBoard;
