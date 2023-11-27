@@ -1,6 +1,9 @@
+import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { IStoreInfo } from "@/types/firebase";
+import Image from "next/image";
 import React from "react";
+import ImageSwiper from "./ImageSwiper";
 
 const category = {
   address: "주소",
@@ -14,10 +17,20 @@ const category = {
 
 function StoreDetial() {
   const { data } = useSelectedStore();
+  const { urls } = useImageStore();
 
   return (
     <section className="w-full">
-      <div className="bg-gray-500 h-[220px]">StoreDetial</div>
+      <div className="h-[220px] relative">
+        {urls.length ? (
+          <ImageSwiper urls={urls} />
+        ) : (
+          <div className="flex flex-col items-center gap-4 justify-center h-full">
+            <Image src="/default.png" alt="이미지 준비중" width={100} height={100} />
+            <p className="text-xl font-bold">이미지 준비중입니다.</p>
+          </div>
+        )}
+      </div>
       <div className="h-[115px] bg-gray-300 flex flex-col items-center justify-center gap-3 py-4">
         <p className="text-2xl">{data.name}</p>
         <p className="text-[#777]">{data.type} 카페</p>
