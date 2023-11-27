@@ -37,7 +37,7 @@ function StoreDetial() {
       </div>
       <div className="p-6">
         {Object.entries(category).map(([key, value]) => (
-          <div key={key} className="h-10 flex gap-5">
+          <div key={key} className="h-10 flex gap-5 items-center">
             <p className="w-20">{value}</p>
             <p>{data[key as keyof IStoreInfo]}</p>
           </div>

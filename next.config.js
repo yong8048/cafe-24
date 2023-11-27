@@ -10,8 +10,13 @@ const nextConfig = {
       },
     ],
   },
-  env: {
-    NEXT_PUBLIC_NAVER_CLIENT_ID: process.env.NEXT_PUBLIC_NAVER_CLIENT_ID,
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode/:path*",
+      },
+    ];
   },
 };
 
