@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
-import UserProfile from "./UserProfile";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { initializeApp } from "firebase/app";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 import { auth } from "@/utils/firebase";
 import Image from "next/image";
 import LoginStatus from "./LoginStatus";
@@ -65,7 +64,7 @@ const Header = () => {
             setIsLogined(true);
           }}
         >
-          {/* <h1 className="px-4 cursor-pointer">로그인</h1> */}로그인
+          로그인
         </h1>
       )}
     </header>

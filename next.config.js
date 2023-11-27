@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/ @type {import('next').NextConfig} */;
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -6,15 +6,15 @@ const nextConfig = {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
         port: "",
-        pathname: "/v0/b/cafe-24-2286c.appspot.com/**",
+        pathname: "/v0/b/cafe-24-2286c.appspot.com/",
       },
     ],
   },
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
-        destination: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode/:path*",
+        source: "/api/:path",
+        destination: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode/:path",
       },
     ];
   },
