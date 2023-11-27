@@ -18,11 +18,11 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
       className="relative h-full"
     >
       {urls.map(url => (
-        <SwiperSlide key={url.toString()}>
+        <SwiperSlide key={url.toString()} className="w-full h-full relative">
           {urls[0] === "/loading.gif" ? (
-            <Image src={url.toString()} alt="1" width={200} height={200} className="m-auto" />
+            <Image src={url.toString()} alt="로딩 이미지" width={200} height={200} className="m-auto" />
           ) : (
-            <Image src={url.toString()} alt="1" fill />
+            <Image src={url.toString()} alt="카페 사진" layout="fill" objectFit="cover" />
           )}
         </SwiperSlide>
       ))}
