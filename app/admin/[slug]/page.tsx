@@ -3,6 +3,7 @@ import AdminSidebar from "@/components/admin/report/AdminSidebar";
 import AdminReportForm from "@/components/admin/report/AdminReportForm";
 import { redirect, usePathname } from "next/navigation";
 import React, { useEffect } from "react";
+import AdminUploadForm from "@/components/admin/upload/AdminUploadForm";
 
 type Tsection = "modify" | "report" | "upload";
 
@@ -16,7 +17,7 @@ const section = {
   ),
   upload: (
     <>
-      <AdminReportForm />
+      <AdminUploadForm />
     </>
   ),
 };
