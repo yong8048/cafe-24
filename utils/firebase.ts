@@ -1,4 +1,4 @@
-import { IStoreInfo } from "@/types/firebase";
+import { IReportInfo, IStoreInfo } from "@/types/firebase";
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -33,6 +33,20 @@ export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
   });
 
   return users; // 배열 반환
+};
+
+export const GetReportInfo = async (): Promise<IReportInfo[]> => {
+  const querySnapshot = await getDocs(collection(db, "ReportInfo"));
+  const res: IReportInfo[] = [];
+
+  querySnapshot.forEach(doc => {
+    res.push({
+      name: doc.id,
+      ...doc.data(),
+    } as IReportInfo);
+  });
+
+  return res; // 배열 반환
 };
 
 export const getStoreImages = async (fileID: string) => {

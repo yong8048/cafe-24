@@ -12,3 +12,15 @@ export interface IStoreInfo {
   toilet: string;
   type: string;
 }
+
+export interface IReportInfo {
+  address: string;
+  group: string;
+  internet: string;
+  name: string;
+  number: string;
+  parking: string;
+  table: string;
+  toilet: string;
+  type: string;
+}
