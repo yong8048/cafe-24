@@ -1,13 +1,14 @@
+"use client";
 import React from "react";
+import AdminHeader from "@/components/admin/AdminHeader";
+import AdminSection from "@/components/admin/AdminSection";
 
 function admin() {
   return (
-    <div>
-      <div>
-        <h1></h1>
-        <input type="text" />
-      </div>
-    </div>
+    <>
+      <AdminHeader />
+      <AdminSection />
+    </>
   );
 }
 
