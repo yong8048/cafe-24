@@ -13,9 +13,9 @@ const LoginStatus = ({ name }: { name: String }) => {
       >
         <h1 className="text-base">{name}</h1>
         <span
-          className={`relative  top-2 left-0 w-2 h-2 border-t-2 border-r-2 border-black rotate-[${
-            isClicked ? "315" : "135"
-          }deg]`}
+          className={`relative  top-2 left-0 w-2 h-2 border-t-2 border-r-2 border-black ${
+            isClicked ? "rotate-[315deg]" : "rotate-[135deg]"
+          }`}
         ></span>
       </div>
     </div>

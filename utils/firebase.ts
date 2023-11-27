@@ -1,7 +1,7 @@
 import { IReportInfo, IStoreInfo } from "@/types/firebase";
-import { FirebaseApp, initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 
@@ -47,6 +47,9 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
   });
 
   return res; // 배열 반환
+};
+export const PostStoreInfo = async (storeData: IStoreInfo) => {
+  const a = await addDoc(collection(db, "StoreInfo"), storeData);
 };
 
 export const getStoreImages = async (fileID: string) => {

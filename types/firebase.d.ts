@@ -1,5 +1,5 @@
 export interface IStoreInfo {
-  id: string;
+  id?: string;
   address: string;
   group: string;
   internet: string;
