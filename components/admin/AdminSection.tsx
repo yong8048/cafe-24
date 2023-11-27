@@ -1,14 +1,7 @@
 import React from "react";
-import AdminSidebar from "./AdminSidebar";
-import AdminUploadForm from "./AdminUploadForm";
 
-const AdminSection = () => {
-  return (
-    <section className="flex h-main_section">
-      <AdminSidebar />
-      <AdminUploadForm />
-    </section>
-  );
+const AdminSection = ({ children }: { children: React.ReactNode }) => {
+  return <section className="flex h-main_section">{children}</section>;
 };
 
 export default AdminSection;
