@@ -16,5 +16,10 @@
   }
 }
 
-body {
+body {}
+
+@layer components {
+  .input-admin {
+    @apply border rounded-lg px-2;
+  }
 }
