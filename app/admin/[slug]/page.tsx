@@ -15,11 +15,7 @@ const section = {
       <AdminReportForm />
     </>
   ),
-  upload: (
-    <>
-      <AdminUploadForm />
-    </>
-  ),
+  upload: <AdminUploadForm />,
 };
 const Page = () => {
   const pathName = usePathname();
