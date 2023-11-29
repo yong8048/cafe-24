@@ -16,7 +16,6 @@ const createInstance = () => {
       // "Access-Control-Allow-Credentials": true,
       // "Access-Control-Allow-Method": "GET",
     },
-    withCredentials: true,
   });
 
   return request;
@@ -24,8 +23,7 @@ const createInstance = () => {
 
 const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
   const request = createInstance();
-  console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_ID);
-  console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET_KEY);
+
   try {
     const response = await request.get(`?query=${encodeURI(address)}`);
     console.log(response);
