@@ -22,6 +22,9 @@ export const auth = () => {
   return getAuth();
 };
 export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
+  const app = initializeApp(firebaseConfig);
+  console.log(firebaseConfig);
+  const db = getFirestore(app);
   const querySnapshot = await getDocs(collection(db, "StoreInfo"));
   const users: IStoreInfo[] = [];
 
