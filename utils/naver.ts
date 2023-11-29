@@ -12,11 +12,10 @@ const createInstance = () => {
       "X-NCP-APIGW-API-KEY-ID": `${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`,
       "X-NCP-APIGW-API-KEY": `${process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET_KEY}`,
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Method": "GET",
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Credentials": true,
+      // "Access-Control-Allow-Method": "GET",
     },
-    withCredentials: true,
   });
 
   return request;

@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 import "@/styles/marker.css";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
+import { useGetStores } from "@/hooks/useGetStores";
 
 const Map = () => {
   const mapRef = useRef<any | null>(null);
@@ -18,6 +19,7 @@ const Map = () => {
   const { setUrl, resetUrl } = useImageStore();
   const { type } = useCafeTypeStore();
   const [research, setResearch] = useState(false);
+  const { stores, isError, isLoading } = useGetStores();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -32,7 +34,7 @@ const Map = () => {
 
   useEffect(() => {
     setMarker();
-  }, [type]);
+  }, [type, isLoading]);
 
   const initMap = async () => {
     const mapOptions = {
@@ -48,56 +50,57 @@ const Map = () => {
       });
     }
 
-    setMarker();
+    // setMarker();
   };
 
   const setMarker = async () => {
     markerRef.current.map(marker => marker.setMap(null));
-    const storeInfo = await GetStoreInfo();
 
-    let boundsStores = storeInfo.filter(store => {
-      return (
-        store.latitude < mapRef.current.getBounds()._max._lat &&
-        store.latitude > mapRef.current.getBounds()._min._lat &&
-        store.longitude > mapRef.current.getBounds()._min._lng &&
-        store.longitude < mapRef.current.getBounds()._max._lng
-      );
-    });
-
-    if (type !== "전체") {
-      boundsStores = boundsStores.filter(store => {
-        return store.type === type;
+    if (stores) {
+      let boundsStores = stores.filter(store => {
+        return (
+          store.latitude < mapRef.current.getBounds()._max._lat &&
+          store.latitude > mapRef.current.getBounds()._min._lat &&
+          store.longitude > mapRef.current.getBounds()._min._lng &&
+          store.longitude < mapRef.current.getBounds()._max._lng
+        );
       });
-    }
 
-    boundsStores.map(data => {
-      const marker = new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(data.latitude, data.longitude),
-        map: mapRef.current,
-        icon: {
-          content: `
+      if (type !== "전체") {
+        boundsStores = boundsStores.filter(store => {
+          return store.type === type;
+        });
+      }
+
+      boundsStores.map(data => {
+        const marker = new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(data.latitude, data.longitude),
+          map: mapRef.current,
+          icon: {
+            content: `
           <div class="marker-container">
           ${data.name}
-            <div class="marker-arrow-border"></div>
-            <div class="marker-arrow"></div>
+          <div class="marker-arrow-border"></div>
+          <div class="marker-arrow"></div>
           </div>`,
-          size: new window.naver.maps.Size(128, 40),
-          anchor: new window.naver.maps.Point(32, 32),
-        },
-        data: data,
+            size: new window.naver.maps.Size(128, 40),
+            anchor: new window.naver.maps.Point(32, 32),
+          },
+          data: data,
+        });
+        markerRef.current.push(marker);
       });
-      markerRef.current.push(marker);
-    });
-    markerRef.current.map(marker => {
-      window.naver.maps.Event.addListener(marker, "click", async () => {
-        resetUrl();
-        setData(marker.data);
-        setOpen();
-        const image = await getStoreImages(marker.data.id as string);
-        setUrl(image as string[]);
+      markerRef.current.map(marker => {
+        window.naver.maps.Event.addListener(marker, "click", async () => {
+          resetUrl();
+          setData(marker.data);
+          setOpen();
+          const image = await getStoreImages(marker.data.id as string);
+          setUrl(image as string[]);
+        });
       });
-    });
-    setResearch(false);
+      setResearch(false);
+    }
   };
 
   return (
