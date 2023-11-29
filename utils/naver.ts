@@ -24,7 +24,8 @@ const createInstance = () => {
 
 const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
   const request = createInstance();
-  console.log(request);
+  console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_ID);
+  console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET_KEY);
   try {
     const response = await request.get(`?query=${encodeURI(address)}`);
     console.log(response);
