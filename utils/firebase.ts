@@ -5,13 +5,20 @@ import { addDoc, getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 
+const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+const authDomain = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN;
+const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+const messagingSenderId = process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID;
+const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
+
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: apiKey,
+  authDomain: authDomain,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -22,16 +29,7 @@ export const auth = () => {
   return getAuth();
 };
 export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
-  const app = initializeApp({
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  });
-
-  const db = getFirestore(app);
+  console.log(firebaseConfig);
   const querySnapshot = await getDocs(collection(db, "StoreInfo"));
   const users: IStoreInfo[] = [];
 
