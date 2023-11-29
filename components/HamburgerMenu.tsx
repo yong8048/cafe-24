@@ -1,13 +1,17 @@
+"use client";
 import { useSidebarStore } from "@/store/sidebarStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const HamburgerMenu = () => {
-  const { setToggle } = useSidebarStore();
-  const [isActive, setIsActive] = useState(false);
+  const { isOpen, setToggle } = useSidebarStore();
+  const [isActive, setIsActive] = useState(true);
   const handleActive = () => {
     setToggle();
-    setIsActive(!isActive);
   };
+
+  useEffect(() => {
+    setIsActive(!isActive);
+  }, [isOpen]);
 
   return (
     <div className="flex items-center p-2" onClick={handleActive}>
