@@ -24,7 +24,7 @@ const createInstance = () => {
 
 const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
   const request = createInstance();
-
+  console.log(request);
   try {
     const response = await request.get(`?query=${encodeURI(address)}`);
     console.log(response);
