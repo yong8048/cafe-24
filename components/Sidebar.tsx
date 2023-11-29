@@ -4,7 +4,7 @@ import React from "react";
 import StoreDetial from "./StoreDetial";
 import { useSelectedStore } from "@/store/selectedStore";
 import Intro from "./Intro";
-import { FaPhone } from "react-icons/fa6";
+
 const Sidebar = () => {
   const { isOpen } = useSidebarStore();
   const { data } = useSelectedStore();

@@ -4,15 +4,21 @@ import { IStoreInfo } from "@/types/firebase";
 import Image from "next/image";
 import React from "react";
 import ImageSwiper from "./ImageSwiper";
-
+import { FaPhone as Phone } from "react-icons/fa6";
+import { LiaMapMarkerAltSolid as Marker } from "react-icons/lia";
+import { MdOutlineTableBar as Table } from "react-icons/md";
+import { FaCarSide as Parking } from "react-icons/fa6";
+import { FaRestroom as Toilet } from "react-icons/fa";
+import { IoIosWifi as Internet } from "react-icons/io";
+import { VscOrganization as Group } from "react-icons/vsc";
 const category = {
-  address: "주소",
-  number: "전화번호",
-  table: "테이블",
-  parking: "주차",
-  toilet: "화장실",
-  internet: "인터넷",
-  group: "단체석",
+  address: { name: "주소", icon: <Marker size="25" /> },
+  number: { name: "전화번호", icon: <Phone size="20" /> },
+  table: { name: "테이블", icon: <Table size="25" /> },
+  parking: { name: "주차", icon: <Parking size="25" /> },
+  toilet: { name: "화장실", icon: <Toilet size="25" /> },
+  internet: { name: "인터넷", icon: <Internet size="25" /> },
+  group: { name: "단체석", icon: <Group size="25" /> },
 };
 
 function StoreDetial() {
@@ -31,14 +37,14 @@ function StoreDetial() {
           </div>
         )}
       </div>
-      <div className="h-[115px] bg-gray-300 flex flex-col items-center justify-center gap-3 py-4">
-        <p className="text-2xl">{data.name}</p>
+      <div className="h-[115px] bg-white flex flex-col items-center justify-center gap-3 py-4 border">
+        <p className="text-2xl font-bold">{data.name}</p>
         <p className="text-[#777]">{data.type} 카페</p>
       </div>
       <div className="p-6">
         {Object.entries(category).map(([key, value]) => (
-          <div key={key} className="h-10 flex gap-5 items-center">
-            <p className="w-20">{value}</p>
+          <div key={key} className="h-10 flex gap-9 items-center">
+            <div className="h-7 w-7 flex justify-center">{value.icon}</div>
             <p>{data[key as keyof IStoreInfo]}</p>
           </div>
         ))}
