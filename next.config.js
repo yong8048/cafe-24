@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/ @type {import('next').NextConfig} */;
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -14,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode/:path*",
+        destination: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=:path*",
       },
     ];
   },
