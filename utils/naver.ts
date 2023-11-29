@@ -7,7 +7,7 @@ interface GeoLocation {
 
 const createInstance = () => {
   const request = axios.create({
-    baseURL: "/api",
+    baseURL: "/utils/naver",
     headers: {
       "X-NCP-APIGW-API-KEY-ID": `${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`,
       "X-NCP-APIGW-API-KEY": `${process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET_KEY}`,
