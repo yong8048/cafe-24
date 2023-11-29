@@ -2,7 +2,7 @@ import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { IStoreInfo } from "@/types/firebase";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import ImageSwiper from "./ImageSwiper";
 import { FaPhone as Phone } from "react-icons/fa6";
 import { LiaMapMarkerAltSolid as Marker } from "react-icons/lia";
@@ -11,19 +11,41 @@ import { FaCarSide as Parking } from "react-icons/fa6";
 import { FaRestroom as Toilet } from "react-icons/fa";
 import { IoIosWifi as Internet } from "react-icons/io";
 import { VscOrganization as Group } from "react-icons/vsc";
+import { FaRegCopy as Copy } from "react-icons/fa";
 const category = {
-  address: { name: "주소", icon: <Marker size="25" /> },
-  number: { name: "전화번호", icon: <Phone size="20" /> },
-  table: { name: "테이블", icon: <Table size="25" /> },
-  parking: { name: "주차", icon: <Parking size="25" /> },
-  toilet: { name: "화장실", icon: <Toilet size="25" /> },
-  internet: { name: "인터넷", icon: <Internet size="25" /> },
-  group: { name: "단체석", icon: <Group size="25" /> },
+  address: { name: "주소", icon: <Marker size="25" />, copy: true },
+  number: { name: "전화번호", icon: <Phone size="20" />, copy: true },
+  table: { name: "테이블", icon: <Table size="25" />, copy: false },
+  parking: { name: "주차", icon: <Parking size="25" />, copy: false },
+  toilet: { name: "화장실", icon: <Toilet size="25" />, copy: false },
+  internet: { name: "인터넷", icon: <Internet size="25" />, copy: false },
+  group: { name: "단체석", icon: <Group size="25" />, copy: false },
 };
 
 function StoreDetial() {
   const { data } = useSelectedStore();
   const { urls } = useImageStore();
+  const [isHovered, setIsHovered] = useState<{ [key: string]: boolean }>({});
+
+  const handleMouseOver = (e: React.MouseEvent<HTMLDivElement>) => {
+    const id = e.currentTarget.id;
+    setIsHovered(prevState => ({ ...prevState, [id]: true }));
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const id = e.currentTarget.id;
+    setIsHovered(prevState => ({ ...prevState, [id]: false }));
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const id = e.currentTarget.id;
+    if (id === "address" || id === "number") {
+      const text = data[id as keyof IStoreInfo];
+      if (text) {
+        navigator.clipboard.writeText(text);
+      }
+    }
+  };
 
   return (
     <section className="w-full">
@@ -41,11 +63,27 @@ function StoreDetial() {
         <p className="text-2xl font-bold">{data.name}</p>
         <p className="text-[#777]">{data.type} 카페</p>
       </div>
-      <div className="p-6">
+      <div className="">
         {Object.entries(category).map(([key, value]) => (
-          <div key={key} className="h-10 flex gap-9 items-center">
-            <div className="h-7 w-7 flex justify-center">{value.icon}</div>
-            <p>{data[key as keyof IStoreInfo]}</p>
+          <div
+            id={key}
+            key={key}
+            className="px-6 hover:bg-gray-300 cursor-pointer"
+            onClick={handleClick}
+            onMouseOver={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="relative h-10 flex gap-9 items-center">
+              <div className="h-7 w-7 flex justify-center items-center">{value.icon}</div>
+              <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"}`}>
+                {data[key as keyof IStoreInfo] || "정보 없음"}
+              </p>
+              {value.copy && (
+                <div className={`absolute right-1 ${isHovered[key] ? "opacity-100" : "opacity-0"}`}>
+                  <Copy />
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
