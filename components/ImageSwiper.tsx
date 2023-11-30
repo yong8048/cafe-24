@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "@/styles/swiper.css";
 
 const ImageSwiper = ({ urls }: { urls: string[] }) => {
+  const handleImageModal = () => {};
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -22,7 +23,14 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
           {urls[0] === "/loading.gif" ? (
             <Image src={url.toString()} alt="로딩 이미지" width={200} height={200} className="m-auto" />
           ) : (
-            <Image src={url.toString()} alt="카페 사진" layout="fill" objectFit="cover" />
+            <Image
+              src={url.toString()}
+              alt="카페 사진"
+              layout="fill"
+              objectFit="cover"
+              onClick={handleImageModal}
+              className="cursor-pointer"
+            />
           )}
         </SwiperSlide>
       ))}

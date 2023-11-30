@@ -12,6 +12,9 @@ import { FaRestroom as Toilet } from "react-icons/fa";
 import { IoIosWifi as Internet } from "react-icons/io";
 import { VscOrganization as Group } from "react-icons/vsc";
 import { FaRegCopy as Copy } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { split } from "postcss/lib/list";
 const category = {
   address: { name: "주소", icon: <Marker size="25" />, copy: true },
   number: { name: "전화번호", icon: <Phone size="20" />, copy: true },
@@ -26,6 +29,8 @@ function StoreDetial() {
   const { data } = useSelectedStore();
   const { urls } = useImageStore();
   const [isHovered, setIsHovered] = useState<{ [key: string]: boolean }>({});
+
+  const notify = () => toast(`복사 완료`);
 
   const handleMouseOver = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = e.currentTarget.id;
@@ -43,12 +48,24 @@ function StoreDetial() {
       const text = data[id as keyof IStoreInfo];
       if (text) {
         navigator.clipboard.writeText(text);
+        notify();
       }
     }
   };
 
   return (
     <section className="w-full">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={300}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="h-[220px] relative">
         {urls.length ? (
           <ImageSwiper urls={urls} />
