@@ -115,7 +115,7 @@ const Map = () => {
       {research && (
         <button
           onClick={setMarker}
-          className="flex justify-center items-center gap-2 absolute w-48 h-7 top-28 left-1/2 transform -translate-x-1/2 z-50 bg-white text-l rounded-3xl border border-mainColor text-mainColor"
+          className="flex justify-center items-center gap-2 absolute w-48 h-7 top-28 left-1/2 transform -translate-x-1/2 z-20 bg-white text-l rounded-3xl border border-mainColor text-mainColor"
         >
           <IoMdRefresh />현 지도에서 검색
         </button>
