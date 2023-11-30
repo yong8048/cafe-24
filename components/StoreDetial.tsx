@@ -85,12 +85,12 @@ function StoreDetial() {
           <div
             id={key}
             key={key}
-            className="px-6 hover:bg-gray-300 cursor-pointer"
+            className="px-6 hover:bg-gray-300 cursor-pointer relative group"
             onClick={handleClick}
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="relative h-10 flex gap-9 items-center">
+            <div className="relative h-10 flex gap-9 items-center " title={`${key}`}>
               <div className="h-7 w-7 flex justify-center items-center">{value.icon}</div>
               <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"}`}>
                 {data[key as keyof IStoreInfo] || "정보 없음"}
@@ -100,6 +100,9 @@ function StoreDetial() {
                   <Copy />
                 </div>
               )}
+            </div>
+            <div className="absolute left-0 top-0 mt-10 ml-14 text-white text-sm bg-black p-1 rounded transition-opacity duration-300 ease-in-out opacity-0  text-opacity-100 group-hover:opacity-100 ">
+              {value.name}
             </div>
           </div>
         ))}
