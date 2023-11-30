@@ -49,7 +49,14 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
   return res; // 배열 반환
 };
 export const PostStoreInfo = async (storeData: IStoreInfo) => {
-  await addDoc(collection(db, "StoreInfo"), storeData);
+  try {
+    const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
+    alert(docRef.id);
+    return docRef.id;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    return "";
+  }
 };
 
 export const getStoreImages = async (fileID: string) => {
