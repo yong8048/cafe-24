@@ -1,4 +1,4 @@
-import { IReportInfo, IStoreInfo, IUserInfo } from "@/types/firebase";
+import { IReportInfo, IStoreInfo, IUploadInfo, IUserInfo } from "@/types/firebase";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import {
@@ -58,7 +58,7 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
 
   return res; // 배열 반환
 };
-export const PostStoreInfo = async (storeData: IStoreInfo) => {
+export const PostStoreInfo = async (storeData: IUploadInfo) => {
   try {
     const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
     alert(docRef.id);
