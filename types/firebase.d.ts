@@ -1,5 +1,5 @@
 export interface IStoreInfo {
-  id?: string;
+  id: string;
   address: string;
   group: string;
   internet: string;
@@ -23,4 +23,12 @@ export interface IReportInfo {
   table: string;
   toilet: string;
   type: string;
+}
+
+export interface IUserInfo {
+  name: string;
+  email: string;
+  uid: string;
+  fav: string[];
+  admin: boolean;
 }
