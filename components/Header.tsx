@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 
@@ -8,12 +8,12 @@ import Image from "next/image";
 import LoginStatus from "./LoginStatus";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
+import { useLoginStatusStore } from "@/store/loginStatusStore";
 
 const Header = () => {
-  const [isLogined, setIsLogined] = useState(false);
-  const [selected, setSelected] = useState("전체");
-  const { setType } = useCafeTypeStore();
+  const { type, setType } = useCafeTypeStore();
   const { userInfo, setUserInfo } = useUserInfoStore();
+  const { loginStatus, setLoginStatus } = useLoginStatusStore();
   const provider = new GoogleAuthProvider();
 
   const handleLogin = () => {
@@ -39,58 +39,58 @@ const Header = () => {
             admin: false,
           });
         }
-        setIsLogined(true);
+        setLoginStatus(true);
       })
       .catch(error => {
         console.error(error);
       });
   };
 
+  useEffect(() => {
+    userInfo.name && setLoginStatus(true);
+  }, []);
+
   return (
-    <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between ">
+    <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between min-w-[900px]">
       <div className="flex gap-10 text-l font-semibold leading-[66.8px]">
         <HamburgerMenu />
         <Image src="/Logo.png" alt="Logo" width={150} height={32} className="-ml-6 cursor-default" />
         <h1
-          className={`${selected === "전체" && "text-red-400"} cursor-pointer`}
+          className={`${type === "전체" && "text-red-400"} cursor-pointer`}
           onClick={() => {
-            setSelected("전체");
             setType("전체");
           }}
         >
           전체
         </h1>
         <h1
-          className={`${selected === "무인카페" && "text-red-400"} cursor-pointer`}
+          className={`${type === "무인" && "text-red-400"} cursor-pointer`}
           onClick={() => {
-            setSelected("무인카페");
             setType("무인");
           }}
         >
           무인카페
         </h1>
         <h1
-          className={`${selected === "일반카페" && "text-red-400"} cursor-pointer`}
+          className={`${type === "일반" && "text-red-400"} cursor-pointer`}
           onClick={() => {
-            setSelected("일반카페");
             setType("일반");
           }}
         >
           일반카페
         </h1>
         <h1
-          className={`${selected === "즐겨찾기" && "text-red-400"} cursor-pointer`}
+          className={`${type === "즐겨찾기" && "text-red-400"} cursor-pointer`}
           onClick={() => {
-            setSelected("즐겨찾기");
-            setType("즐겨찾기");
+            loginStatus ? setType("즐겨찾기") : alert("로그인이 필요합니다.");
           }}
         >
           즐겨찾기
         </h1>
       </div>
 
-      {isLogined ? (
-        <LoginStatus name={userInfo.name} />
+      {loginStatus ? (
+        <LoginStatus />
       ) : (
         <h1
           className="px-4 cursor-pointer"

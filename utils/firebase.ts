@@ -31,6 +31,7 @@ export const auth = () => {
   initializeApp(firebaseConfig);
   return getAuth();
 };
+
 export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
   const querySnapshot = await getDocs(collection(db, "StoreInfo"));
   const users: IStoreInfo[] = [];
@@ -79,7 +80,7 @@ export const GetStoreImages = async (fileID: string) => {
         return url;
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   });
 
@@ -125,7 +126,6 @@ export const PostFavStore = async (userID: string, storeID: string, isDelete: bo
 };
 
 export const GetFavStore = async (userID: string) => {
-  console.log(userID);
   try {
     const querySnapshot = await getDoc(doc(db, "UserInfo", userID));
     return (querySnapshot.data() as IUserInfo).fav;

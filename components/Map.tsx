@@ -1,10 +1,9 @@
 "use client";
-import { useGetImages } from "@/hooks/useGetImages";
 import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { useSidebarStore } from "@/store/sidebarStore";
 import { IMarkerInfo } from "@/types/Map";
-import { GetStoreInfo, GetStoreImages } from "@/utils/firebase";
+import { GetStoreImages } from "@/utils/firebase";
 import { useEffect, useRef, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 import "@/styles/marker.css";
@@ -110,7 +109,7 @@ const Map = () => {
     <div>
       <div
         id="map"
-        className="w-screen h-main_section"
+        className="w-screen h-main_section min-w-[900px]"
         onWheelCapture={() => {
           setResearch(true);
         }}

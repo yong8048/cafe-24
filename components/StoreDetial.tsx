@@ -1,6 +1,6 @@
 import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
-import { IStoreInfo, IUserInfo } from "@/types/firebase";
+import { IStoreInfo } from "@/types/firebase";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ImageSwiper from "./ImageSwiper";
@@ -16,7 +16,7 @@ import { FaRegStar as NotFav } from "react-icons/fa";
 import { FaStar as Fav } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GetFavStore, PostFavStore } from "@/utils/firebase";
+import { PostFavStore } from "@/utils/firebase";
 import { useUserInfoStore } from "@/store/userInfoStore";
 
 const category = {
@@ -67,16 +67,19 @@ function StoreDetial() {
       }
     }
   };
-  ////파이어베이스에 데이터 추가하고 삭제하는 코드 작성 필요
+
   const handleFav = async () => {
-    setIsFav(!isFav);
-    !isFav ? favAddNotify() : favRemoveNotify();
-    const favList = await PostFavStore(userInfo.uid, data.id as string, isFav);
-    setUserInfo({ ...userInfo, fav: favList as string[] });
+    if (userInfo.name) {
+      setIsFav(!isFav);
+      !isFav ? favAddNotify() : favRemoveNotify();
+      const favList = await PostFavStore(userInfo.uid, data.id as string, isFav);
+      setUserInfo({ ...userInfo, fav: favList as string[] });
+    } else {
+      alert("로그인이 필요합니다.");
+    }
   };
 
   return (
-    ////너무 지저분한데 나눠주든 정리해야할듯
     <section className="w-full">
       <ToastContainer
         position="bottom-center"
@@ -118,7 +121,7 @@ function StoreDetial() {
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="relative h-10 flex gap-9 items-center " title={`${key}`}>
+            <div className="relative h-10 flex gap-9 items-center ">
               <div className="h-7 w-7 flex justify-center items-center">{value.icon}</div>
               <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"}`}>
                 {data[key as keyof IStoreInfo] || "정보 없음"}

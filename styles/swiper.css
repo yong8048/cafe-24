@@ -5,3 +5,11 @@
   left: 50% !important;
   transform: translateX(-50%);
 }
+.swiper-button-prev {
+  width: 50px;
+  left: 0;
+}
+.swiper-button-next {
+  width: 50px;
+  right: 0;
+}

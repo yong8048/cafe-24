@@ -26,7 +26,6 @@ const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
 
   try {
     const response = await request.get(`?query=${encodeURI(address)}`);
-    console.log(response);
 
     if (response.data.status === "OK" && response.data.meta.totalCount !== 0) {
       return {
