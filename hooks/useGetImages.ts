@@ -1,5 +1,5 @@
 import { useSelectedStore } from "@/store/selectedStore";
-import { getStoreImages } from "@/utils/firebase";
+import { GetStoreImages } from "@/utils/firebase";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetImages = (id: string) => {
@@ -10,7 +10,7 @@ export const useGetImages = (id: string) => {
   } = useQuery({
     queryKey: ["images"],
     queryFn: () => {
-      getStoreImages(id);
+      GetStoreImages(id);
       console.log(id);
     },
   });

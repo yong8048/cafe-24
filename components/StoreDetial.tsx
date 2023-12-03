@@ -1,8 +1,8 @@
 import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
-import { IStoreInfo } from "@/types/firebase";
+import { IStoreInfo, IUserInfo } from "@/types/firebase";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageSwiper from "./ImageSwiper";
 import { FaPhone as Phone } from "react-icons/fa6";
 import { LiaMapMarkerAltSolid as Marker } from "react-icons/lia";
@@ -16,6 +16,9 @@ import { FaRegStar as NotFav } from "react-icons/fa";
 import { FaStar as Fav } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GetFavStore, PostFavStore } from "@/utils/firebase";
+import { useUserInfoStore } from "@/store/userInfoStore";
+
 const category = {
   address: { name: "주소", icon: <Marker size="25" />, copy: true },
   number: { name: "전화번호", icon: <Phone size="20" />, copy: true },
@@ -29,8 +32,15 @@ const category = {
 function StoreDetial() {
   const { data } = useSelectedStore();
   const { urls } = useImageStore();
+  const { userInfo, setUserInfo } = useUserInfoStore();
+
   const [isHovered, setIsHovered] = useState<{ [key: string]: boolean }>({});
   const [isFav, setIsFav] = useState(false);
+
+  useEffect(() => {
+    const favList = userInfo.fav;
+    setIsFav(favList.includes(data.id as string));
+  }, [data]);
 
   ////토스트 메세지 종류 추가
   const copyNotify = () => toast(`복사 완료`);
@@ -58,9 +68,11 @@ function StoreDetial() {
     }
   };
   ////파이어베이스에 데이터 추가하고 삭제하는 코드 작성 필요
-  const handleFav = () => {
+  const handleFav = async () => {
     setIsFav(!isFav);
     !isFav ? favAddNotify() : favRemoveNotify();
+    const favList = await PostFavStore(userInfo.uid, data.id as string, isFav);
+    setUserInfo({ ...userInfo, fav: favList as string[] });
   };
 
   return (
@@ -117,7 +129,7 @@ function StoreDetial() {
                 </div>
               )}
             </div>
-            <div className="absolute left-0 top-0 mt-10 ml-14 text-white text-sm bg-black p-1 rounded transition-opacity duration-300 ease-in-out opacity-0  text-opacity-100 group-hover:opacity-100 ">
+            <div className="absolute left-0 top-0 mt-10 ml-14 text-white text-sm bg-black p-1 rounded transition-opacity duration-300 ease-in-out opacity-0  text-opacity-100 group-hover:opacity-100 z-10">
               {value.name}
             </div>
           </div>

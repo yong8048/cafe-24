@@ -1,55 +1,48 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 
-import { auth } from "@/utils/firebase";
+import { GetUserInfo, PostUserInfo, auth } from "@/utils/firebase";
 import Image from "next/image";
 import LoginStatus from "./LoginStatus";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
+import { useUserInfoStore } from "@/store/userInfoStore";
 
 const Header = () => {
   const [isLogined, setIsLogined] = useState(false);
   const [selected, setSelected] = useState("전체");
   const { setType } = useCafeTypeStore();
+  const { userInfo, setUserInfo } = useUserInfoStore();
   const provider = new GoogleAuthProvider();
-
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "이메일",
-    uid: "",
-  });
-
-  useEffect(() => {
-    localStorage.setItem("userInfo", JSON.stringify(userData));
-  }, [userData]);
 
   const handleLogin = () => {
     signInWithPopup(auth(), provider)
-      .then(result => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential?.accessToken) {
-          const token = credential.accessToken;
-          const uid = result.user.uid;
+      .then(async result => {
+        const user = result.user;
+        const userInfo = await GetUserInfo(user.uid);
 
-          const user = result.user;
-          console.log(result.user.uid);
-
-          if (user.displayName && user.email) {
-            setUserData({
-              name: user.displayName,
-              email: user.email,
-              uid: user.uid,
-            });
-          }
-          setIsLogined(true);
+        if (userInfo) {
+          setUserInfo({
+            name: userInfo.name,
+            email: userInfo.email,
+            uid: user.uid,
+            admin: userInfo.admin,
+            fav: userInfo.fav,
+          });
+        } else {
+          PostUserInfo({
+            name: user.displayName as string,
+            email: user.email as string,
+            uid: user.uid,
+            fav: [],
+            admin: false,
+          });
         }
+        setIsLogined(true);
       })
       .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error(error);
       });
   };
 
@@ -87,14 +80,17 @@ const Header = () => {
         </h1>
         <h1
           className={`${selected === "즐겨찾기" && "text-red-400"} cursor-pointer`}
-          onClick={() => setSelected("즐겨찾기")}
+          onClick={() => {
+            setSelected("즐겨찾기");
+            setType("즐겨찾기");
+          }}
         >
           즐겨찾기
         </h1>
       </div>
 
       {isLogined ? (
-        <LoginStatus name={userData.name} />
+        <LoginStatus name={userInfo.name} />
       ) : (
         <h1
           className="px-4 cursor-pointer"
