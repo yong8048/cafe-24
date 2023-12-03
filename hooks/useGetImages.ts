@@ -11,7 +11,6 @@ export const useGetImages = (id: string) => {
     queryKey: ["images"],
     queryFn: () => {
       GetStoreImages(id);
-      console.log(id);
     },
   });
   return { urls, isLoading, isError };

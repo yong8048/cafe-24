@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -10,6 +10,7 @@ import "@/styles/swiper.css";
 const ImageSwiper = ({ urls }: { urls: string[] }) => {
   const [showModal, setShowModal] = useState(false);
   const [clickImageUrl, setClickImageUrl] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   const modalOpen = (imageUrl: string) => {
     setShowModal(true);
@@ -20,14 +21,20 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
     setShowModal(false);
   };
 
+  useEffect(() => {
+    setCurrentIndex(1);
+  }, [urls]);
+
   return (
     <Swiper
-      modules={[Navigation, Pagination]}
+      modules={[Navigation]}
       slidesPerView={1}
       scrollbar={{ draggable: true }}
       navigation
       pagination={{ clickable: true }}
       className="relative h-full"
+      onSlideNextTransitionStart={() => setCurrentIndex(currentIndex + 1)}
+      onSlidePrevTransitionStart={() => setCurrentIndex(currentIndex - 1)}
     >
       {urls.map(url => (
         <SwiperSlide key={url.toString()} className="w-full h-full relative">
@@ -47,6 +54,11 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
           )}
         </SwiperSlide>
       ))}
+      <div className="absolute right-2 bottom-2 w-12 h-6 rounded-lg bg-gray-800 z-10 opacity-70 text-white leading-6 text-center text-sm ">
+        <p>
+          {currentIndex} / {urls.length}
+        </p>
+      </div>
       {showModal && (
         <div
           className="fixed z-50 left-0 top-0 w-full h-full overflow-auto bg-black bg-opacity-40 flex items-center justify-center"

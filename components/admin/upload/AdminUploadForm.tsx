@@ -44,7 +44,6 @@ const AdminUploadForm = () => {
   };
 
   const handleClickSearch = async () => {
-    console.log(storeData.address);
     const res = await GetGeoLocation(storeData.address);
     if (res) {
       setStoreData({ ...storeData, latitude: res.latitude, longitude: res.longitude });
