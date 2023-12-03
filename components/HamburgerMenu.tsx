@@ -9,6 +9,10 @@ const activeStyle = [
 const HamburgerMenu = () => {
   const { isOpen, setToggle } = useSidebarStore();
 
+  const handleActive = () => {
+    setToggle();
+  };
+
   return (
     <div className="flex items-center p-2" onClick={setToggle}>
       <button className="h-4 w-5 flex flex-col justify-between">

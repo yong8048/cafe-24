@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -15,9 +15,14 @@ const Header = () => {
   const provider = new GoogleAuthProvider();
 
   const [userData, setUserData] = useState({
-    name: " ",
+    name: "",
     email: "이메일",
+    uid: "",
   });
+
+  useEffect(() => {
+    localStorage.setItem("userInfo", JSON.stringify(userData));
+  }, [userData]);
 
   const handleLogin = () => {
     signInWithPopup(auth(), provider)
@@ -25,13 +30,16 @@ const Header = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         if (credential?.accessToken) {
           const token = credential.accessToken;
+          const uid = result.user.uid;
 
           const user = result.user;
+          console.log(result.user.uid);
 
           if (user.displayName && user.email) {
             setUserData({
               name: user.displayName,
               email: user.email,
+              uid: user.uid,
             });
           }
           setIsLogined(true);
