@@ -40,7 +40,7 @@ function StoreDetial() {
   useEffect(() => {
     const favList = userInfo.fav;
     setIsFav(favList.includes(data.id as string));
-  }, [data]);
+  }, [data, userInfo]);
 
   ////토스트 메세지 종류 추가
   const copyNotify = () => toast(`복사 완료`);
