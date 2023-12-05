@@ -1,20 +1,40 @@
+import { useLoginStatusStore } from "@/store/loginStatusStore";
+import { useSelectedStore } from "@/store/selectedStore";
+import { useUserInfoStore } from "@/store/userInfoStore";
+import { auth } from "@/utils/firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const LoginStatus = ({ name }: { name: String }) => {
+const LoginStatus = () => {
   const [isClicked, setIsClicked] = useState(false);
-
-  const Logout = () => {};
+  const { userInfo, resetUserInfo } = useUserInfoStore();
+  const { setLoginStatus } = useLoginStatusStore();
+  const { resetData } = useSelectedStore();
+  const router = useRouter();
+  const handleCLogout = () => {
+    signOut(auth())
+      .then(() => {
+        resetUserInfo();
+        setIsClicked(false);
+        setLoginStatus(false);
+        resetData();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   return (
     <div className="relative inline-block">
       <div className="flex gap-1 items-center">
         <div className="flex items-center justify-center h-[26px] w-[26px] rounded-full bg-blue-500 text-white">
-          {name[0]}
+          {userInfo.name[0]}
         </div>
         <div
           className="flex gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg"
           onClick={() => setIsClicked(!isClicked)}
         >
-          <h1 className="text-base">{name}</h1>
+          <h1 className="text-base">{userInfo.name}</h1>
           <span
             className={`relative  top-2 left-0 w-2 h-2 border-t-2 border-r-2 border-black ${
               isClicked ? "rotate-[315deg]" : "rotate-[135deg]"
@@ -23,9 +43,9 @@ const LoginStatus = ({ name }: { name: String }) => {
         </div>
       </div>
       {isClicked ? (
-        <div className="absolute w-[74px] h-10 top-full mt-2 ml-7 text-center border border-gray-300 bg-white text-black rounded-md ">
+        <div className="absolute w-[74px] h-10 z-10 top-full mt-2 right-0 text-center border border-gray-300 bg-white text-black rounded-md ">
           <ul className="w-[74px] h-10 flex flex-col justify-center gap-2 ">
-            <li className="cursor-pointer" onClick={Logout}>
+            <li className="cursor-pointer " onClick={handleCLogout}>
               로그아웃
             </li>
           </ul>

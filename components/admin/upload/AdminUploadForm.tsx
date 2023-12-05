@@ -1,4 +1,4 @@
-import { IStoreInfo } from "@/types/firebase";
+import { IStoreInfo, IUploadInfo } from "@/types/firebase";
 import { PostStoreInfo } from "@/utils/firebase";
 import GetGeoLocation from "@/utils/naver";
 import React, { useState } from "react";
@@ -18,7 +18,7 @@ const category = {
 };
 
 const AdminUploadForm = () => {
-  const [storeData, setStoreData] = useState<IStoreInfo>({
+  const [storeData, setStoreData] = useState<IUploadInfo>({
     address: "",
     group: "",
     internet: "",
@@ -44,7 +44,6 @@ const AdminUploadForm = () => {
   };
 
   const handleClickSearch = async () => {
-    console.log(storeData.address);
     const res = await GetGeoLocation(storeData.address);
     if (res) {
       setStoreData({ ...storeData, latitude: res.latitude, longitude: res.longitude });
@@ -60,7 +59,7 @@ const AdminUploadForm = () => {
             <input
               className={`${key === "address" ? "w-[320px]" : "w-[400px]"} input-admin`}
               name={key}
-              value={storeData[key as keyof IStoreInfo]}
+              value={storeData[key as keyof IUploadInfo]}
               onChange={handleChange}
             />
             {key === "address" && (

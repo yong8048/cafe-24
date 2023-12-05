@@ -16,7 +16,9 @@
   }
 }
 
-body {}
+body {
+  min-width: 900px;
+}
 
 @layer components {
   .input-admin {

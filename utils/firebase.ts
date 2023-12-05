@@ -1,8 +1,18 @@
-import { IReportInfo, IStoreInfo } from "@/types/firebase";
+import { IReportInfo, IStoreInfo, IUploadInfo, IUserInfo } from "@/types/firebase";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { addDoc, getFirestore } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  arrayUnion,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+  collection,
+  getDocs,
+  arrayRemove,
+} from "firebase/firestore";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 
 const firebaseConfig = {
@@ -21,6 +31,7 @@ export const auth = () => {
   initializeApp(firebaseConfig);
   return getAuth();
 };
+
 export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
   const querySnapshot = await getDocs(collection(db, "StoreInfo"));
   const users: IStoreInfo[] = [];
@@ -48,7 +59,7 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
 
   return res; // 배열 반환
 };
-export const PostStoreInfo = async (storeData: IStoreInfo) => {
+export const PostStoreInfo = async (storeData: IUploadInfo) => {
   try {
     const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
     alert(docRef.id);
@@ -59,7 +70,7 @@ export const PostStoreInfo = async (storeData: IStoreInfo) => {
   }
 };
 
-export const getStoreImages = async (fileID: string) => {
+export const GetStoreImages = async (fileID: string) => {
   const folderRef = ref(storage, fileID);
   const imageListRef = await listAll(folderRef);
 
@@ -69,10 +80,56 @@ export const getStoreImages = async (fileID: string) => {
         return url;
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   });
 
   const images = await Promise.all(imageList);
   return images;
+};
+
+export const PostUserInfo = async (userInfo: IUserInfo) => {
+  try {
+    const isExist = await GetIsExistUser(userInfo.uid);
+    if (!isExist) {
+      await setDoc(doc(db, "UserInfo", userInfo.uid), userInfo);
+    }
+  } catch (error) {
+    console.error("Error adding UserInfo: ", error);
+  }
+};
+
+export const GetUserInfo = async (userID: string) => {
+  try {
+    const querySnapshot = await getDoc(doc(db, "UserInfo", userID));
+    return querySnapshot.data() as IUserInfo;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const GetIsExistUser = async (uid: string) => {
+  const querySnapshot = await getDoc(doc(db, "UserInfo", uid));
+  return querySnapshot.exists();
+};
+
+export const PostFavStore = async (userID: string, storeID: string, isDelete: boolean) => {
+  // TODO: currentUser 체크 추가
+  try {
+    await updateDoc(doc(db, "UserInfo", userID), {
+      fav: isDelete ? arrayRemove(storeID) : arrayUnion(storeID),
+    });
+    return await GetFavStore(userID);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+};
+
+export const GetFavStore = async (userID: string) => {
+  try {
+    const querySnapshot = await getDoc(doc(db, "UserInfo", userID));
+    return (querySnapshot.data() as IUserInfo).fav;
+  } catch (error) {
+    console.error("Error adding UserInfo: ", error);
+  }
 };

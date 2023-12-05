@@ -1,15 +1,15 @@
 "use client";
-import { useGetImages } from "@/hooks/useGetImages";
 import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { useSidebarStore } from "@/store/sidebarStore";
 import { IMarkerInfo } from "@/types/Map";
-import { GetStoreInfo, getStoreImages } from "@/utils/firebase";
+import { GetStoreImages } from "@/utils/firebase";
 import { useEffect, useRef, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 import "@/styles/marker.css";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useGetStores } from "@/hooks/useGetStores";
+import { useUserInfoStore } from "@/store/userInfoStore";
 
 const Map = () => {
   const mapRef = useRef<any | null>(null);
@@ -20,6 +20,7 @@ const Map = () => {
   const { type } = useCafeTypeStore();
   const [research, setResearch] = useState(false);
   const { stores, isError, isLoading } = useGetStores();
+  const { userInfo } = useUserInfoStore();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -49,8 +50,6 @@ const Map = () => {
         setResearch(true);
       });
     }
-
-    // setMarker();
   };
 
   const setMarker = async () => {
@@ -66,7 +65,9 @@ const Map = () => {
         );
       });
 
-      if (type !== "전체") {
+      if (type === "즐겨찾기") {
+        boundsStores = boundsStores.filter(store => userInfo.fav.includes(store.id as string));
+      } else if (type !== "전체") {
         boundsStores = boundsStores.filter(store => {
           return store.type === type;
         });
@@ -95,10 +96,11 @@ const Map = () => {
           resetUrl();
           setData(marker.data);
           setOpen();
-          const image = await getStoreImages(marker.data.id as string);
+          const image = await GetStoreImages(marker.data.id as string);
           setUrl(image as string[]);
         });
       });
+
       setResearch(false);
     }
   };
@@ -107,7 +109,7 @@ const Map = () => {
     <div>
       <div
         id="map"
-        className="w-screen h-main_section"
+        className="w-screen h-main_section min-w-[900px]"
         onWheelCapture={() => {
           setResearch(true);
         }}
