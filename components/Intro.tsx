@@ -47,14 +47,15 @@ const Intro = () => {
       <Image src="/intro.png" alt="이미지 준비중" width={435} height={100} className="py-10 animate-cloud" />
       <div className="text-center text-sm">
         <div className="flex flex-col justify-center items-center">
-          <h3 id="intro_title" className=" flex text-3xl">
+          <h1 id="intro_title" className=" flex text-3xl">
             새벽감성 24시 카페 검색
-          </h3>
+          </h1>
           {subTitles.map((subTitle, index) => (
             <h3 key={index} className={`${animationPriority === index && "animate-subtitle"} text-gray-400`}>
               {subTitle}
             </h3>
           ))}
+          <h2 className="text-base font-bold mt-6">이런 분들을 위한 24시 운영하는 카페들을 모아 찾아보는 사이트</h2>
         </div>
         <div className="absolute right-2 bottom-20 text-xs text-right">
           <h2>lbw3973@gmail.com</h2>
