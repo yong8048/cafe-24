@@ -27,7 +27,6 @@ const Header = () => {
             name: userInfo.name,
             email: userInfo.email,
             uid: user.uid,
-            admin: userInfo.admin,
             fav: userInfo.fav,
           });
         } else {
@@ -36,7 +35,6 @@ const Header = () => {
             email: user.email as string,
             uid: user.uid,
             fav: [],
-            admin: false,
           });
         }
         setLoginStatus(true);

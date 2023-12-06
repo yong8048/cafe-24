@@ -1,9 +1,11 @@
+import { useUserInfoStore } from "@/store/userInfoStore";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const AdminHeader = () => {
   const [isClicked, setIsClicked] = useState(false);
+  const { userInfo } = useUserInfoStore();
   return (
     <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between">
       <div className="flex gap-10 text-l font-semibold first-of-type:cursor-pointer leading-[66.8px]">
@@ -26,7 +28,7 @@ const AdminHeader = () => {
           className="relative flex gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg items-center"
           onClick={() => setIsClicked(!isClicked)}
         >
-          <h1 className="text-base">관리자 이름</h1>
+          <h1 className="text-base">{userInfo.name}</h1>
           <span
             className={`w-2 h-2 border-t-2 border-r-2 border-black ${
               isClicked ? "rotate-[315deg]" : "rotate-[135deg]"

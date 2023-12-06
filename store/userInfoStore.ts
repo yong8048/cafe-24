@@ -13,7 +13,6 @@ const initialState = {
   email: "",
   uid: "",
   fav: [],
-  admin: false,
 };
 
 const userInfoStore = create(
