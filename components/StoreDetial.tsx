@@ -30,7 +30,7 @@ const category = {
 };
 
 function StoreDetial() {
-  const { data } = useSelectedStore();
+  const { data, resetData } = useSelectedStore();
   const { urls } = useImageStore();
   const { userInfo, setUserInfo } = useUserInfoStore();
 
@@ -80,7 +80,7 @@ function StoreDetial() {
   };
 
   return (
-    <section className="w-full">
+    <section className="w-full relative">
       <ToastContainer
         position="bottom-center"
         autoClose={300}
@@ -138,6 +138,9 @@ function StoreDetial() {
           </div>
         ))}
       </div>
+      <button className="w-[43px] h-[44px] absolute top-[78px] -right-[43px] bg-black z-50" onClick={resetData}>
+        X
+      </button>
     </section>
   );
 }
