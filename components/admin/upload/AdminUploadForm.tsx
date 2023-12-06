@@ -6,17 +6,17 @@ import Image from "next/image";
 import React, { ChangeEvent, useRef, useState } from "react";
 import CheckBox from "./CheckBox";
 
-const category: { [key: string]: { title: string; placeholder: string; property?: string[] } } = {
+const category: { [key: string]: { title: string; placeholder?: string; property?: string[] } } = {
   name: { title: "지점명", placeholder: "만월경 위례점" },
-  type: { title: "카페 타입", placeholder: "무인 / 일반", property: ["일반", "무인"] },
+  type: { title: "카페 타입", property: ["일반", "무인"] },
   address: { title: "주소", placeholder: "주소 입력" },
-  latitude: { title: "위도", placeholder: "" },
-  longitude: { title: "경도", placeholder: "" },
+  latitude: { title: "위도", placeholder: "주소검색시, 자동으로 등록" },
+  longitude: { title: "경도", placeholder: "주소검색시, 자동으로 등록" },
   number: { title: "전화번호", placeholder: "- 포함 입력" },
   table: { title: "테이블", placeholder: "몇 테이블 / 많음" },
-  parking: { title: "주차", placeholder: "가능 / 불가", property: ["가능", "불가"] },
-  toilet: { title: "화장실", placeholder: "있음 / 없음", property: ["있음", "없음"] },
-  internet: { title: "인터넷", placeholder: "가능 / 불가", property: ["가능", "불가"] },
+  parking: { title: "주차", property: ["가능", "불가"] },
+  toilet: { title: "화장실", property: ["있음", "없음"] },
+  internet: { title: "인터넷", property: ["가능", "불가"] },
   group: { title: "단체석", placeholder: "몇인석" },
 };
 const AdminUploadForm = () => {
@@ -73,9 +73,10 @@ const AdminUploadForm = () => {
         {Object.entries(category).map(([key, value]) => (
           <div key={key} className={`flex gap-10 leading-10 py-2 pl-2 ${key === "address" && "justify-between pr-2"}`}>
             <p className="w-20">{value.title}</p>
-            {value.property ? (
+            {value.property && (
               <CheckBox stateKey={key} property={value.property} setState={setStoreData} state={storeData} />
-            ) : (
+            )}
+            {value.placeholder && (
               <input
                 className={`${key === "address" ? "w-[320px]" : "w-[400px]"} input-admin`}
                 name={key}

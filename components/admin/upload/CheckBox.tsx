@@ -2,6 +2,8 @@
 import { IUploadInfo } from "@/types/firebase";
 import React, { ChangeEvent } from "react";
 
+const hasNone = ["parking", "toilet", "internet"];
+
 const CheckBox = ({
   stateKey,
   property,
@@ -14,7 +16,8 @@ const CheckBox = ({
   state: IUploadInfo;
 }) => {
   const handleClick = (e: ChangeEvent<HTMLInputElement>) => {
-    setState(prevState => ({ ...prevState, [stateKey]: e.target.name === "first" ? property[0] : property[1] }));
+    const res = e.target.name === "none" ? "" : e.target.name === "first" ? property[0] : property[1];
+    setState(prevState => ({ ...prevState, [stateKey]: res }));
   };
 
   return (
@@ -39,6 +42,18 @@ const CheckBox = ({
         />
         {property[1]}
       </label>
+      {hasNone.includes(stateKey) && (
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            name="none"
+            checked={state[stateKey as keyof IUploadInfo] === ""}
+            className="w-6 h-6"
+            readOnly
+          />
+          정보 없음
+        </label>
+      )}
     </div>
   );
 };
