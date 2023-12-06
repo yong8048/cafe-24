@@ -6,6 +6,7 @@ export const useGetStores = () => {
     data: stores,
     isLoading,
     isError,
+    refetch,
   } = useQuery({ queryKey: ["stores"], queryFn: GetStoreInfo, staleTime: Infinity });
-  return { stores, isLoading, isError };
+  return { stores, isLoading, isError, refetch };
 };

@@ -24,6 +24,9 @@ const config: Config = {
         icon: "icon 0.3s ease-in-out forwards",
         subtitle: "fontweight 2s ease-in-out forwards",
       },
+      boxShadow: {
+        closebutton: "rgba(0, 0, 0, 0.2) 0px 3px 7px 0px",
+      },
       keyframes: {
         cloud: {
           "0%, 100%": { transform: "translateY(0)" },

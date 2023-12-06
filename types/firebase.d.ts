@@ -30,7 +30,6 @@ export interface IUserInfo {
   email: string;
   uid: string;
   fav: string[];
-  admin: boolean;
 }
 
 export interface IUploadInfo {

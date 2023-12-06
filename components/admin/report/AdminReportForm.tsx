@@ -20,7 +20,7 @@ const AdminReportForm = () => {
   const { report } = useReportStore();
 
   return (
-    <div className="min-w-[900px] h-full p-10 text-center">
+    <div className="min-w-[900px] p-10 text-center">
       <div className="text-xl border rounded-xl py-4 flex flex-col items-center">
         {Object.entries(category).map(([key, value]) => (
           <div key={key} className="flex gap-10 leading-10 py-2 pl-2">
