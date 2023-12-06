@@ -4,14 +4,10 @@ import { useSidebarStore } from "@/store/sidebarStore";
 const activeStyle = [
   { condition: "transform translate-x-1 translate-y-0.5 -rotate-45 w-[75%]" },
   { condition: "opacity-0 -translate-x-20" },
-  { condition: "transform translate-x-1 -translate-y-0.5 rotate-45 w-[75%]" },
+  { condition: "transform translate-x-1 translate-y-0.5 rotate-45 w-[75%]" },
 ];
 const HamburgerMenu = () => {
   const { isOpen, setToggle } = useSidebarStore();
-
-  const handleActive = () => {
-    setToggle();
-  };
 
   return (
     <div className="flex items-center p-2" onClick={setToggle}>

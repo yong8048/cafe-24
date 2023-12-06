@@ -18,6 +18,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PostFavStore } from "@/utils/firebase";
 import { useUserInfoStore } from "@/store/userInfoStore";
+import { CgClose as Close } from "react-icons/cg";
+import { useSidebarStore } from "@/store/sidebarStore";
 
 const category = {
   address: { name: "주소", icon: <Marker size="25" />, copy: true },
@@ -33,13 +35,16 @@ function StoreDetial() {
   const { data, resetData } = useSelectedStore();
   const { urls } = useImageStore();
   const { userInfo, setUserInfo } = useUserInfoStore();
+  const { isOpen } = useSidebarStore();
 
   const [isHovered, setIsHovered] = useState<{ [key: string]: boolean }>({});
   const [isFav, setIsFav] = useState(false);
 
   useEffect(() => {
     const favList = userInfo.fav;
-    setIsFav(favList.includes(data.id as string));
+    if (favList) {
+      setIsFav(favList.includes(data.id as string));
+    }
   }, [data, userInfo]);
 
   ////토스트 메세지 종류 추가
@@ -138,9 +143,14 @@ function StoreDetial() {
           </div>
         ))}
       </div>
-      <button className="w-[43px] h-[44px] absolute top-[78px] -right-[43px] bg-black z-50" onClick={resetData}>
-        X
-      </button>
+      {isOpen && (
+        <button
+          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white z-50 rounded-r-md shadow-closebutton flex justify-center items-center"
+          onClick={resetData}
+        >
+          <Close size="25" />
+        </button>
+      )}
     </section>
   );
 }
