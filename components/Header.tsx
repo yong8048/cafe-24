@@ -54,7 +54,7 @@ const Header = () => {
         <HamburgerMenu />
         <Image src="/Logo.png" alt="Logo" width={150} height={32} className="-ml-6 cursor-default" />
         <h1
-          className={`${type === "전체" && "text-red-400"} cursor-pointer`}
+          className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
           onClick={() => {
             setType("전체");
           }}
@@ -62,7 +62,7 @@ const Header = () => {
           전체
         </h1>
         <h1
-          className={`${type === "무인" && "text-red-400"} cursor-pointer`}
+          className={`${type === "무인" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
           onClick={() => {
             setType("무인");
           }}
@@ -70,7 +70,7 @@ const Header = () => {
           무인카페
         </h1>
         <h1
-          className={`${type === "일반" && "text-red-400"} cursor-pointer`}
+          className={`${type === "일반" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
           onClick={() => {
             setType("일반");
           }}
@@ -78,7 +78,7 @@ const Header = () => {
           일반카페
         </h1>
         <h1
-          className={`${type === "즐겨찾기" && "text-red-400"} cursor-pointer`}
+          className={`${type === "즐겨찾기" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
           onClick={() => {
             loginStatus ? setType("즐겨찾기") : alert("로그인이 필요합니다.");
           }}
