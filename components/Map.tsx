@@ -10,19 +10,38 @@ import "@/styles/marker.css";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useGetStores } from "@/hooks/useGetStores";
 import { useUserInfoStore } from "@/store/userInfoStore";
+import { CgClose as Close } from "react-icons/cg";
+import { useReportClickStore } from "@/store/ReportClickStore";
 
 const Map = () => {
+  const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number }>();
+  const [research, setResearch] = useState(false);
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
   const { setOpen } = useSidebarStore();
   const { setData } = useSelectedStore();
   const { setUrl, resetUrl } = useImageStore();
   const { type } = useCafeTypeStore();
-  const [research, setResearch] = useState(false);
   const { stores, isError, isLoading } = useGetStores();
   const { userInfo } = useUserInfoStore();
+  const { isClicked, setIsClicked } = useReportClickStore();
 
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setMyLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        error => {
+          setMyLocation({ latitude: 37.497952, longitude: 127.027619 });
+          console.error(error);
+        },
+      );
+    }
+
     const script = document.createElement("script");
     script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`;
     script.onload = () => initMap();
@@ -36,6 +55,10 @@ const Map = () => {
   useEffect(() => {
     setMarker();
   }, [type, isLoading]);
+
+  useEffect(() => {
+    isClicked && console.log("가운데 마커생성?");
+  }, [isClicked]);
 
   const initMap = async () => {
     const mapOptions = {
@@ -106,12 +129,14 @@ const Map = () => {
   };
 
   return (
-    <div>
+    <div className={`${isClicked ? "bg-black opacity-50" : ""}`}>
       <div
         id="map"
         className="w-screen h-main_section min-w-[900px]"
         onWheelCapture={() => {
-          setResearch(true);
+          if (!isClicked) {
+            setResearch(true);
+          }
         }}
       ></div>
       {research && (
@@ -120,6 +145,11 @@ const Map = () => {
           className="flex justify-center items-center gap-2 absolute w-48 h-7 top-28 left-1/2 transform -translate-x-1/2 z-20 bg-white text-l rounded-3xl border border-mainColor text-mainColor"
         >
           <IoMdRefresh />현 지도에서 검색
+        </button>
+      )}
+      {isClicked && (
+        <button className="absolute top-28 right-10" onClick={() => setIsClicked()}>
+          <Close size="40" />
         </button>
       )}
     </div>
