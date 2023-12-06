@@ -74,7 +74,7 @@ const AdminUploadForm = () => {
           <div key={key} className={`flex gap-10 leading-10 py-2 pl-2 ${key === "address" && "justify-between pr-2"}`}>
             <p className="w-20">{value.title}</p>
             {value.property ? (
-              <CheckBox stateKey={key} property={value.property} setState={setStoreData} />
+              <CheckBox stateKey={key} property={value.property} setState={setStoreData} state={storeData} />
             ) : (
               <input
                 className={`${key === "address" ? "w-[320px]" : "w-[400px]"} input-admin`}
