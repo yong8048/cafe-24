@@ -1,6 +1,7 @@
 import { IReportInfo, IStoreInfo, IUploadInfo, IUserInfo } from "@/types/firebase";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+
 import {
   addDoc,
   arrayUnion,
@@ -13,7 +14,7 @@ import {
   getDocs,
   arrayRemove,
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
+import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -59,13 +60,20 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
 
   return res; // 배열 반환
 };
-export const PostStoreInfo = async (storeData: IUploadInfo) => {
+export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
   try {
     const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
-    alert(docRef.id);
-    return docRef.id;
+    files.map(async (file, index) => {
+      const imageRef = ref(storage, `${docRef.id}/${index + 1}`);
+      uploadBytes(imageRef, file).then(snapshot => {
+        console.log(snapshot);
+      });
+    });
+    alert("업로드 완료");
+    return true;
   } catch (error) {
     console.error("Error adding document: ", error);
+    alert("업로드 실패");
     return "";
   }
 };
