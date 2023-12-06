@@ -6,13 +6,20 @@ import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
+const adminID = [process.env.NEXT_PUBLIC_ADMIN_1, process.env.NEXT_PUBLIC_ADMIN_2];
+
 const LoginStatus = () => {
   const [isClicked, setIsClicked] = useState(false);
   const { userInfo, resetUserInfo } = useUserInfoStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { resetData } = useSelectedStore();
   const router = useRouter();
-  const handleCLogout = () => {
+
+  const handleAdmin = () => {
+    router.push("/admin");
+  };
+
+  const handleLogout = () => {
     signOut(auth())
       .then(() => {
         resetUserInfo();
@@ -43,9 +50,20 @@ const LoginStatus = () => {
         </div>
       </div>
       {isClicked ? (
-        <div className="absolute w-[74px] h-10 z-10 top-full mt-2 right-0 text-center border border-gray-300 bg-white text-black rounded-md ">
-          <ul className="w-[74px] h-10 flex flex-col justify-center gap-2 ">
-            <li className="cursor-pointer " onClick={handleCLogout}>
+        <div className="absolute z-10 top-full mt-2 right-0 text-center">
+          <ul className="flex flex-col justify-center">
+            {adminID.includes(userInfo.uid) && (
+              <li
+                className="w-[74px] h-10 cursor-pointer border border-gray-300 bg-white text-black rounded-md leading-10"
+                onClick={handleAdmin}
+              >
+                백오피스
+              </li>
+            )}
+            <li
+              className="w-[74px] h-10 cursor-pointer border border-gray-300 bg-white text-black rounded-md leading-10"
+              onClick={handleLogout}
+            >
               로그아웃
             </li>
           </ul>

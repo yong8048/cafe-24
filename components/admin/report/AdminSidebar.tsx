@@ -22,7 +22,7 @@ const AdminSidebar = () => {
   });
 
   return (
-    <div className="min-w-[425px] h-full bg-[#b1b1b1]">
+    <div className="min-w-[425px] bg-[#b1b1b1]">
       {reports &&
         reports.map((report, index) => (
           <div
