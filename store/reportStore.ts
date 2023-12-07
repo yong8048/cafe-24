@@ -9,6 +9,8 @@ interface IReportStore {
 
 const initialState = {
   address: "",
+  latitude: "",
+  longitude: "",
   group: "",
   internet: "",
   name: "",
@@ -17,6 +19,7 @@ const initialState = {
   table: "",
   toilet: "",
   type: "",
+  additional: "",
 };
 
 const reportStore = create<IReportStore>(set => ({

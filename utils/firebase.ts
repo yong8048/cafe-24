@@ -47,19 +47,6 @@ export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
   return users; // 배열 반환
 };
 
-export const GetReportInfo = async (): Promise<IReportInfo[]> => {
-  const querySnapshot = await getDocs(collection(db, "ReportInfo"));
-  const res: IReportInfo[] = [];
-
-  querySnapshot.forEach(doc => {
-    res.push({
-      name: doc.id,
-      ...doc.data(),
-    } as IReportInfo);
-  });
-
-  return res; // 배열 반환
-};
 export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
   try {
     const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
@@ -76,6 +63,39 @@ export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
     alert("업로드 실패");
     return "";
   }
+};
+
+export const GetReportInfo = async (): Promise<IReportInfo[]> => {
+  const querySnapshot = await getDocs(collection(db, "ReportInfo"));
+  const res: IReportInfo[] = [];
+
+  querySnapshot.forEach(doc => {
+    res.push({
+      name: doc.id,
+      ...doc.data(),
+    } as IReportInfo);
+  });
+
+  return res; // 배열 반환
+};
+
+export const PostReportInfo = async (reportData: IReportInfo) => {
+  const res = addDoc(collection(db, "ReportInfo"), reportData)
+    .then(result => {
+      console.log(result);
+      alert("소중한 제보 감사합니다.");
+      return true;
+    })
+    .catch(error => {
+      console.error(error);
+      alert("에러발생\n사이트 새로고침 후 다시시도해주세요");
+      return "";
+    });
+  return res;
+};
+
+export const DeleteReportInfo = async () => {
+  const reportDoc = doc(db, "ReportInfo");
 };
 
 export const GetStoreImages = async (fileID: string) => {
