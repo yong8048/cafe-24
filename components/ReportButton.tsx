@@ -1,9 +1,12 @@
 import { useReportClickStore } from "@/store/ReportClickStore";
+import { useSidebarStore } from "@/store/sidebarStore";
 import React from "react";
 
 const ReportButton = () => {
   const { isClicked, setIsClicked } = useReportClickStore();
+  const { isOpen, setOpen } = useSidebarStore();
   const handleClickReport = () => {
+    !isOpen && setOpen();
     setIsClicked();
   };
   return (
