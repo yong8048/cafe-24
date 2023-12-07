@@ -46,19 +46,31 @@ const Map = () => {
     script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`;
     script.onload = () => initMap();
     document.head.appendChild(script);
-
     return () => {
       document.head.removeChild(script);
     };
   }, []);
 
   useEffect(() => {
-    setMarker();
-  }, [type, isLoading]);
+    setResearch(false);
+
+    if (mapRef.current !== null) {
+      const dragendListener = window.naver.maps.Event.addListener(mapRef.current, "dragend", () => {
+        if (!isClicked) {
+          setResearch(true);
+        }
+      });
+
+      isClicked && centerMarker();
+      return () => {
+        window.naver.maps.Event.removeListener(dragendListener);
+      };
+    }
+  }, [mapRef.current, isClicked]);
 
   useEffect(() => {
-    isClicked && console.log("가운데 마커생성?");
-  }, [isClicked]);
+    setMarker();
+  }, [type, isLoading]);
 
   const initMap = async () => {
     const mapOptions = {
@@ -68,10 +80,6 @@ const Map = () => {
 
     if (mapRef.current === null) {
       mapRef.current = new window.naver.maps.Map("map", mapOptions);
-
-      window.naver.maps.Event.addListener(mapRef.current, "dragend", () => {
-        setResearch(true);
-      });
     }
   };
 
@@ -123,9 +131,16 @@ const Map = () => {
           setUrl(image as string[]);
         });
       });
-
+      centerMarker();
       setResearch(false);
     }
+  };
+
+  const centerMarker = () => {
+    new window.naver.maps.Marker({
+      position: mapRef.current.getCenter(),
+      map: mapRef.current,
+    });
   };
 
   return (
