@@ -14,7 +14,9 @@ export interface IStoreInfo {
 }
 
 export interface IReportInfo {
-  address: string;
+  address?: string;
+  latitude?: string;
+  longitude?: string;
   group: string;
   internet: string;
   name: string;
@@ -23,6 +25,7 @@ export interface IReportInfo {
   table: string;
   toilet: string;
   type: string;
+  additional?: string;
 }
 
 export interface IUserInfo {

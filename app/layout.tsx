@@ -1,4 +1,3 @@
-import "tailwindcss/tailwind.css";
 import localFont from "next/font/local";
 import "./globals.css";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
@@ -16,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ReactQueryProvider>
           <main className={pretendard.className}>
-            <div>{children}</div>
+            <div className="relative">{children}</div>
           </main>
         </ReactQueryProvider>
       </body>
