@@ -13,7 +13,7 @@
     return [
       {
         source: "/api/:path*",
-        destination: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode/:path*",
+        destination: "https://naveropenapi.apigw.ntruss.com/:path*",
       },
     ];
   },
