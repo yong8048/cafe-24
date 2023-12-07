@@ -14,10 +14,10 @@ const category: { [key: string]: { title: string; placeholder?: string; property
   longitude: { title: "경도", placeholder: "주소검색시, 자동으로 등록" },
   number: { title: "전화번호", placeholder: "- 포함 입력" },
   table: { title: "테이블", placeholder: "몇 테이블 / 많음" },
+  group: { title: "단체석", placeholder: "몇인석" },
   parking: { title: "주차", property: ["가능", "불가"] },
   toilet: { title: "화장실", property: ["있음", "없음"] },
   internet: { title: "인터넷", property: ["가능", "불가"] },
-  group: { title: "단체석", placeholder: "몇인석" },
 };
 const AdminUploadForm = () => {
   const [storeData, setStoreData] = useState<IUploadInfo>({
