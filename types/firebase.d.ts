@@ -25,7 +25,7 @@ export interface IReportInfo {
   table: string;
   toilet: string;
   type: string;
-  additional: string;
+  additional?: string;
 }
 
 export interface IUserInfo {

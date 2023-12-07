@@ -28,7 +28,6 @@ const AdminReportForm = () => {
   useEffect(() => {
     setReportData(report);
   }, [report]);
-  console.log(reportData);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File[]>([]);
@@ -88,6 +87,10 @@ const AdminReportForm = () => {
             )}
           </div>
         ))}
+        <div className="flex gap-10 leading-10 py-2 pl-2">
+          <p className="w-20">추가사항</p>
+          <p className="w-[400px] text-start break-keep">{report.additional}</p>
+        </div>
         <div className="flex gap-10 leading-10 py-2 pl-2">
           <p className="w-20">매장사진</p>
           <input type="file" multiple onChange={handleImageChange} className="hidden" ref={inputRef} />
