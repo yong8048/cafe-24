@@ -24,4 +24,8 @@ body {
   .input-admin {
     @apply border rounded-lg px-2;
   }
+
+  .input-report {
+    @apply border border-gray-300 rounded-lg
+  }
 }
