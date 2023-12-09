@@ -89,7 +89,7 @@ const AdminReportForm = () => {
         ))}
         <div className="flex gap-10 leading-10 py-2 pl-2">
           <p className="w-20">추가사항</p>
-          <p className="w-[400px] text-start break-keep">{report.additional}</p>
+          <p className="w-[400px] text-start break-keep text-sm">{report.additional}</p>
         </div>
         <div className="flex gap-10 leading-10 py-2 pl-2">
           <p className="w-20">매장사진</p>

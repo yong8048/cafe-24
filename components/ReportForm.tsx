@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckBox from "./admin/upload/CheckBox";
 import { IReportInfo } from "@/types/firebase";
 import { PostReportInfo } from "@/utils/firebase";
 import { useReportClickStore } from "@/store/ReportClickStore";
+import { useReportLocationStore } from "@/store/reportLocationStore";
 
 const category: { [key: string]: { title: string; placeholder?: string; property?: string[] } } = {
-  name: { title: "지점명", placeholder: "만월경 위례점" },
-  type: { title: "카페 타입", property: ["일반", "무인"] },
-  // address: { title: "주소", placeholder: "주소 입력" },
-  // latitude: { title: "위도", placeholder: "주소검색시, 자동으로 등록" },
-  // longitude: { title: "경도", placeholder: "주소검색시, 자동으로 등록" },
+  name: { title: "지점명*", placeholder: "만월경 위례점" },
+  type: { title: "카페 타입*", property: ["일반", "무인"] },
   number: { title: "전화번호", placeholder: "- 포함 입력 / 정보없음" },
   table: { title: "테이블", placeholder: "몇 테이블 / 많음 / 정보없음" },
   group: { title: "단체석", placeholder: "몇인석 / 정보없음" },
@@ -41,6 +39,11 @@ const ReportForm = () => {
     additional: "",
   });
   const { setIsClicked } = useReportClickStore();
+  const { location } = useReportLocationStore();
+
+  useEffect(() => {
+    setReportData({ ...reportData, latitude: location.latitude, longitude: location.longitude });
+  }, [location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setReportData({
@@ -50,11 +53,19 @@ const ReportForm = () => {
   };
 
   const handleReportClick = async () => {
-    const res = await PostReportInfo(reportData);
-    console.log(res);
-    if (res) {
-      setIsClicked();
+    if (!reportData.latitude && !reportData.longitude) {
+      alert("지도를 클릭하여 위치를 선택해주세요.");
+      return;
+    } else if (!reportData.name) {
+      alert("지점명을 입력해주세요.");
+      return;
+    } else if (!reportData.type) {
+      alert("카페 타입을 선택해주세요.");
+      return;
     }
+
+    const res = await PostReportInfo(reportData);
+    res && setIsClicked();
   };
 
   return (
