@@ -2,7 +2,7 @@
 import { useReportStore } from "@/store/reportStore";
 import { IReportInfo } from "@/types/firebase";
 import { PostReportInfo } from "@/utils/firebase";
-import GetGeoLocation from "@/utils/naver";
+import { GetGeoLocation } from "@/utils/naver";
 import Image from "next/image";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import CheckBox from "../upload/CheckBox";
