@@ -135,6 +135,15 @@ export const GetUserInfo = async (userID: string) => {
     console.error(error);
   }
 };
+export const GetTotalUser = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "UserInfo"));
+
+    return querySnapshot.size;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const GetIsExistUser = async (uid: string) => {
   const querySnapshot = await getDoc(doc(db, "UserInfo", uid));
