@@ -79,7 +79,8 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
   return res; // 배열 반환
 };
 
-export const PostReportInfo = async (reportData: IReportInfo) => {
+export const PostReportInfo = async (reportData: IReportInfo, address: string) => {
+  reportData.address = address;
   const res = addDoc(collection(db, "ReportInfo"), reportData)
     .then(result => {
       console.log(result);

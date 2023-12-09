@@ -54,8 +54,8 @@ const AdminReportForm = () => {
   };
 
   const handleUpload = async () => {
-    const res = await PostReportInfo(reportData);
-    res && setImageFile([]);
+    // const res = await PostReportInfo(reportData);
+    // res && setImageFile([]);
   };
 
   const handleRemove = (removeIndex: number) => {
