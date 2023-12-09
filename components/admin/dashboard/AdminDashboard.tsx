@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { GetTotalUser } from "@/utils/firebase";
+import { GetReportSize, GetTotalUser } from "@/utils/firebase";
 import { useGetStores } from "@/hooks/useGetStores";
+import { useReportStore } from "@/store/reportStore";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const unmannedCafeList = ["만월경", "데이롱", "커피에반하다", "카페일분", "프리헷", "터치카페", "나우커피", "기타"];
+const generalCafeList = ["The november", "탐앤탐스"];
 
 const AdminDashboard = () => {
   const { stores } = useGetStores();
   const unmanned = stores?.filter(store => store.type === "무인").length;
   const general = stores?.filter(store => store.type === "일반").length;
   const [userLength, setUserLength] = useState<number>(0);
-
+  const [reportLength, setReportLength] = useState<number>(0);
+  const { report } = useReportStore();
   useEffect(() => {
     const fetchUsers = async () => {
       const users = await GetTotalUser();
       setUserLength(users ?? 0);
+      const reports = await GetReportSize();
+      setReportLength(reports ?? 0);
     };
     fetchUsers();
   }, []);
+
+  const reportList = report;
+  console.log(reportList);
 
   const totalData = {
     labels: ["무인카페", "일반카페"],
@@ -34,7 +42,7 @@ const AdminDashboard = () => {
     ],
   };
 
-  const cafes = unmannedCafeList.map(cafe => {
+  const unmannedcafes = unmannedCafeList.map(cafe => {
     return stores?.filter(store => store.name.includes(cafe)).length;
   });
 
@@ -42,18 +50,22 @@ const AdminDashboard = () => {
     labels: unmannedCafeList,
     datasets: [
       {
-        data: cafes,
+        data: unmannedcafes,
         backgroundColor: ["#4bc0c0", "#36a2eb"],
         borderColor: ["#ffffff"],
         borderWidth: 1,
       },
     ],
   };
+
+  const generalCafes = generalCafeList.map(cafe => {
+    return stores?.filter(store => store.name.includes(cafe)).length;
+  });
   const generalData = {
-    labels: ["무인카페", "일반카페"],
+    labels: generalCafeList,
     datasets: [
       {
-        data: [unmanned, general],
+        data: generalCafes,
         backgroundColor: ["#4bc0c0", "#36a2eb"],
         borderColor: ["#ffffff"],
         borderWidth: 1,
@@ -62,8 +74,8 @@ const AdminDashboard = () => {
   };
 
   return (
-    <section className="flex flex-col h-main_section">
-      <div className="flex">
+    <section className="flex w-full h-main_section justify-center pt-14">
+      <div className="flex h-1/2">
         <div>
           <div className="text-center">
             <h1>총 카페 개수</h1>
@@ -92,9 +104,19 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div>
-        <h1>사용자 수</h1>
-        <h2>{userLength} 명</h2>
+      <div className="w-[300px] h-1/2 flex flex-col gap-5 mt-20 ml-10">
+        <div className="flex flex-col gap-2">
+          <h1 className="border-b border-gray-300">로그인 사용자</h1>
+          <h2 className="font-bold ml-2">{userLength} 명</h2>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h1 className="border-b border-gray-300">현재 제보 리스트</h1>
+          <h2 className="font-bold ml-2">{reportLength} 개</h2>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h1 className="border-b border-gray-300">총 조회수</h1>
+          <h2 className="font-bold ml-2">{userLength} 회</h2>
+        </div>
       </div>
     </section>
   );
