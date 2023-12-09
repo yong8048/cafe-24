@@ -72,7 +72,6 @@ const ReportForm = () => {
       }
     }
   };
-  console.log(reportData);
 
   return (
     <section className="w-full pt-5 px-2">

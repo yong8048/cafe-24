@@ -72,6 +72,8 @@ const Map = () => {
           visible: false,
         });
         clickMarkerRef.current = clickMarker;
+      } else {
+        clickMarkerRef.current.setVisible(false);
       }
 
       const clickListener = window.naver.maps.Event.addListener(mapRef.current, "click", (e: any) => {
