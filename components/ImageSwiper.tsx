@@ -44,12 +44,12 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
             <Image
               src={url.toString()}
               alt="카페 사진"
-              layout="fill"
-              objectFit="cover"
+              fill
+              sizes="(width: 435px, height: 220px)"
               onClick={() => {
                 modalOpen(url.toString());
               }}
-              className="cursor-pointer"
+              className="cursor-pointer object-cover"
             />
           )}
         </SwiperSlide>
@@ -69,7 +69,7 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
             onClick={e => e.stopPropagation()}
           >
             <div className="w-full pointer-events-none ">
-              <Image src={`${clickImageUrl}`} alt="모달 카페 사진" width={1000} height={600} />
+              <Image src={clickImageUrl} alt="모달 카페 사진" width={1000} height={600} />
             </div>
           </div>
         </div>
