@@ -5,6 +5,23 @@ interface GeoLocation {
   latitude: string;
 }
 
+interface AddressResult {
+  land: {
+    name: string;
+    number1: string;
+    number2: string;
+  };
+  region: {
+    area1: {
+      name: string;
+      alias: string;
+    };
+    area2: {
+      name: string;
+    };
+  };
+}
+
 const createInstance = () => {
   const request = axios.create({
     baseURL: "/api",
@@ -21,7 +38,7 @@ const createInstance = () => {
   return request;
 };
 
-const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
+export const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
   const request = createInstance();
 
   try {
@@ -40,4 +57,15 @@ const GetGeoLocation = async (address: string): Promise<GeoLocation | null> => {
   return null;
 };
 
-export default GetGeoLocation;
+export const GetAddrress = async (longitude: string, latitude: string): Promise<AddressResult[] | null> => {
+  const request = createInstance();
+  try {
+    const response = await request.get(
+      `/map-reversegeocode/v2/gc?output=json&orders=roadaddr&coords=${longitude},${latitude}`,
+    );
+    return response.data.results;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

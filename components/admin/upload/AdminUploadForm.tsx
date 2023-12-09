@@ -1,7 +1,7 @@
 "use client";
 import { IUploadInfo } from "@/types/firebase";
 import { PostStoreInfo } from "@/utils/firebase";
-import GetGeoLocation from "@/utils/naver";
+import { GetGeoLocation } from "@/utils/naver";
 import Image from "next/image";
 import React, { ChangeEvent, useRef, useState } from "react";
 import CheckBox from "./CheckBox";
