@@ -4,6 +4,7 @@ import { IReportInfo } from "@/types/firebase";
 import { PostReportInfo } from "@/utils/firebase";
 import { useReportClickStore } from "@/store/ReportClickStore";
 import { useReportLocationStore } from "@/store/reportLocationStore";
+import { GetAddrress } from "@/utils/naver";
 
 const category: { [key: string]: { title: string; placeholder?: string; property?: string[] } } = {
   name: { title: "지점명*", placeholder: "만월경 위례점" },
@@ -53,20 +54,25 @@ const ReportForm = () => {
   };
 
   const handleReportClick = async () => {
-    if (!reportData.latitude && !reportData.longitude) {
+    if (!reportData.latitude || !reportData.longitude) {
       alert("지도를 클릭하여 위치를 선택해주세요.");
-      return;
     } else if (!reportData.name) {
       alert("지점명을 입력해주세요.");
-      return;
     } else if (!reportData.type) {
       alert("카페 타입을 선택해주세요.");
-      return;
+    } else {
+      const address = await GetAddrress(reportData.longitude, reportData.latitude);
+      console.log(address);
+      if (address) {
+        console.log(address[0].land, address[0].region);
+        const _address = `${address[0].region.area1.alias} ${address[0].region.area2.name} ${address[0].land.name} ${address[0].land.number1} ${address[0].land.number2}`;
+        setReportData({ ...reportData, address: _address });
+      }
+      // const res = await PostReportInfo(reportData);
+      // res && setIsClicked();
     }
-
-    const res = await PostReportInfo(reportData);
-    res && setIsClicked();
   };
+  console.log(reportData);
 
   return (
     <section className="w-full pt-5 px-2">
