@@ -9,6 +9,7 @@ declare global {
 interface IMarkerInfo {
   data: IStoreInfo;
   setMap: any;
+  setVisible: any;
 }
 
 export { IMarkerInfo };

@@ -2,7 +2,7 @@
 import { useReportStore } from "@/store/reportStore";
 import { IReportInfo } from "@/types/firebase";
 import { PostReportInfo } from "@/utils/firebase";
-import GetGeoLocation from "@/utils/naver";
+import { GetGeoLocation } from "@/utils/naver";
 import Image from "next/image";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import CheckBox from "../upload/CheckBox";
@@ -89,7 +89,7 @@ const AdminReportForm = () => {
         ))}
         <div className="flex gap-10 leading-10 py-2 pl-2">
           <p className="w-20">추가사항</p>
-          <p className="w-[400px] text-start break-keep">{report.additional}</p>
+          <p className="w-[400px] text-start break-keep text-sm">{report.additional}</p>
         </div>
         <div className="flex gap-10 leading-10 py-2 pl-2">
           <p className="w-20">매장사진</p>

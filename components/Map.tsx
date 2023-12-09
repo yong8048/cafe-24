@@ -12,12 +12,14 @@ import { useGetStores } from "@/hooks/useGetStores";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { CgClose as Close } from "react-icons/cg";
 import { useReportClickStore } from "@/store/ReportClickStore";
+import { useReportLocationStore } from "@/store/reportLocationStore";
 
 const Map = () => {
   const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number }>();
   const [research, setResearch] = useState(false);
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
+  const clickMarkerRef = useRef<any>(null);
   const { setOpen } = useSidebarStore();
   const { setData } = useSelectedStore();
   const { setUrl, resetUrl } = useImageStore();
@@ -25,6 +27,7 @@ const Map = () => {
   const { stores, isError, isLoading } = useGetStores();
   const { userInfo } = useUserInfoStore();
   const { isClicked, setIsClicked } = useReportClickStore();
+  const { location, setLocation, resetLocation } = useReportLocationStore();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -53,6 +56,7 @@ const Map = () => {
 
   useEffect(() => {
     setResearch(false);
+    markerRef.current.map(marker => marker.setVisible(!isClicked));
 
     if (mapRef.current !== null) {
       const dragendListener = window.naver.maps.Event.addListener(mapRef.current, "dragend", () => {
@@ -61,9 +65,26 @@ const Map = () => {
         }
       });
 
-      isClicked && centerMarker();
+      if (clickMarkerRef.current === null) {
+        const clickMarker = new window.naver.maps.Marker({
+          position: mapRef.current.getCenter(),
+          map: mapRef.current,
+          visible: false,
+        });
+        clickMarkerRef.current = clickMarker;
+      }
+
+      const clickListener = window.naver.maps.Event.addListener(mapRef.current, "click", (e: any) => {
+        if (isClicked) {
+          clickMarkerRef.current.setVisible(true);
+          clickMarkerRef.current.setPosition(e.coord);
+          setLocation({ latitude: e.coord._lat, longitude: e.coord._lng });
+        }
+      });
+
       return () => {
         window.naver.maps.Event.removeListener(dragendListener);
+        window.naver.maps.Event.removeListener(clickListener);
       };
     }
   }, [mapRef.current, isClicked]);
@@ -131,20 +152,12 @@ const Map = () => {
           setUrl(image as string[]);
         });
       });
-      centerMarker();
       setResearch(false);
     }
   };
 
-  const centerMarker = () => {
-    new window.naver.maps.Marker({
-      position: mapRef.current.getCenter(),
-      map: mapRef.current,
-    });
-  };
-
   return (
-    <div className={`${isClicked ? "bg-black opacity-50" : ""}`}>
+    <div className={`${isClicked ? "bg-black opacity-80" : ""}`}>
       <div
         id="map"
         className="w-screen h-main_section min-w-[900px]"
@@ -163,7 +176,14 @@ const Map = () => {
         </button>
       )}
       {isClicked && (
-        <button className="absolute top-28 right-10" onClick={() => setIsClicked()}>
+        <button
+          className="absolute top-28 right-10"
+          onClick={() => {
+            setIsClicked();
+            clickMarkerRef.current.setVisible(false);
+            resetLocation();
+          }}
+        >
           <Close size="40" />
         </button>
       )}
