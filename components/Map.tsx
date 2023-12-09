@@ -26,7 +26,7 @@ const Map = () => {
   const { type } = useCafeTypeStore();
   const { stores, isError, isLoading } = useGetStores();
   const { userInfo } = useUserInfoStore();
-  const { isClicked, setIsClicked } = useReportClickStore();
+  const { isReportClicked, setIsReportClicked } = useReportClickStore();
   const { location, setLocation, resetLocation } = useReportLocationStore();
 
   useEffect(() => {
@@ -56,11 +56,11 @@ const Map = () => {
 
   useEffect(() => {
     setResearch(false);
-    markerRef.current.map(marker => marker.setVisible(!isClicked));
+    markerRef.current.map(marker => marker.setVisible(!isReportClicked));
 
     if (mapRef.current !== null) {
       const dragendListener = window.naver.maps.Event.addListener(mapRef.current, "dragend", () => {
-        if (!isClicked) {
+        if (!isReportClicked) {
           setResearch(true);
         }
       });
@@ -75,7 +75,7 @@ const Map = () => {
       }
 
       const clickListener = window.naver.maps.Event.addListener(mapRef.current, "click", (e: any) => {
-        if (isClicked) {
+        if (isReportClicked) {
           clickMarkerRef.current.setVisible(true);
           clickMarkerRef.current.setPosition(e.coord);
           setLocation({ latitude: e.coord._lat, longitude: e.coord._lng });
@@ -87,7 +87,7 @@ const Map = () => {
         window.naver.maps.Event.removeListener(clickListener);
       };
     }
-  }, [mapRef.current, isClicked]);
+  }, [mapRef.current, isReportClicked]);
 
   useEffect(() => {
     setMarker();
@@ -157,12 +157,12 @@ const Map = () => {
   };
 
   return (
-    <div className={`${isClicked ? "bg-black opacity-80" : ""}`}>
+    <div className={`${isReportClicked ? "bg-black opacity-80" : ""}`}>
       <div
         id="map"
         className="w-screen h-main_section min-w-[900px]"
         onWheelCapture={() => {
-          if (!isClicked) {
+          if (!isReportClicked) {
             setResearch(true);
           }
         }}
@@ -175,11 +175,11 @@ const Map = () => {
           <IoMdRefresh />현 지도에서 검색
         </button>
       )}
-      {isClicked && (
+      {isReportClicked && (
         <button
           className="absolute top-28 right-10"
           onClick={() => {
-            setIsClicked();
+            setIsReportClicked();
             clickMarkerRef.current.setVisible(false);
             resetLocation();
           }}
