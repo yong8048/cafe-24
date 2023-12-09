@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import intro from "../public/intro.png";
 import "../styles/intro.css";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -44,7 +44,7 @@ const Intro = () => {
 
   return (
     <div className="relative bg-[#F1EFD7] h-full">
-      <Image src="/intro.png" alt="이미지 준비중" width={435} height={100} className="py-10 animate-cloud" />
+      <Image src={intro} alt="이미지 준비중" className="w-[435px] h-[400px] py-10 animate-cloud" />
       <div className="text-center text-sm">
         <div className="flex flex-col justify-center items-center">
           <h1 id="intro_title" className=" flex text-3xl">

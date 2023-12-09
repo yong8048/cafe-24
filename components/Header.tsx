@@ -5,6 +5,7 @@ import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 
 import { GetUserInfo, PostUserInfo, auth } from "@/utils/firebase";
 import Image from "next/image";
+import logo from "../public/Logo.png";
 import LoginStatus from "./LoginStatus";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
@@ -52,7 +53,7 @@ const Header = () => {
     <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between min-w-[900px]">
       <div className="flex gap-10 text-l font-semibold leading-[66.8px]">
         <HamburgerMenu />
-        <Image src="/Logo.png" alt="Logo" width={150} height={32} className="-ml-6 cursor-default" />
+        <Image src={logo} alt="Logo" className="w-[150px] h-[66px] -ml-6 cursor-default" />
         <h1
           className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
           onClick={() => {
