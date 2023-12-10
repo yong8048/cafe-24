@@ -8,6 +8,7 @@ interface IReportStore {
 }
 
 const initialState = {
+  id: "",
   address: "",
   latitude: "",
   longitude: "",

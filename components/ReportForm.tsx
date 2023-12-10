@@ -26,6 +26,7 @@ const notices = [
 
 const ReportForm = () => {
   const [reportData, setReportData] = useState<IReportInfo>({
+    id: "",
     address: "",
     group: "",
     internet: "",
@@ -97,7 +98,7 @@ const ReportForm = () => {
           </div>
         ))}
         <div className="pt-2 grid grid-cols-[100px_minmax(200px,_1fr)]">
-          <p className="h-10 leading-10">추가정보</p>
+          <p className="h-10 leading-10">기타 제보</p>
           <textarea className="p-2 h-40 input-report" name="additional" onChange={handleChange} />
         </div>
       </div>

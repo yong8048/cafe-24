@@ -15,11 +15,11 @@ import { FaRegCopy as Copy } from "react-icons/fa";
 import { FaRegStar as NotFav } from "react-icons/fa";
 import { FaStar as Fav } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { PostFavStore } from "@/utils/firebase";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { CgClose as Close } from "react-icons/cg";
 import { useSidebarStore } from "@/store/sidebarStore";
+import "react-toastify/dist/ReactToastify.css";
 
 const category = {
   address: { name: "주소", icon: <Marker size="25" />, copy: true },
@@ -145,7 +145,7 @@ function StoreDetial() {
       </div>
       {isOpen && (
         <button
-          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white z-50 rounded-r-md shadow-closebutton flex justify-center items-center"
+          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white rounded-r-md shadow-closebutton flex justify-center items-center"
           onClick={resetData}
         >
           <Close size="25" />

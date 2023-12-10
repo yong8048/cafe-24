@@ -13,6 +13,7 @@ import {
   collection,
   getDocs,
   arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 
@@ -52,9 +53,7 @@ export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
     const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
     files.map(async (file, index) => {
       const imageRef = ref(storage, `${docRef.id}/${index + 1}`);
-      uploadBytes(imageRef, file).then(snapshot => {
-        console.log(snapshot);
-      });
+      await uploadBytes(imageRef, file);
     });
     alert("업로드 완료");
     return true;
@@ -71,18 +70,20 @@ export const GetReportInfo = async (): Promise<IReportInfo[]> => {
 
   querySnapshot.forEach(doc => {
     res.push({
-      name: doc.id,
+      id: doc.id,
       ...doc.data(),
     } as IReportInfo);
   });
-
   return res; // 배열 반환
 };
 
 export const PostReportInfo = async (reportData: IReportInfo, address: string) => {
   reportData.address = address;
   const res = addDoc(collection(db, "ReportInfo"), reportData)
-    .then(result => {
+    .then(async result => {
+      await updateDoc(doc(db, "ReportInfo", result.id), {
+        id: result.id,
+      });
       console.log(result);
       alert("소중한 제보 감사합니다.");
       return true;
@@ -95,8 +96,41 @@ export const PostReportInfo = async (reportData: IReportInfo, address: string) =
   return res;
 };
 
-export const DeleteReportInfo = async () => {
-  const reportDoc = doc(db, "ReportInfo");
+export const AcceptReportInfo = async (reportData: IReportInfo, files: File[]) => {
+  const { id, ..._reportData } = reportData;
+  const res = await addDoc(collection(db, "StoreInfo"), _reportData)
+    .then(async result => {
+      files.map(async (file, index) => {
+        const imageRef = ref(storage, `${result.id}/${index + 1}`);
+        await uploadBytes(imageRef, file);
+      });
+      const deleteRes = await DeleteReportInfo(id, false);
+      if (deleteRes) {
+        alert("승인 완료");
+        return true;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("에러 발생");
+      return false;
+    });
+  return res;
+};
+
+export const DeleteReportInfo = async (reportID: string, isReject: boolean) => {
+  const reportDoc = doc(db, "ReportInfo", reportID);
+  const res = await deleteDoc(reportDoc)
+    .then(() => {
+      isReject && alert("삭제 완료");
+      return true;
+    })
+    .catch(error => {
+      console.error(error);
+      alert("에러 발생");
+      return false;
+    });
+  return res;
 };
 
 export const GetStoreImages = async (fileID: string) => {
