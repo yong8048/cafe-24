@@ -1,5 +1,5 @@
 import Image from "next/image";
-import intro from "../public/intro.png";
+import intro from "../public/intro.webp";
 import "../styles/intro.css";
 import React, { useEffect, useRef, useState } from "react";
 
