@@ -14,6 +14,7 @@ export interface IStoreInfo {
 }
 
 export interface IReportInfo {
+  id: string;
   address?: string;
   latitude?: string;
   longitude?: string;

@@ -15,11 +15,12 @@ import { FaRegCopy as Copy } from "react-icons/fa";
 import { FaRegStar as NotFav } from "react-icons/fa";
 import { FaStar as Fav } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { PostFavStore } from "@/utils/firebase";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { CgClose as Close } from "react-icons/cg";
 import { useSidebarStore } from "@/store/sidebarStore";
+import { isAdmin } from "@/utils/admin";
+import "react-toastify/dist/ReactToastify.css";
 
 const category = {
   address: { name: "주소", icon: <Marker size="25" />, copy: true },
@@ -84,6 +85,11 @@ function StoreDetial() {
     }
   };
 
+  const handleClickAdminCopy = () => {
+    navigator.clipboard.writeText(data.id);
+    copyNotify();
+  };
+
   return (
     <section className="w-full relative">
       <ToastContainer
@@ -107,14 +113,24 @@ function StoreDetial() {
           </div>
         )}
       </div>
-      <div className="h-[115px] bg-white flex flex-col items-center justify-center gap-3 py-4 border">
-        <div className="flex justify-center items-center gap-3 ">
+      <div className="h-[115px] bg-white flex flex-col items-center justify-center gap-3 py-4 border relative">
+        <div className="flex justify-center items-center gap-3">
           <p className="text-2xl font-bold">{data.name}</p>
           <div className={`cursor-pointer ${isFav ? "text-[#fabe6d]" : "text-gray-400"}`} onClick={handleFav}>
             {isFav ? <Fav size="20" /> : <NotFav size="20" />}
           </div>
         </div>
-        <p className="text-[#777]">{data.type} 카페</p>
+        <div className="relative w-full text-center">
+          <p className="text-[#777]">{data.type} 카페</p>
+          {isAdmin(userInfo) && (
+            <button
+              className="absolute top-1/2 -translate-y-1/2 right-20 border border-gray-300 rounded-lg px-3 py-1 duration-300 hover:bg-gray-300"
+              onClick={handleClickAdminCopy}
+            >
+              ID 복사
+            </button>
+          )}
+        </div>
       </div>
       <div className="">
         {Object.entries(category).map(([key, value]) => (
@@ -145,7 +161,7 @@ function StoreDetial() {
       </div>
       {isOpen && (
         <button
-          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white z-50 rounded-r-md shadow-closebutton flex justify-center items-center"
+          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white rounded-r-md shadow-closebutton flex justify-center items-center"
           onClick={resetData}
         >
           <Close size="25" />

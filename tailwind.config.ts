@@ -13,6 +13,9 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      width: {
+        without_sidebar: "calc(100% - 435px)",
+      },
       height: {
         main_section: "calc(100vh - 78px)",
       },

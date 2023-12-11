@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
 interface IReportClickStore {
-  isClicked: boolean;
-  setIsClicked: () => void;
+  isReportClicked: boolean;
+  setIsReportClicked: () => void;
 }
 
 const ReportClickStore = create<IReportClickStore>(set => ({
-  isClicked: false,
-  setIsClicked: () => set(state => ({ isClicked: !state.isClicked })),
+  isReportClicked: false,
+  setIsReportClicked: () => set(state => ({ isReportClicked: !state.isReportClicked })),
 }));
 
 export const useReportClickStore = () => ReportClickStore(state => state);

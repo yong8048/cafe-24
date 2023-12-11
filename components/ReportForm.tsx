@@ -19,13 +19,14 @@ const category: { [key: string]: { title: string; placeholder?: string; property
 
 const notices = [
   "관리자의 검토를 거쳐 매장이 등록됩니다.",
-  "정확한 이름과 주소를 기재해 주세요.",
+  "정확한 이름과 정보를 기재해 주세요.",
   "가능한 많은 정보를 제공해 주시면 좋습니다!",
   "허위제보는 이용자들에게 불이익을 가져올 수 있습니다.",
 ];
 
 const ReportForm = () => {
   const [reportData, setReportData] = useState<IReportInfo>({
+    id: "",
     address: "",
     group: "",
     internet: "",
@@ -39,7 +40,7 @@ const ReportForm = () => {
     type: "",
     additional: "",
   });
-  const { setIsClicked } = useReportClickStore();
+  const { setIsReportClicked } = useReportClickStore();
   const { location } = useReportLocationStore();
 
   useEffect(() => {
@@ -62,17 +63,16 @@ const ReportForm = () => {
       alert("카페 타입을 선택해주세요.");
     } else {
       const address = await GetAddrress(reportData.longitude, reportData.latitude);
-      console.log(address);
-      if (address) {
-        console.log(address[0].land, address[0].region);
+      if (address?.length) {
         const _address = `${address[0].region.area1.alias} ${address[0].region.area2.name} ${address[0].land.name} ${address[0].land.number1} ${address[0].land.number2}`;
         setReportData({ ...reportData, address: _address });
+        const res = await PostReportInfo(reportData, _address);
+        res && setIsReportClicked();
+      } else {
+        alert("정확한 위치에 핀을 위치해야 합니다.\n핀을 매장이 위치한 '건물'위에 올려주세요.");
       }
-      // const res = await PostReportInfo(reportData);
-      // res && setIsClicked();
     }
   };
-  console.log(reportData);
 
   return (
     <section className="w-full pt-5 px-2">
@@ -98,7 +98,7 @@ const ReportForm = () => {
           </div>
         ))}
         <div className="pt-2 grid grid-cols-[100px_minmax(200px,_1fr)]">
-          <p className="h-10 leading-10">추가정보</p>
+          <p className="h-10 leading-10">기타 제보</p>
           <textarea className="p-2 h-40 input-report" name="additional" onChange={handleChange} />
         </div>
       </div>

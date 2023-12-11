@@ -1,3 +1,4 @@
+import { adminID } from "@/constants/admin";
 import { useLoginStatusStore } from "@/store/loginStatusStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
@@ -5,8 +6,6 @@ import { auth } from "@/utils/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
-const adminID = [process.env.NEXT_PUBLIC_ADMIN_1, process.env.NEXT_PUBLIC_ADMIN_2];
 
 const LoginStatus = () => {
   const [isClicked, setIsClicked] = useState(false);

@@ -1,11 +1,12 @@
 "use client";
 import { useReportStore } from "@/store/reportStore";
 import { IReportInfo } from "@/types/firebase";
-import { PostReportInfo } from "@/utils/firebase";
+import { AcceptReportInfo, DeleteReportInfo } from "@/utils/firebase";
 import { GetGeoLocation } from "@/utils/naver";
 import Image from "next/image";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import CheckBox from "../upload/CheckBox";
+import { useQueryClient } from "@tanstack/react-query";
 
 const category: { [key: string]: { title: string; placeholder?: string; property?: string[] } } = {
   name: { title: "지점명", placeholder: "만월경 위례점" },
@@ -22,8 +23,9 @@ const category: { [key: string]: { title: string; placeholder?: string; property
 };
 
 const AdminReportForm = () => {
-  const { report } = useReportStore();
+  const { report, resetReport } = useReportStore();
   const [reportData, setReportData] = useState<IReportInfo>(report);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setReportData(report);
@@ -53,15 +55,33 @@ const AdminReportForm = () => {
     }
   };
 
-  const handleUpload = async () => {
-    const res = await PostReportInfo(reportData);
-    res && setImageFile([]);
-  };
-
-  const handleRemove = (removeIndex: number) => {
+  const handleImageRemove = (removeIndex: number) => {
     setImageFile(prevPreviews => prevPreviews.filter((preview, index) => index !== removeIndex));
   };
 
+  const handleAccept = async () => {
+    const res = await AcceptReportInfo(reportData, imageFile);
+    if (res) {
+      setImageFile([]);
+      resetReport();
+      queryClient.invalidateQueries({ queryKey: ["reports"] });
+    }
+  };
+
+  const handleReject = async () => {
+    const res = await DeleteReportInfo(reportData.id, true);
+    if (res) {
+      resetReport();
+      queryClient.invalidateQueries({ queryKey: ["reports"] });
+    }
+  };
+
+  if (!report.name)
+    return (
+      <div className="min-w-[900px] h-full flex justify-center items-center">
+        <p className="text-5xl">제보를 선택해주세요😊</p>
+      </div>
+    );
   return (
     <div className="min-w-[900px] h-full p-10 text-center">
       <div className="text-xl border rounded-xl py-4 grid justify-center">
@@ -107,14 +127,18 @@ const AdminReportForm = () => {
               alt="preview"
               width={100}
               height={100}
-              onClick={() => handleRemove(index)}
+              onClick={() => handleImageRemove(index)}
             />
           ))}
         </div>
       </div>
       <div className="mt-5 flex justify-center gap-5 text-2xl text-white">
-        <button className="w-[140px] h-[52px] bg-[#3D7FFF] rounded-[20px]">승인</button>
-        <button className="w-[140px] h-[52px] bg-[#3D7FFF] rounded-[20px]">거부</button>
+        <button className="w-[140px] h-[52px] bg-[#3D7FFF] rounded-[20px]" onClick={handleAccept}>
+          승인
+        </button>
+        <button className="w-[140px] h-[52px] bg-[#3D7FFF] rounded-[20px]" onClick={handleReject}>
+          거부
+        </button>
       </div>
     </div>
   );
