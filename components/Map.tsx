@@ -178,16 +178,21 @@ const Map = () => {
         </button>
       )}
       {isReportClicked && (
-        <button
-          className="absolute top-28 right-10"
-          onClick={() => {
-            setIsReportClicked();
-            clickMarkerRef.current.setVisible(false);
-            resetLocation();
-          }}
-        >
-          <Close size="40" />
-        </button>
+        <>
+          <button
+            className="absolute top-28 right-10"
+            onClick={() => {
+              setIsReportClicked();
+              clickMarkerRef.current.setVisible(false);
+              resetLocation();
+            }}
+          >
+            <Close size="40" />
+          </button>
+          <div className="flex justify-center items-center gap-2  absolute w-72 h-10 top-40 left-1/2 transform -translate-x-1/2 font-bold bg-white text-l rounded-md border border-mainColor">
+            <h1>매장위치를 지도에서 클릭해주세요</h1>
+          </div>
+        </>
       )}
     </div>
   );
