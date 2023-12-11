@@ -142,7 +142,7 @@ function StoreDetial() {
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="relative h-10 flex gap-9 items-center ">
+            <div className="relative py-1.5 flex gap-9 items-center ">
               <div className="h-7 w-7 flex justify-center items-center">{value.icon}</div>
               <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"}`}>
                 {data[key as keyof IStoreInfo] || "정보 없음"}
