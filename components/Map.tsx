@@ -6,17 +6,19 @@ import { IMarkerInfo } from "@/types/Map";
 import { GetStoreImages } from "@/utils/firebase";
 import { useEffect, useRef, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
-import "@/styles/marker.css";
+import { TbCurrentLocation } from "react-icons/tb";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useGetStores } from "@/hooks/useGetStores";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { CgClose as Close } from "react-icons/cg";
 import { useReportClickStore } from "@/store/ReportClickStore";
 import { useReportLocationStore } from "@/store/reportLocationStore";
+import "@/styles/marker.css";
 
 const Map = () => {
   const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number }>();
   const [research, setResearch] = useState(false);
+  const [isHoverCurrentLocation, setIsHoverCurrentLocation] = useState(false);
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
   const clickMarkerRef = useRef<any>(null);
@@ -158,17 +160,39 @@ const Map = () => {
     }
   };
 
+  const handleCurrentClick = () => {
+    const _myLocation = new window.naver.maps.LatLng(myLocation?.latitude, myLocation?.longitude);
+    mapRef.current.panTo(_myLocation);
+  };
+
   return (
-    <div className={`${isReportClicked ? "bg-black opacity-80" : ""}`}>
+    <div className={`${isReportClicked && "bg-black opacity-80"}`}>
       <div
         id="map"
-        className="w-screen h-main_section min-w-[900px]"
+        className="w-full h-main_section min-w-[900px]"
         onWheelCapture={() => {
           if (!isReportClicked) {
             setResearch(true);
           }
         }}
       ></div>
+      <div className="w-9 h-9 absolute bottom-20 right-5 bg-white rounded-md shadow-currentLocation border border-[rgba(0,0,0,0.2)] flex justify-center items-center">
+        <button
+          className="relative"
+          onMouseOver={() => setIsHoverCurrentLocation(true)}
+          onMouseLeave={() => setIsHoverCurrentLocation(false)}
+          onClick={handleCurrentClick}
+        >
+          <TbCurrentLocation size="20" />
+          <span
+            className={`${
+              isHoverCurrentLocation ? "opacity-100" : "opacity-0"
+            } absolute -left-24 top-1/2 -translate-y-1/2 w-20 duration-300 bg-black rounded-full text-white text-sm py-1`}
+          >
+            접속위치
+          </span>
+        </button>
+      </div>
       {research && (
         <button
           onClick={setMarker}
