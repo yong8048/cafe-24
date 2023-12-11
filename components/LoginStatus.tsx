@@ -15,7 +15,7 @@ const LoginStatus = () => {
   const router = useRouter();
 
   const handleAdmin = () => {
-    router.push("/admin");
+    window.open("/admin");
   };
 
   const handleLogout = () => {
