@@ -83,8 +83,8 @@ const AdminReportForm = () => {
       </div>
     );
   return (
-    <div className="min-w-[900px] h-full p-10 text-center">
-      <div className="text-xl border rounded-xl py-4 grid justify-center">
+    <div className="min-w-[900px] h-full p-8 text-center">
+      <div className="text-xl border rounded-xl py-1 grid justify-center">
         {Object.entries(category).map(([key, value]) => (
           <div key={key} className={`flex gap-10 leading-10 py-2 pl-2 ${key === "address" && "justify-between pr-2"}`}>
             <p className="w-20">{value.title}</p>
@@ -132,7 +132,7 @@ const AdminReportForm = () => {
           ))}
         </div>
       </div>
-      <div className="mt-5 flex justify-center gap-5 text-2xl text-white">
+      <div className="mt-2 flex justify-center gap-5 text-2xl text-white">
         <button className="w-[140px] h-[52px] bg-[#3D7FFF] rounded-[20px]" onClick={handleAccept}>
           승인
         </button>

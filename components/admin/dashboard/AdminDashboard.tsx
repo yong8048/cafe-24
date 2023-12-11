@@ -7,7 +7,7 @@ import { useReportStore } from "@/store/reportStore";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const unmannedCafeList = ["만월경", "데이롱", "커피에반하다", "카페일분", "프리헷", "터치카페", "나우커피", "기타"];
+const unmannedCafeList = ["만월경", "데이롱", "커피에반하다", "카페일분", "프리헷", "터치카페", "나우커피"];
 const generalCafeList = ["The november", "탐앤탐스"];
 
 const AdminDashboard = () => {
@@ -16,7 +16,7 @@ const AdminDashboard = () => {
   const general = stores?.filter(store => store.type === "일반").length;
   const [userLength, setUserLength] = useState<number>(0);
   const [reportLength, setReportLength] = useState<number>(0);
-  const { report } = useReportStore();
+
   useEffect(() => {
     const fetchUsers = async () => {
       const users = await GetTotalUser();
@@ -26,9 +26,6 @@ const AdminDashboard = () => {
     };
     fetchUsers();
   }, []);
-
-  const reportList = report;
-  console.log(reportList);
 
   const totalData = {
     labels: ["무인카페", "일반카페"],
@@ -42,15 +39,17 @@ const AdminDashboard = () => {
     ],
   };
 
-  const unmannedcafes = unmannedCafeList.map(cafe => {
+  const unmannedcafes = unmannedCafeList.map((cafe, index) => {
     return stores?.filter(store => store.name.includes(cafe)).length;
   });
 
+  console.log(unmannedcafes);
+
   const unmannedData = {
-    labels: unmannedCafeList,
+    labels: [...unmannedCafeList, "기타"],
     datasets: [
       {
-        data: unmannedcafes,
+        data: [...unmannedcafes, calEtcCafes(unmanned, unmannedcafes)],
         backgroundColor: ["#4bc0c0", "#36a2eb"],
         borderColor: ["#ffffff"],
         borderWidth: 1,
@@ -122,3 +121,12 @@ const AdminDashboard = () => {
   );
 };
 export default AdminDashboard;
+
+const calEtcCafes = (_allCafes: number | undefined, _array: (number | undefined)[]): number => {
+  const allCafes = _allCafes as number;
+  const array = _array as number[];
+  const res = array.reduce((acc, cur) => {
+    return acc + cur;
+  }, 0);
+  return allCafes - res;
+};

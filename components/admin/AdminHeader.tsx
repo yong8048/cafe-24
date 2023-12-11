@@ -33,15 +33,15 @@ const AdminHeader = () => {
           {adminName[0]}
         </div>
         <div
-          className="relative flex gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg items-center"
+          className="relative flex gap-2 px-2 py-0.5 bg-slate-200 rounded-lg items-center"
           onClick={() => setIsClicked(!isClicked)}
         >
           <h1 className="text-base">{adminName}</h1>
-          <span
+          {/* <span
             className={`w-2 h-2 border-t-2 border-r-2 border-black ${
               isClicked ? "rotate-[315deg]" : "rotate-[135deg]"
             }`}
-          ></span>
+          ></span> */}
         </div>
       </div>
     </header>
