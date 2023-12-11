@@ -136,9 +136,9 @@ const Map = () => {
           icon: {
             content: `
           <div class="marker-container">
-          ${data.name}
-          <div class="marker-arrow-border"></div>
-          <div class="marker-arrow"></div>
+            ${data.name}
+            <div class="marker-arrow-border"></div>
+            <div class="marker-arrow"></div>
           </div>`,
             size: new window.naver.maps.Size(128, 40),
             anchor: new window.naver.maps.Point(32, 32),
