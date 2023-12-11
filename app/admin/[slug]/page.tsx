@@ -1,9 +1,11 @@
 "use client";
 import AdminSidebar from "@/components/admin/report/AdminSidebar";
 import AdminReportForm from "@/components/admin/report/AdminReportForm";
-import { redirect, usePathname } from "next/navigation";
+import { notFound, redirect, usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 import AdminUploadForm from "@/components/admin/upload/AdminUploadForm";
+import { useUserInfoStore } from "@/store/userInfoStore";
+import { adminID } from "@/constants/admin";
 
 type Tsection = "modify" | "report" | "upload";
 
@@ -20,6 +22,13 @@ const section = {
 const Page = () => {
   const pathName = usePathname();
   const path = pathName.split("/")[2] as Tsection;
+  const { userInfo } = useUserInfoStore();
+
+  useEffect(() => {
+    if (pathName.includes("admin") && (!userInfo.uid || !adminID.includes(userInfo.uid))) {
+      notFound();
+    }
+  }, [pathName]);
 
   useEffect(() => {
     if (!(path in section)) {
