@@ -29,6 +29,7 @@ const config: Config = {
       },
       boxShadow: {
         closebutton: "rgba(0, 0, 0, 0.2) 0px 3px 7px 0px",
+        currentLocation: "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px",
       },
       keyframes: {
         cloud: {
