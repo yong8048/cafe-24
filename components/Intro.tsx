@@ -51,8 +51,8 @@ const Intro = () => {
             새벽감성 24시 카페 검색
           </h1>
           {subTitles.map((subTitle, index) => (
-            // <h3 key={index} className={`${animationPriority === index && "animate-subtitle"} text-gray-400`}>
-            <h3 key={index} className={`text-gray-400`}>
+            <h3 key={index} className={`${animationPriority === index && "animate-subtitle"} text-gray-400`}>
+              {/* <h3 key={index} className={`text-gray-400`}> */}
               {subTitle}
             </h3>
           ))}
