@@ -13,7 +13,7 @@ const Sidebar = () => {
   const { isReportClicked } = useReportClickStore();
   return (
     <aside
-      className={`fixed top-[78px] h-full z-40 bg-white transition-width duration-500 ease-in-out w-[436px] border-r border-gray-300 ${
+      className={`fixed sm:top-[78px] top-[44px] h-full z-40 bg-white transition-width duration-500 ease-in-out w-[436px] border-r border-gray-300 ${
         isOpen ? "left-0" : "-left-[436px]"
       }`}
     >
