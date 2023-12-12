@@ -46,7 +46,7 @@ const LoginStatus = () => {
         </div>
       </div>
       {isClicked ? (
-        <div className="absolute z-10 top-full mt-2 right-0 text-center">
+        <div className="absolute z-50 top-full mt-2 right-0 text-center">
           <ul className="flex flex-col justify-center">
             {adminID.includes(userInfo.uid) && (
               <li

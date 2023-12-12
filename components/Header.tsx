@@ -51,8 +51,6 @@ const Header = () => {
     userInfo.name && setLoginStatus(true);
   }, []);
 
-  console.log(isClicked);
-
   return (
     <header className="bg-white w-full sm:h-[78px] h-[44px] flex items-center border-b border-solid border-gray-300 px-4 text-black justify-between">
       <div className="flex items-center gap-10 text-xl font-semibold">
