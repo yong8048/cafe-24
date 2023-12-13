@@ -18,12 +18,14 @@
 
 body {
   min-width: 320px;
-  height: calc(var(--vh, 1vh) * 100);
+  /* height: calc(var(--vh, 1vh) * 100); */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 @layer components {
   .input-admin {
-    @apply border rounded-lg px-2;
+    @apply px-2 border rounded-lg;
   }
 
   .input-report {
