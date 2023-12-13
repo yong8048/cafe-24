@@ -132,7 +132,7 @@ function StoreDetial() {
           )}
         </div>
       </div>
-      <div className="pt-2">
+      <div className="pt-2 overscroll-y-auto">
         {Object.entries(category).map(([key, value]) => (
           <div
             id={key}

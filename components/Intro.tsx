@@ -61,7 +61,7 @@ const Intro = () => {
           ))}
           <h2 className="text-base font-bold mt-6">이런 분들을 위한 24시 운영하는 카페들을 모아 찾아보는 사이트</h2>
         </div>
-        <div className="absolute right-2 bottom-0 text-xs text-right">
+        <div className="absolute left-2 bottom-0 text-xs text-left">
           <h2>lbw3973@gmail.com</h2>
           <h2>sylee8048@gmail.com</h2>
           <h2>Data Update : 2023.12.04</h2>

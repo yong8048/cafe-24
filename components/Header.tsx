@@ -11,17 +11,23 @@ import { useUserInfoStore } from "@/store/userInfoStore";
 import { useLoginStatusStore } from "@/store/loginStatusStore";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { useSelectedStore } from "@/store/selectedStore";
+import { useSidebarStore } from "@/store/sidebarStore";
 
-const STYLE_H1 = `text-center p-1`;
+const PROPS_H1 = {
+  전체: "전체",
+  일반: "일반카페",
+  무인: "무인카페",
+  즐겨찾기: "즐겨찾기",
+};
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
   const { type, setType } = useCafeTypeStore();
   const { userInfo, setUserInfo } = useUserInfoStore();
   const { loginStatus, setLoginStatus } = useLoginStatusStore();
+  const { setOpen } = useSidebarStore();
   const provider = new GoogleAuthProvider();
   const { resetData } = useSelectedStore();
-  const [mapLevel, setMapLevel] = useState(14);
 
   const handleLogin = () => {
     signInWithPopup(auth(), provider)
@@ -84,18 +90,17 @@ const Header = () => {
               className="z-50 absolute top-full text-base right-0 rounded w-20 border border-gray-300 bg-white"
               onClick={handleClickType}
             >
-              <h1 id="전체" className={`${STYLE_H1} border-b border-gray-300`}>
-                전체
-              </h1>
-              <h1 id="일반" className={`${STYLE_H1} border-b border-gray-300`}>
-                일반카페
-              </h1>
-              <h1 id="무인" className={`${STYLE_H1} border-b border-gray-300`}>
-                무인카페
-              </h1>
-              <h1 id="즐겨찾기" className={STYLE_H1}>
-                즐겨찾기
-              </h1>
+              {Object.entries(PROPS_H1).map(([key, value], index) => (
+                <h1
+                  key={index}
+                  id={key}
+                  className={`text-center p-1 ${
+                    index !== Object.entries(PROPS_H1).length - 1 && "border-b border-gray-300"
+                  }`}
+                >
+                  {value}
+                </h1>
+              ))}
             </div>
           )}
         </div>
@@ -103,41 +108,22 @@ const Header = () => {
           src={logo}
           alt="Logo"
           className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] sm:-ml-4 cursor-default"
-          onClick={resetData}
+          onClick={() => {
+            resetData();
+            setOpen();
+          }}
         />
         <div className="hidden sm:flex items-center gap-10 font-semibold">
-          <h1
-            className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
-            onClick={() => {
-              setType("전체");
-            }}
-          >
-            전체
-          </h1>
-          <h1
-            className={`${type === "무인" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
-            onClick={() => {
-              setType("무인");
-            }}
-          >
-            무인카페
-          </h1>
-          <h1
-            className={`${type === "일반" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
-            onClick={() => {
-              setType("일반");
-            }}
-          >
-            일반카페
-          </h1>
-          <h1
-            className={`${type === "즐겨찾기" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
-            onClick={() => {
-              loginStatus ? setType("즐겨찾기") : alert("로그인이 필요합니다.");
-            }}
-          >
-            즐겨찾기
-          </h1>
+          {Object.entries(PROPS_H1).map(([key, value], index) => (
+            <h1
+              key={key}
+              id={key}
+              className={`${type === key && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
+              onClick={handleClickType}
+            >
+              {value}
+            </h1>
+          ))}
         </div>
         <div className="sm:w-full w-16"></div>
         {loginStatus ? (
