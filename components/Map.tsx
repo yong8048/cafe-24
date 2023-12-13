@@ -62,9 +62,7 @@ const Map = () => {
 
     if (mapRef.current !== null) {
       const dragendListener = window.naver.maps.Event.addListener(mapRef.current, "dragend", () => {
-        if (!isReportClicked) {
-          setResearch(true);
-        }
+        !isReportClicked && setResearch(true);
       });
 
       if (clickMarkerRef.current === null) {
@@ -87,7 +85,7 @@ const Map = () => {
       });
 
       const pinchListener = window.naver.maps.Event.addListener(mapRef.current, "pinchend", () => {
-        setResearch(true);
+        !isReportClicked && setResearch(true);
       });
 
       return () => {
