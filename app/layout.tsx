@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" type="image/png" href="/favicon.png" />
         <title>새벽 감성 - 24시 카페</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, minimal-ui, viewport-fit=cover" />
       </head>
       <body>
         <ReactQueryProvider>
