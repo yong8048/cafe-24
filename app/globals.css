@@ -18,11 +18,11 @@
 
 body {
   min-width: 320px;
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--vh, 1vh) * 200);
 }
 
 main {
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--vh, 1vh) * 200);
 }
 
 @layer components {
@@ -36,5 +36,5 @@ main {
 }
 
 .sm_test {
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--vh, 1vh) * 200);
 }
