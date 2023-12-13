@@ -26,6 +26,10 @@ body {
   }
 
   .input-report {
-    @apply border border-gray-300 rounded-lg
+    @apply border border-gray-300 rounded-lg;
   }
+}
+
+.container {
+  height: calc(var(--vh, 1vh) * 100);
 }
