@@ -99,7 +99,12 @@ const Header = () => {
             </div>
           )}
         </div>
-        <Image src={logo} alt="Logo" className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] sm:-ml-4 cursor-default" />
+        <Image
+          src={logo}
+          alt="Logo"
+          className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] sm:-ml-4 cursor-default"
+          onClick={resetData}
+        />
         <div className="hidden sm:flex items-center gap-10 font-semibold">
           <h1
             className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
