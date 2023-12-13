@@ -25,7 +25,7 @@ const AdminSidebar = () => {
   });
 
   return (
-    <div className="min-w-[425px] bg-[#b1b1b1]">
+    <div className="min-w-[425px] bg-[#b1b1b1] overflow-y-auto">
       {reports?.length === 0 && (
         <div className="w-full h-full flex flex-col justify-center items-center">
           {Array.from("제보가 없습니다🤣").map((char, index) => (

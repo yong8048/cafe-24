@@ -32,14 +32,11 @@ const LoginStatus = () => {
   };
   return (
     <div className="relative inline-block">
-      <div className="flex gap-1 items-center">
-        <div className="flex items-center justify-center h-[26px] w-[26px] rounded-full bg-blue-500 text-white">
+      <div className="flex gap-1 items-center" onClick={() => setIsClicked(!isClicked)}>
+        <div className="flex items-center justify-center h-[26px] w-[26px] rounded-full bg-blue-500 text-white cursor-pointer">
           {userInfo.name[0]}
         </div>
-        <div
-          className="flex gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg"
-          onClick={() => setIsClicked(!isClicked)}
-        >
+        <div className="sm:flex hidden gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg">
           <h1 className="text-base">{userInfo.name}</h1>
           <span
             className={`relative  top-2 left-0 w-2 h-2 border-t-2 border-r-2 border-black ${
@@ -49,7 +46,7 @@ const LoginStatus = () => {
         </div>
       </div>
       {isClicked ? (
-        <div className="absolute z-10 top-full mt-2 right-0 text-center">
+        <div className="absolute z-50 top-full mt-2 right-0 text-center">
           <ul className="flex flex-col justify-center">
             {adminID.includes(userInfo.uid) && (
               <li

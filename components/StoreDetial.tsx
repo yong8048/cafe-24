@@ -161,7 +161,7 @@ function StoreDetial() {
       </div>
       {isOpen && (
         <button
-          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white rounded-r-md shadow-closebutton flex justify-center items-center"
+          className="w-[43px] h-[44px] absolute top-[78px] -right-[44px] bg-white rounded-r-md shadow-closebutton hidden sm:flex justify-center items-center"
           onClick={resetData}
         >
           <Close size="25" />
