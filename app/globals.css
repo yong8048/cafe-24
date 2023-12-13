@@ -16,10 +16,9 @@
   }
 }
 
-html,
 body {
   min-width: 320px;
-  /* height: calc(var(--vh, 1vh) * 100); */
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 @layer components {
