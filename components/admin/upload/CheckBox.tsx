@@ -21,7 +21,7 @@ const CheckBox = ({
   };
 
   return (
-    <div onChange={handleClick} className="leading-10 flex justify-start gap-5 items-center pl-2">
+    <div onChange={handleClick} className="flex items-center justify-start gap-5 pl-2 leading-10">
       <label className="flex items-center gap-2">
         <input
           type="checkbox"

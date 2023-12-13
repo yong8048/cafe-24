@@ -4,7 +4,6 @@ import { useSelectedStore } from "@/store/selectedStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { auth } from "@/utils/firebase";
 import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const LoginStatus = () => {
@@ -12,11 +11,6 @@ const LoginStatus = () => {
   const { userInfo, resetUserInfo } = useUserInfoStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { resetData } = useSelectedStore();
-  const router = useRouter();
-
-  const handleAdmin = () => {
-    window.open("/admin");
-  };
 
   const handleLogout = () => {
     signOut(auth())
@@ -32,7 +26,7 @@ const LoginStatus = () => {
   };
   return (
     <div className="relative inline-block">
-      <div className="flex gap-1 items-center" onClick={() => setIsClicked(!isClicked)}>
+      <div className="flex items-center gap-1" onClick={() => setIsClicked(!isClicked)}>
         <div className="flex items-center justify-center h-[26px] w-[26px] rounded-full bg-blue-500 text-white cursor-pointer">
           {userInfo.name[0]}
         </div>
@@ -46,12 +40,12 @@ const LoginStatus = () => {
         </div>
       </div>
       {isClicked ? (
-        <div className="absolute z-50 top-full mt-2 right-0 text-center text-base">
+        <div className="absolute right-0 z-50 mt-2 text-base text-center top-full">
           <ul className="flex flex-col justify-center">
             {adminID.includes(userInfo.uid) && (
               <li
                 className="w-[74px] h-10 cursor-pointer border border-gray-300 bg-white text-black rounded-md leading-10"
-                onClick={handleAdmin}
+                onClick={() => window.open("/admin")}
               >
                 백오피스
               </li>

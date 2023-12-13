@@ -4,7 +4,7 @@ import Link from "next/link";
 function NotFound() {
   return (
     <section className="text-center">
-      <div className="my-16 flex flex-col gap-4 break-keep leading-6 items-center">
+      <div className="flex flex-col items-center gap-4 my-16 leading-6 break-keep">
         <Image src="/Logo.png" width={200} height={100} alt="logo" />
         <h3 className="my-5 text-2xl font-bold">페이지가 없습니다</h3>
         <p>주소가 잘못되었거나 바뀐 것 같습니다.</p>

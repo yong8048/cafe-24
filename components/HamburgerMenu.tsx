@@ -11,7 +11,7 @@ const HamburgerMenu = () => {
 
   return (
     <div className="flex items-center p-2" onClick={setToggle}>
-      <button className="h-4 w-5 flex flex-col justify-between">
+      <button className="flex flex-col justify-between w-5 h-4">
         {activeStyle.map((style, index) => (
           <div
             key={index}

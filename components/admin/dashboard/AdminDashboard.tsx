@@ -73,12 +73,12 @@ const AdminDashboard = () => {
   };
 
   return (
-    <section className="flex w-full h-main_section_sm justify-center pt-14">
+    <section className="flex justify-center w-full h-main_section_sm pt-14">
       <div className="flex h-1/2">
         <div>
           <div className="text-center">
             <h1>총 카페 개수</h1>
-            <h2 className="font-bold text-3xl">{stores?.length}개</h2>
+            <h2 className="text-3xl font-bold">{stores?.length}개</h2>
             <div className="w-80 h-80">
               <Doughnut data={totalData} />
             </div>
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
         <div className="flex">
           <div className="text-center">
             <h1>무인 카페 개수</h1>
-            <h2 className="font-bold text-3xl">{unmanned}개</h2>
+            <h2 className="text-3xl font-bold">{unmanned}개</h2>
             <div className="w-80 h-80">
               <Doughnut data={unmannedData} />
             </div>
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
         <div className="flex">
           <div className="text-center">
             <h1>일반 카페 개수</h1>
-            <h2 className="font-bold text-3xl">{general}개</h2>
+            <h2 className="text-3xl font-bold">{general}개</h2>
             <div className="w-80 h-80">
               <Doughnut data={generalData} />
             </div>
@@ -106,15 +106,15 @@ const AdminDashboard = () => {
       <div className="w-[300px] h-1/2 flex flex-col gap-5 mt-20 ml-10">
         <div className="flex flex-col gap-2">
           <h1 className="border-b border-gray-300">로그인 사용자</h1>
-          <h2 className="font-bold ml-2">{userLength} 명</h2>
+          <h2 className="ml-2 font-bold">{userLength} 명</h2>
         </div>
         <div className="flex flex-col gap-2">
           <h1 className="border-b border-gray-300">현재 제보 리스트</h1>
-          <h2 className="font-bold ml-2">{reportLength} 개</h2>
+          <h2 className="ml-2 font-bold">{reportLength} 개</h2>
         </div>
         <div className="flex flex-col gap-2">
           <h1 className="border-b border-gray-300">총 조회수</h1>
-          <h2 className="font-bold ml-2">{userLength} 회</h2>
+          <h2 className="ml-2 font-bold">{userLength} 회</h2>
         </div>
       </div>
     </section>
