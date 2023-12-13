@@ -6,7 +6,6 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --vh: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,12 +25,6 @@ body {
   height: calc(var(--vh, 1vh) * 100);
 } */
 
-html,
-body {
-  height: 100vh;
-  height: var(--vh);
-}
-
 @layer components {
   .input-admin {
     @apply border rounded-lg px-2;
@@ -42,6 +35,6 @@ body {
   }
 }
 
-/* .sm_test {
+.sm_test {
   height: calc(var(--vh, 1vh) * 100);
-} */
+}
