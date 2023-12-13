@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 
@@ -10,8 +10,10 @@ import LoginStatus from "./LoginStatus";
 import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { useLoginStatusStore } from "@/store/loginStatusStore";
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const Header = () => {
+  const [isClicked, setIsClicked] = useState(false);
   const { type, setType } = useCafeTypeStore();
   const { userInfo, setUserInfo } = useUserInfoStore();
   const { loginStatus, setLoginStatus } = useLoginStatusStore();
@@ -50,44 +52,54 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="bg-white w-full h-[78px] flex items-center border-b border-solid border-gray-300 p-4 text-black justify-between min-w-[900px]">
-      <div className="flex gap-10 text-l font-semibold leading-[66.8px]">
+    <header className="bg-white w-full sm:h-[78px] h-[44px] flex items-center border-b border-solid border-gray-300 px-4 text-black justify-between">
+      <div className="flex items-center gap-10 text-xl font-semibold">
         <HamburgerMenu />
-        <Image src={logo} alt="Logo" className="w-[150px] h-[66px] -ml-6 cursor-default" />
-        <h1
-          className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
+        <Image src={logo} alt="Logo" className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] -ml-4 cursor-default" />
+        <div className="hidden sm:flex items-center gap-10">
+          <h1
+            className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
+            onClick={() => {
+              setType("전체");
+            }}
+          >
+            전체
+          </h1>
+          <h1
+            className={`${type === "무인" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
+            onClick={() => {
+              setType("무인");
+            }}
+          >
+            무인카페
+          </h1>
+          <h1
+            className={`${type === "일반" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
+            onClick={() => {
+              setType("일반");
+            }}
+          >
+            일반카페
+          </h1>
+          <h1
+            className={`${type === "즐겨찾기" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
+            onClick={() => {
+              loginStatus ? setType("즐겨찾기") : alert("로그인이 필요합니다.");
+            }}
+          >
+            즐겨찾기
+          </h1>
+        </div>
+        <div
+          className="sm:hidden flex items-center"
           onClick={() => {
-            setType("전체");
+            setIsClicked(!isClicked);
           }}
         >
-          전체
-        </h1>
-        <h1
-          className={`${type === "무인" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
-          onClick={() => {
-            setType("무인");
-          }}
-        >
-          무인카페
-        </h1>
-        <h1
-          className={`${type === "일반" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
-          onClick={() => {
-            setType("일반");
-          }}
-        >
-          일반카페
-        </h1>
-        <h1
-          className={`${type === "즐겨찾기" && "text-red-400"} cursor-pointer duration-300 hover:leading-[60px]`}
-          onClick={() => {
-            loginStatus ? setType("즐겨찾기") : alert("로그인이 필요합니다.");
-          }}
-        >
-          즐겨찾기
-        </h1>
+          <span>전체</span>
+          {isClicked ? <MdArrowDropUp size="30" /> : <MdArrowDropDown size="30" />}
+        </div>
       </div>
-
       {loginStatus ? (
         <LoginStatus />
       ) : (

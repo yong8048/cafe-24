@@ -41,8 +41,8 @@ const config: Config = {
           "100%": { transform: "scale(1.2)" },
         },
         fontweight: {
-          "0%, 100%": { "font-weight": "normal", color: "gray" },
-          "50%": { "font-weight": "bold", color: "black" },
+          "0%, 100%": { fontweight: "normal", color: "gray" },
+          "50%": { fontweight: "bold", color: "black" },
         },
       },
     },

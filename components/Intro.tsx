@@ -1,5 +1,5 @@
 import Image from "next/image";
-import intro from "../public/intro.webp";
+import intro from "../public/intro.png";
 import "../styles/intro.css";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -47,7 +47,7 @@ const Intro = () => {
       <Image src={intro} alt="이미지 준비중" className="w-[435px] h-[400px] py-10 animate-cloud" />
       <div className="text-center text-sm">
         <div className="flex flex-col justify-center items-center">
-          <h1 id="intro_title" className=" flex text-3xl">
+          <h1 id="intro_title" className="flex text-3xl">
             새벽감성 24시 카페 검색
           </h1>
           {subTitles.map((subTitle, index) => (
