@@ -21,6 +21,10 @@ body {
   height: calc(var(--vh, 1vh) * 100);
 }
 
+main {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
 @layer components {
   .input-admin {
     @apply border rounded-lg px-2;
