@@ -17,6 +17,7 @@
 }
 
 body {
+  height: calc(var(--vh, 1vh) * 100);
   /* min-width: 900px; */
 }
 
@@ -28,8 +29,4 @@ body {
   .input-report {
     @apply border border-gray-300 rounded-lg;
   }
-}
-
-.container {
-  height: calc(var(--vh, 1vh) * 100);
 }
