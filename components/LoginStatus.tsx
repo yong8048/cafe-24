@@ -4,7 +4,6 @@ import { useSelectedStore } from "@/store/selectedStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { auth } from "@/utils/firebase";
 import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const LoginStatus = () => {
@@ -12,11 +11,6 @@ const LoginStatus = () => {
   const { userInfo, resetUserInfo } = useUserInfoStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { resetData } = useSelectedStore();
-  const router = useRouter();
-
-  const handleAdmin = () => {
-    window.open("/admin");
-  };
 
   const handleLogout = () => {
     signOut(auth())
@@ -51,7 +45,7 @@ const LoginStatus = () => {
             {adminID.includes(userInfo.uid) && (
               <li
                 className="w-[74px] h-10 cursor-pointer border border-gray-300 bg-white text-black rounded-md leading-10"
-                onClick={handleAdmin}
+                onClick={() => window.open("/admin")}
               >
                 백오피스
               </li>

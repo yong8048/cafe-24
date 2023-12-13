@@ -26,10 +26,10 @@ const Map = () => {
   const { setData } = useSelectedStore();
   const { setUrl, resetUrl } = useImageStore();
   const { type } = useCafeTypeStore();
-  const { stores, isError, isLoading } = useGetStores();
+  const { stores, isLoading } = useGetStores();
   const { userInfo } = useUserInfoStore();
   const { isReportClicked, setIsReportClicked } = useReportClickStore();
-  const { location, setLocation, resetLocation } = useReportLocationStore();
+  const { setLocation, resetLocation } = useReportLocationStore();
 
   useEffect(() => {
     if (navigator.geolocation) {
