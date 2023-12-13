@@ -75,13 +75,13 @@ const ReportForm = () => {
   };
 
   return (
-    <section className="w-full pt-5 px-2">
+    <section className="w-full pt-5 px-2 z-40">
       <div className="text-center">
         <h1 className="text-2xl">제보하기</h1>
       </div>
       <div className="px-2 mt-4 flex flex-col gap-1">
         {Object.entries(category).map(([key, value]) => (
-          <div key={key} className="grid grid-cols-[100px_minmax(200px,_1fr)]">
+          <div key={key} className="grid sm:grid-cols-[100px_minmax(200px,_1fr)] grid-cols-[80px_minmax(100px,_1fr)]">
             <p className="h-10 leading-10">{value.title}</p>
             {value.placeholder && (
               <input
@@ -97,7 +97,7 @@ const ReportForm = () => {
             )}
           </div>
         ))}
-        <div className="pt-2 grid grid-cols-[100px_minmax(200px,_1fr)]">
+        <div className="pt-2 grid sm:grid-cols-[100px_minmax(200px,_1fr)] grid-cols-[80px_minmax(100px,_1fr)]">
           <p className="h-10 leading-10">기타 제보</p>
           <textarea className="p-2 h-40 input-report" name="additional" onChange={handleChange} />
         </div>
