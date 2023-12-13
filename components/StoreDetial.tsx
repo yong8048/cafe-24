@@ -132,7 +132,7 @@ function StoreDetial() {
           )}
         </div>
       </div>
-      <div className="">
+      <div className="pt-2">
         {Object.entries(category).map(([key, value]) => (
           <div
             id={key}
