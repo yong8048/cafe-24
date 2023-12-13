@@ -21,7 +21,6 @@ const Header = () => {
   const { loginStatus, setLoginStatus } = useLoginStatusStore();
   const provider = new GoogleAuthProvider();
   const { resetData } = useSelectedStore();
-  const [mapLevel, setMapLevel] = useState(14);
 
   const handleLogin = () => {
     signInWithPopup(auth(), provider)

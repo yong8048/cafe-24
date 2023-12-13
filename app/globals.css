@@ -34,3 +34,7 @@ main {
     @apply border border-gray-300 rounded-lg;
   }
 }
+
+.sm_test {
+  height: calc(var(--vh, 1vh) * 100);
+}
