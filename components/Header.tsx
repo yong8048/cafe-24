@@ -59,8 +59,10 @@ const Header = () => {
     e.stopPropagation();
     const headingEl = e.target as HTMLHeadingElement;
     if (headingEl.id === "즐겨찾기") {
-      !loginStatus && alert("로그인이 필요합니다.");
-      return;
+      if (!loginStatus) {
+        alert("로그인이 필요합니다.");
+        return;
+      }
     }
     setType(headingEl.id);
     setIsClicked(false);
