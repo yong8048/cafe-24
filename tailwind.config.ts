@@ -21,7 +21,6 @@ const config: Config = {
       height: {
         main_section_sm: "calc(100vh - 78px)",
         main_section: "calc(100vh - 44px)",
-        map_section: "calc(100vh - 44px - 9.3vh)",
       },
       colors: {
         mainColor: "#5A2CDA",
