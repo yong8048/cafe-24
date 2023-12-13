@@ -86,9 +86,14 @@ const Map = () => {
         }
       });
 
+      const pinchListener = window.naver.maps.Event.addListener(mapRef.current, "pinchend", () => {
+        setResearch(true);
+      });
+
       return () => {
         window.naver.maps.Event.removeListener(dragendListener);
         window.naver.maps.Event.removeListener(clickListener);
+        window.naver.maps.Event.removeListener(pinchListener);
       };
     }
   }, [mapRef.current, isReportClicked]);
@@ -100,6 +105,9 @@ const Map = () => {
   const initMap = async () => {
     const mapOptions = {
       center: new window.naver.maps.LatLng(37.497952, 127.027619),
+      mapDataControl: false,
+      scaleControl: false,
+      mapTypeControl: false,
       zoom: 14,
     };
 
@@ -169,14 +177,18 @@ const Map = () => {
     <div className={`${isReportClicked && "bg-black opacity-80"}`}>
       <div
         id="map"
-        className="w-full h-main_section"
+        className="w-full sm:h-main_section_sm h-main_section"
         onWheelCapture={() => {
           if (!isReportClicked) {
             setResearch(true);
           }
         }}
       ></div>
-      <div className="w-9 h-9 absolute bottom-20 right-5 bg-white rounded-md shadow-currentLocation border border-[rgba(0,0,0,0.2)] flex justify-center items-center">
+      <div
+        className={`${
+          isReportClicked ? "bottom-5" : "bottom-20"
+        } w-9 h-9 absolute right-5 bg-white rounded-md shadow-currentLocation border border-[rgba(0,0,0,0.2)] flex justify-center items-center`}
+      >
         <button
           className="relative"
           onMouseOver={() => setIsHoverCurrentLocation(true)}
@@ -196,7 +208,7 @@ const Map = () => {
       {research && (
         <button
           onClick={setMarker}
-          className="flex justify-center items-center gap-2 absolute w-48 h-7 top-28 left-1/2 transform -translate-x-1/2 z-20 bg-white text-l rounded-3xl border border-mainColor text-mainColor"
+          className="sm:top-28 flex justify-center items-center gap-2 absolute w-48 h-7 top-14 left-1/2 transform -translate-x-1/2 z-20 bg-white text-l rounded-3xl border border-mainColor text-mainColor"
         >
           <IoMdRefresh />현 지도에서 검색
         </button>
@@ -204,7 +216,7 @@ const Map = () => {
       {isReportClicked && (
         <>
           <button
-            className="absolute top-28 right-10"
+            className="absolute sm:top-28 sm:right-10 top-[52px] right-2"
             onClick={() => {
               setIsReportClicked();
               clickMarkerRef.current.setVisible(false);
@@ -213,7 +225,7 @@ const Map = () => {
           >
             <Close size="40" />
           </button>
-          <div className="flex justify-center items-center gap-2  absolute w-72 h-10 top-40 left-1/2 transform -translate-x-1/2 font-bold bg-white text-l rounded-md border border-mainColor">
+          <div className="sm:top-40 flex justify-center items-center gap-2  absolute sm:w-72 w-52 py-1.5 top-14 left-1/2 transform -translate-x-1/2 font-bold bg-white sm:text-lg text-sm rounded-md border border-mainColor">
             <h1>매장위치를 지도에서 클릭해주세요</h1>
           </div>
         </>

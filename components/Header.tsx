@@ -11,6 +11,7 @@ import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { useLoginStatusStore } from "@/store/loginStatusStore";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import { useSelectedStore } from "@/store/selectedStore";
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -18,6 +19,8 @@ const Header = () => {
   const { userInfo, setUserInfo } = useUserInfoStore();
   const { loginStatus, setLoginStatus } = useLoginStatusStore();
   const provider = new GoogleAuthProvider();
+  const { resetData } = useSelectedStore();
+  const [mapLevel, setMapLevel] = useState(14);
 
   const handleLogin = () => {
     signInWithPopup(auth(), provider)
@@ -55,7 +58,12 @@ const Header = () => {
     <header className="bg-white w-full sm:h-[78px] h-[44px] flex items-center border-b border-solid border-gray-300 px-4 text-black justify-between">
       <div className="flex items-center gap-10 text-xl font-semibold">
         <HamburgerMenu />
-        <Image src={logo} alt="Logo" className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] -ml-4 cursor-default" />
+        <Image
+          src={logo}
+          alt="Logo"
+          className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] -ml-4 cursor-pointer"
+          onClick={resetData}
+        />
         <div className="hidden sm:flex items-center gap-10">
           <h1
             className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
