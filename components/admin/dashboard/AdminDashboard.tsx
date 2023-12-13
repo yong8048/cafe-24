@@ -73,7 +73,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <section className="flex w-full h-main_section justify-center pt-14">
+    <section className="flex w-full h-main_section_sm justify-center pt-14">
       <div className="flex h-1/2">
         <div>
           <div className="text-center">
