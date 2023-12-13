@@ -17,7 +17,7 @@
 }
 
 body {
-  /* min-width: 900px; */
+  min-width: 320px;
   height: calc(var(--vh, 1vh) * 100);
 }
 

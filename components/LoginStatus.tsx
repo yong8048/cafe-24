@@ -37,7 +37,7 @@ const LoginStatus = () => {
           {userInfo.name[0]}
         </div>
         <div className="sm:flex hidden gap-2 px-2 py-0.5 cursor-pointer bg-slate-200 rounded-lg">
-          <h1 className="text-base">{userInfo.name}</h1>
+          <h1 className="text-base whitespace-nowrap">{userInfo.name}</h1>
           <span
             className={`relative  top-2 left-0 w-2 h-2 border-t-2 border-r-2 border-black ${
               isClicked ? "rotate-[315deg]" : "rotate-[135deg]"
@@ -46,7 +46,7 @@ const LoginStatus = () => {
         </div>
       </div>
       {isClicked ? (
-        <div className="absolute z-50 top-full mt-2 right-0 text-center">
+        <div className="absolute z-50 top-full mt-2 right-0 text-center text-base">
           <ul className="flex flex-col justify-center">
             {adminID.includes(userInfo.uid) && (
               <li

@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
-import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
-
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { GetUserInfo, PostUserInfo, auth } from "@/utils/firebase";
 import Image from "next/image";
 import logo from "../public/Logo.png";
@@ -12,6 +11,8 @@ import { useUserInfoStore } from "@/store/userInfoStore";
 import { useLoginStatusStore } from "@/store/loginStatusStore";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { useSelectedStore } from "@/store/selectedStore";
+
+const STYLE_H1 = `text-center p-1`;
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -54,17 +55,57 @@ const Header = () => {
     userInfo.name && setLoginStatus(true);
   }, []);
 
+  const handleClickType = (e: MouseEvent<HTMLHeadingElement>) => {
+    e.stopPropagation();
+    const headingEl = e.target as HTMLHeadingElement;
+    if (headingEl.id === "즐겨찾기") {
+      if (!loginStatus) {
+        alert("로그인이 필요합니다.");
+        return;
+      }
+    }
+    setType(headingEl.id);
+    setIsClicked(false);
+  };
   return (
-    <header className="bg-white w-full sm:h-[78px] h-[44px] flex items-center border-b border-solid border-gray-300 px-4 text-black justify-between">
-      <div className="flex items-center gap-10 text-xl font-semibold">
+    <header className="bg-white w-full sm:h-[78px] h-[44px] flex items-center border-b border-solid border-gray-300 px-4 text-black justify-between whitespace-nowrap">
+      <div className="flex items-center sm:gap-10 sm:justify-normal justify-between text-xl w-full">
         <HamburgerMenu />
+        <div
+          className="sm:hidden flex items-center relative"
+          onClick={() => {
+            setIsClicked(!isClicked);
+          }}
+        >
+          <span>{type === "즐겨찾기" ? "즐찾" : type}</span>
+          {isClicked ? <MdArrowDropUp size="30" /> : <MdArrowDropDown size="30" />}
+          {isClicked && (
+            <div
+              className="z-50 absolute top-full text-base right-0 rounded w-20 border border-gray-300 bg-white"
+              onClick={handleClickType}
+            >
+              <h1 id="전체" className={`${STYLE_H1} border-b border-gray-300`}>
+                전체
+              </h1>
+              <h1 id="일반" className={`${STYLE_H1} border-b border-gray-300`}>
+                일반카페
+              </h1>
+              <h1 id="무인" className={`${STYLE_H1} border-b border-gray-300`}>
+                무인카페
+              </h1>
+              <h1 id="즐겨찾기" className={STYLE_H1}>
+                즐겨찾기
+              </h1>
+            </div>
+          )}
+        </div>
         <Image
           src={logo}
           alt="Logo"
-          className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] -ml-4 cursor-pointer"
+          className="sm:w-[150px] w-[90px] sm:h-[66px] h-[39px] sm:-ml-4 cursor-default"
           onClick={resetData}
         />
-        <div className="hidden sm:flex items-center gap-10">
+        <div className="hidden sm:flex items-center gap-10 font-semibold">
           <h1
             className={`${type === "전체" && "text-red-400"} cursor-pointer duration-300 hover:-translate-y-1`}
             onClick={() => {
@@ -98,28 +139,20 @@ const Header = () => {
             즐겨찾기
           </h1>
         </div>
-        <div
-          className="sm:hidden flex items-center"
-          onClick={() => {
-            setIsClicked(!isClicked);
-          }}
-        >
-          <span>전체</span>
-          {isClicked ? <MdArrowDropUp size="30" /> : <MdArrowDropDown size="30" />}
-        </div>
+        <div className="sm:w-full w-16"></div>
+        {loginStatus ? (
+          <LoginStatus />
+        ) : (
+          <h1
+            className="cursor-pointer sm:text-base text-sm sm:whitespace-nowrap whitespace-normal"
+            onClick={() => {
+              handleLogin();
+            }}
+          >
+            로그인
+          </h1>
+        )}
       </div>
-      {loginStatus ? (
-        <LoginStatus />
-      ) : (
-        <h1
-          className="px-4 cursor-pointer"
-          onClick={() => {
-            handleLogin();
-          }}
-        >
-          로그인
-        </h1>
-      )}
     </header>
   );
 };
