@@ -26,7 +26,7 @@ const AdminReportForm = () => {
   const { report, resetReport } = useReportStore();
   const [reportData, setReportData] = useState<IReportInfo>(report);
   const queryClient = useQueryClient();
-
+  const [isSearchClicked, setIsSearchClicked] = useState(false);
   useEffect(() => {
     setReportData(report);
   }, [report]);
@@ -49,6 +49,7 @@ const AdminReportForm = () => {
   };
 
   const handleClickSearch = async () => {
+    setIsSearchClicked(true);
     const res = await GetGeoLocation(reportData.address as string);
     if (res) {
       setReportData({ ...reportData, latitude: res.latitude, longitude: res.longitude });
@@ -60,11 +61,16 @@ const AdminReportForm = () => {
   };
 
   const handleAccept = async () => {
-    const res = await AcceptReportInfo(reportData, imageFile);
-    if (res) {
-      setImageFile([]);
-      resetReport();
-      queryClient.invalidateQueries({ queryKey: ["reports"] });
+    if (isSearchClicked) {
+      const res = await AcceptReportInfo(reportData, imageFile);
+      if (res) {
+        setImageFile([]);
+        resetReport();
+        queryClient.invalidateQueries({ queryKey: ["reports"] });
+        setIsSearchClicked(false);
+      }
+    } else {
+      alert("지도 검색버튼이 클릭되지 않았습니다.");
     }
   };
 
@@ -83,10 +89,10 @@ const AdminReportForm = () => {
       </div>
     );
   return (
-    <div className="min-w-[900px] h-full p-8 text-center">
-      <div className="text-xl border rounded-xl py-1 grid justify-center">
+    <div className="min-w-[900px] h-full p-2 pl-10 text-center">
+      <div className="text-xl border rounded-xl grid justify-center">
         {Object.entries(category).map(([key, value]) => (
-          <div key={key} className={`flex gap-10 leading-10 py-2 pl-2 ${key === "address" && "justify-between pr-2"}`}>
+          <div key={key} className={`flex gap-8 leading-8 py-2 pl-2 ${key === "address" && "justify-between pr-2"}`}>
             <p className="w-20">{value.title}</p>
             {value.property && (
               <CheckBox stateKey={key} property={value.property} setState={setReportData} state={reportData} />

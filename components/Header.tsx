@@ -10,6 +10,7 @@ import { useCafeTypeStore } from "@/store/cafeTypeStore";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { useLoginStatusStore } from "@/store/loginStatusStore";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import { useSelectedStore } from "@/store/selectedStore";
 
 const STYLE_H1 = `text-center p-1`;
 
@@ -19,6 +20,8 @@ const Header = () => {
   const { userInfo, setUserInfo } = useUserInfoStore();
   const { loginStatus, setLoginStatus } = useLoginStatusStore();
   const provider = new GoogleAuthProvider();
+  const { resetData } = useSelectedStore();
+  const [mapLevel, setMapLevel] = useState(14);
 
   const handleLogin = () => {
     signInWithPopup(auth(), provider)

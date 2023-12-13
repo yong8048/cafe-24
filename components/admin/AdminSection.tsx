@@ -6,7 +6,7 @@ const AdminSection = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     refetch();
   }, []);
-  return <section className="flex h-main_section">{children}</section>;
+  return <section className="flex h-main_section_sm">{children}</section>;
 };
 
 export default AdminSection;
