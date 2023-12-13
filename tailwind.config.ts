@@ -19,8 +19,8 @@ const config: Config = {
         without_sidebar: "calc(100% - 435px)",
       },
       height: {
-        main_section_sm: "calc(100vh - 78px)",
-        main_section: "calc(100vh - 44px)",
+        main_section_sm: "calc(100% - 78px)",
+        main_section: "calc(100% - 44px)",
       },
       colors: {
         mainColor: "#5A2CDA",
