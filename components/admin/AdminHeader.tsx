@@ -28,7 +28,7 @@ const AdminHeader = () => {
           <span>정보 수정</span>
         </Link>
       </div>
-      <div className="flex gap-1 items-center">
+      <div className="flex items-center gap-1">
         <div className="flex items-center justify-center h-[26px] w-[26px] rounded-full bg-blue-500 text-white">
           {adminName[0]}
         </div>
@@ -37,11 +37,6 @@ const AdminHeader = () => {
           onClick={() => setIsClicked(!isClicked)}
         >
           <h1 className="text-base">{adminName}</h1>
-          {/* <span
-            className={`w-2 h-2 border-t-2 border-r-2 border-black ${
-              isClicked ? "rotate-[315deg]" : "rotate-[135deg]"
-            }`}
-          ></span> */}
         </div>
       </div>
     </header>

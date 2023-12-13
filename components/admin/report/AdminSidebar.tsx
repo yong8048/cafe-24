@@ -27,9 +27,9 @@ const AdminSidebar = () => {
   return (
     <div className="min-w-[425px] bg-[#b1b1b1] overflow-y-auto">
       {reports?.length === 0 && (
-        <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center w-full h-full">
           {Array.from("제보가 없습니다🤣").map((char, index) => (
-            <p key={index} className="text-2xl h-8">
+            <p key={index} className="h-8 text-2xl">
               {char}
             </p>
           ))}

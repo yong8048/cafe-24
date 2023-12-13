@@ -6,10 +6,8 @@ declare global {
   }
 }
 
-interface IMarkerInfo {
+export interface IMarkerInfo {
   data: IStoreInfo;
   setMap: any;
   setVisible: any;
 }
-
-export { IMarkerInfo };
