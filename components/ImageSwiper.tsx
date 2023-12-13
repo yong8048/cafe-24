@@ -28,7 +28,7 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
         onSlidePrevTransitionStart={() => setCurrentIndex(currentIndex - 1)}
       >
         {urls.map(url => (
-          <SwiperSlide key={url.toString()} className="w-full h-full relative">
+          <SwiperSlide key={url.toString()} className="relative w-full h-full">
             {urls[0] === "/loading.gif" ? (
               <Image src={url.toString()} alt="로딩 이미지" width={200} height={200} className="m-auto" />
             ) : (
@@ -40,12 +40,12 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
                 onClick={() => {
                   setShowModal(true);
                 }}
-                className="cursor-pointer object-cover"
+                className="object-cover cursor-pointer"
               />
             )}
           </SwiperSlide>
         ))}
-        <div className="absolute right-2 bottom-2 w-12 h-6 rounded-lg bg-gray-800 z-10 opacity-70 text-white leading-6 text-center text-sm ">
+        <div className="absolute z-10 w-12 h-6 text-sm leading-6 text-center text-white bg-gray-800 rounded-lg right-2 bottom-2 opacity-70 ">
           <p>
             {currentIndex} / {urls.length}
           </p>
@@ -53,10 +53,10 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
       </Swiper>
       {showModal && (
         <div
-          className="fixed z-50 left-0 top-0 w-full h-full overflow-auto bg-black bg-opacity-40 flex items-center justify-center"
+          className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full overflow-auto bg-black bg-opacity-40"
           onClick={() => setShowModal(false)}
         >
-          <div className="relative p-1 w-3/4 max-w-lg mx-auto h-auto rounded-md" onClick={e => e.stopPropagation()}>
+          <div className="relative w-3/4 h-auto max-w-lg p-1 mx-auto rounded-md" onClick={e => e.stopPropagation()}>
             <Swiper
               modules={[Navigation]}
               slidesPerView={1}

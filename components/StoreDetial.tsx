@@ -91,7 +91,7 @@ function StoreDetial() {
   };
 
   return (
-    <section className="w-full relative">
+    <section className="relative w-full">
       <ToastContainer
         position="bottom-center"
         autoClose={300}
@@ -107,14 +107,14 @@ function StoreDetial() {
         {urls.length ? (
           <ImageSwiper urls={urls} />
         ) : (
-          <div className="flex flex-col items-center gap-4 justify-center h-full">
+          <div className="flex flex-col items-center justify-center h-full gap-4">
             <Image src="/default.png" alt="이미지 준비중" width={100} height={100} />
             <p className="text-xl font-bold">이미지 준비중입니다.</p>
           </div>
         )}
       </div>
       <div className="h-[115px] bg-white flex flex-col items-center justify-center gap-3 py-4 border relative">
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           <p className="text-2xl font-bold">{data.name}</p>
           <div className={`cursor-pointer ${isFav ? "text-[#fabe6d]" : "text-gray-400"}`} onClick={handleFav}>
             {isFav ? <Fav size="20" /> : <NotFav size="20" />}
@@ -124,7 +124,7 @@ function StoreDetial() {
           <p className="text-[#777]">{data.type} 카페</p>
           {isAdmin(userInfo) && (
             <button
-              className="absolute top-1/2 -translate-y-1/2 right-20 border border-gray-300 rounded-lg px-3 py-1 duration-300 hover:bg-gray-300"
+              className="absolute px-3 py-1 duration-300 -translate-y-1/2 border border-gray-300 rounded-lg top-1/2 right-20 hover:bg-gray-300"
               onClick={handleClickAdminCopy}
             >
               ID 복사
@@ -137,13 +137,13 @@ function StoreDetial() {
           <div
             id={key}
             key={key}
-            className="px-6 hover:bg-gray-300 cursor-pointer relative group"
+            className="relative px-6 cursor-pointer hover:bg-gray-300 group"
             onClick={handleClick}
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
           >
             <div className="relative py-1.5 flex gap-9 items-center ">
-              <div className="h-7 w-7 flex justify-center items-center">{value.icon}</div>
+              <div className="flex items-center justify-center h-7 w-7">{value.icon}</div>
               <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"}`}>
                 {data[key as keyof IStoreInfo] || "정보 없음"}
               </p>
@@ -153,7 +153,7 @@ function StoreDetial() {
                 </div>
               )}
             </div>
-            <div className="absolute left-0 top-0 mt-10 ml-14 text-white text-sm bg-black p-1 rounded transition-opacity duration-300 ease-in-out opacity-0  text-opacity-100 group-hover:opacity-100 z-10">
+            <div className="absolute top-0 left-0 z-10 p-1 mt-10 text-sm text-white text-opacity-100 transition-opacity duration-300 ease-in-out bg-black rounded opacity-0 ml-14 group-hover:opacity-100">
               {value.name}
             </div>
           </div>

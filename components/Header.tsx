@@ -74,11 +74,11 @@ const Header = () => {
     setIsClicked(false);
   };
   return (
-    <header className="bg-white w-full sm:h-[78px] h-[44px] flex items-center border-b border-solid border-gray-300 px-4 text-black justify-between whitespace-nowrap">
-      <div className="flex items-center sm:gap-10 sm:justify-normal justify-between text-xl w-full">
+    <header className="flex items-center justify-between bg-white w-full sm:h-[78px] h-[44px] border-b border-solid border-gray-300 px-4 text-black whitespace-nowrap">
+      <div className="flex items-center justify-between w-full text-xl sm:gap-10 sm:justify-normal">
         <HamburgerMenu />
         <div
-          className="sm:hidden flex items-center relative"
+          className="relative flex items-center sm:hidden"
           onClick={() => {
             setIsClicked(!isClicked);
           }}
@@ -87,7 +87,7 @@ const Header = () => {
           {isClicked ? <MdArrowDropUp size="30" /> : <MdArrowDropDown size="30" />}
           {isClicked && (
             <div
-              className="z-50 absolute top-full text-base right-0 rounded w-20 border border-gray-300 bg-white"
+              className="absolute right-0 z-50 w-20 text-base bg-white border border-gray-300 rounded top-full"
               onClick={handleClickType}
             >
               {Object.entries(PROPS_H1).map(([key, value], index) => (
@@ -113,7 +113,7 @@ const Header = () => {
             setOpen();
           }}
         />
-        <div className="hidden sm:flex items-center gap-10 font-semibold">
+        <div className="items-center hidden gap-10 font-semibold sm:flex">
           {Object.entries(PROPS_H1).map(([key, value], index) => (
             <h1
               key={key}
@@ -125,12 +125,12 @@ const Header = () => {
             </h1>
           ))}
         </div>
-        <div className="sm:w-full w-16"></div>
+        <div className="w-16 sm:w-full"></div>
         {loginStatus ? (
           <LoginStatus />
         ) : (
           <h1
-            className="cursor-pointer sm:text-base text-sm sm:whitespace-nowrap whitespace-normal"
+            className="text-sm whitespace-normal cursor-pointer sm:text-base sm:whitespace-nowrap"
             onClick={() => {
               handleLogin();
             }}

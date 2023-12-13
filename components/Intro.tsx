@@ -9,7 +9,6 @@ const subTitles = [
   "#편의점말고 매장에서 먹고 싶은데",
   "#새벽에 조용히 커피먹고 싶을 때!!",
 ];
-
 const TIMER_TIME = 2;
 
 const Intro = () => {
@@ -47,10 +46,10 @@ const Intro = () => {
       <Image
         src={intro}
         alt="이미지 준비중"
-        className="sm:w-[435px] w-[348px] sm:h-[400px] h-[320px] py-10 animate-cloud"
+        className="sm:w-[435px] w-[348px] sm:h-[400px] h-[320px] animate-cloud py-10"
       />
-      <div className="text-center text-sm">
-        <div className="flex flex-col justify-center items-center">
+      <div className="text-sm text-center">
+        <div className="flex flex-col items-center justify-center ">
           <h1 id="intro_title" className="flex text-3xl">
             새벽감성 24시 카페 검색
           </h1>
@@ -59,9 +58,9 @@ const Intro = () => {
               {subTitle}
             </h3>
           ))}
-          <h2 className="text-base font-bold mt-6">이런 분들을 위한 24시 운영하는 카페들을 모아 찾아보는 사이트</h2>
+          <h2 className="mt-6 text-base font-bold">이런 분들을 위한 24시 운영하는 카페들을 모아 찾아보는 사이트</h2>
         </div>
-        <div className="absolute left-2 bottom-0 text-xs text-left">
+        <div className="absolute bottom-0 text-xs text-left left-2">
           <h2>lbw3973@gmail.com</h2>
           <h2>sylee8048@gmail.com</h2>
           <h2>Data Update : 2023.12.04</h2>

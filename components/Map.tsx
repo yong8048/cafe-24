@@ -185,7 +185,7 @@ const Map = () => {
       <div
         className={`${
           isReportClicked ? "bottom-5" : "bottom-20"
-        } w-9 h-9 absolute right-5 bg-white rounded-md shadow-currentLocation border border-[rgba(0,0,0,0.2)] flex justify-center items-center`}
+        } flex justify-center items-center w-9 h-9 absolute right-5 bg-white rounded-md shadow-currentLocation border border-[rgba(0,0,0,0.2)] `}
       >
         <button
           className="relative"
@@ -206,7 +206,7 @@ const Map = () => {
       {research && (
         <button
           onClick={setMarker}
-          className="sm:top-28 flex justify-center items-center gap-2 absolute w-48 h-7 top-14 left-1/2 transform -translate-x-1/2 z-20 bg-white text-lg rounded-3xl border border-mainColor text-mainColor"
+          className="absolute z-20 flex items-center justify-center w-48 gap-2 text-lg transform -translate-x-1/2 bg-white border sm:top-28 h-7 top-14 left-1/2 rounded-3xl border-mainColor text-mainColor"
         >
           <IoMdRefresh />현 지도에서 검색
         </button>
