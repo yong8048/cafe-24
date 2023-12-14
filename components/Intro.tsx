@@ -58,7 +58,7 @@ const Intro = () => {
               {subTitle}
             </h3>
           ))}
-          <h2 className="px-3 mt-6 text-base font-bold break-keep">
+          <h2 className="px-3 mt-6 text-base font-[600] break-keep">
             이런 분들을 위한 <br /> 24시 운영하는 카페들을 모아 찾아보는 사이트
           </h2>
         </div>

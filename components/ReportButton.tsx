@@ -13,7 +13,7 @@ const ReportButton = () => {
     <button
       className={`${
         isReportClicked ? "hidden" : "block"
-      } w-[140px] h-[54px] text-2xl rounded-2xl absolute bottom-5 right-1 bg-[#3d7fff] text-white`}
+      } w-[140px] h-[54px] text-2xl rounded-2xl absolute bottom-5 sm:right-5 right-1 bg-[#3d7fff] text-white`}
       onClick={handleClickReport}
     >
       제보하기
