@@ -224,7 +224,7 @@ const Map = () => {
           >
             <Close size="40" />
           </button>
-          <div className="sm:top-[120px] text-center absolute sm:w-72 w-52 py-1.5 px-1.5 font-[600] top-14 left-1/2 transform -translate-x-1/2 bg-white sm:text-lg text-sm rounded-md border border-mainColor">
+          <div className="sm:top-[120px] text-center absolute sm:w-72 w-52 py-1.5 px-1.5 font-[500] top-14 left-1/2 transform -translate-x-1/2 bg-white sm:text-lg text-sm rounded-md border border-mainColor">
             <h1>매장위치를 지도에서 클릭해주세요</h1>
           </div>
         </>

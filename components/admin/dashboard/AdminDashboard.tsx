@@ -43,8 +43,6 @@ const AdminDashboard = () => {
     return stores?.filter(store => store.name.includes(cafe)).length;
   });
 
-  console.log(unmannedcafes);
-
   const unmannedData = {
     labels: [...unmannedCafeList, "기타"],
     datasets: [
