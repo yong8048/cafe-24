@@ -10,6 +10,7 @@ const pretendard = localFont({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     function setVhProperty() {
+      console.log(window.innerHeight);
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
       console.log(vh);

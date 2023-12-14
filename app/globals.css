@@ -21,9 +21,14 @@ body {
   height: calc(var(--vh, 1vh) * 100);
 }
 
+
+.mobile_height {
+  height: calc((var(--vh, 1vh) * 100) - 44px);
+}
+
 @layer components {
   .input-admin {
-    @apply border rounded-lg px-2;
+    @apply px-2 border rounded-lg;
   }
 
   .input-report {

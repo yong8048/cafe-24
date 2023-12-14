@@ -99,7 +99,7 @@ const ReportForm = () => {
         ))}
         <div className="pt-2 grid sm:grid-cols-[100px_minmax(200px,_1fr)] grid-cols-[80px_minmax(100px,_1fr)]">
           <p className="h-10 leading-10">기타 제보</p>
-          <textarea className="h-40 p-2 input-report" name="additional" onChange={handleChange} />
+          <textarea className="sm:h-40 h-28 p-2 input-report" name="additional" onChange={handleChange} />
         </div>
       </div>
       <div className="px-2 mt-4 text-sm">
@@ -107,7 +107,7 @@ const ReportForm = () => {
           <p key={index}>• {notice}</p>
         ))}
       </div>
-      <div className="mx-auto w-[140px] mt-4">
+      <div className="mx-auto w-[140px] my-4">
         <button className="w-full h-[54px] bg-[#3d7fff] rounded-2xl text-white text-xl" onClick={handleReportClick}>
           제보하기
         </button>
