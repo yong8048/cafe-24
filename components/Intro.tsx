@@ -58,9 +58,11 @@ const Intro = () => {
               {subTitle}
             </h3>
           ))}
-          <h2 className="mt-6 text-base font-bold">이런 분들을 위한 24시 운영하는 카페들을 모아 찾아보는 사이트</h2>
+          <h2 className="px-3 mt-6 text-base font-bold break-keep">
+            이런 분들을 위한 <br /> 24시 운영하는 카페들을 모아 찾아보는 사이트
+          </h2>
         </div>
-        <div className="absolute bottom-0 text-xs text-left left-2">
+        <div className="absolute bottom-0 text-[9px] text-left left-2 leading-3">
           <h2>lbw3973@gmail.com</h2>
           <h2>sylee8048@gmail.com</h2>
           <h2>Data Update : 2023.12.04</h2>
