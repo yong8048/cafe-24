@@ -21,20 +21,16 @@ body {
   height: calc(var(--vh, 1vh) * 100);
 }
 
-/* main {
-  height: calc(var(--vh, 1vh) * 100);
-} */
+.mobile_height {
+  height: calc((var(--vh, 1vh) * 100) - 44px);
+}
 
 @layer components {
   .input-admin {
-    @apply border rounded-lg px-2;
+    @apply px-2 border rounded-lg;
   }
 
   .input-report {
     @apply border border-gray-300 rounded-lg;
   }
-}
-
-.sm_test {
-  height: calc(var(--vh, 1vh) * 100);
 }

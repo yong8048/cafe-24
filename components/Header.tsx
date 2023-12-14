@@ -129,14 +129,14 @@ const Header = () => {
         {loginStatus ? (
           <LoginStatus />
         ) : (
-          <h1
-            className="text-sm whitespace-normal cursor-pointer sm:text-base sm:whitespace-nowrap"
+          <button
+            className="sm:text-base text-sm cursor-pointer sm:bg-none bg-[url('/googleIcon.ico')] sm:w-auto w-8 h-8 pr-8"
             onClick={() => {
               handleLogin();
             }}
           >
-            로그인
-          </h1>
+            <span className="hidden sm:inline">로그인</span>
+          </button>
         )}
       </div>
     </header>
