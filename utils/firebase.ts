@@ -84,7 +84,6 @@ export const PostReportInfo = async (reportData: IReportInfo, address: string) =
       await updateDoc(doc(db, "ReportInfo", result.id), {
         id: result.id,
       });
-      console.log(result);
       alert("소중한 제보 감사합니다.");
       return true;
     })

@@ -10,10 +10,8 @@ const pretendard = localFont({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     function setVhProperty() {
-      console.log(window.innerHeight);
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
-      console.log(vh);
     }
 
     setVhProperty();
@@ -30,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" href="/favicon.png" />
         <title>새벽 감성 - 24시 카페</title>
         <meta name="viewport" content="width=device-width, minimal-ui, viewport-fit=cover" />
+        <meta name="google-site-verification" content="q9x7v3OCZ9KTW_JeVWCs9PFKl3oQCviK82JokLkQmzY" />
       </head>
       <body>
         <ReactQueryProvider>
