@@ -175,7 +175,7 @@ const Map = () => {
     <div className={`${isReportClicked && "bg-black opacity-80"}`}>
       <div
         id="map"
-        className="w-full sm:h-main_section_sm h-main_section test_test"
+        className="w-full sm:h-main_section_sm h-main_section mobile_height"
         onWheelCapture={() => {
           if (!isReportClicked) {
             setResearch(true);

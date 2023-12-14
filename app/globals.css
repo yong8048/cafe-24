@@ -21,8 +21,9 @@ body {
   height: calc(var(--vh, 1vh) * 100);
 }
 
-.test_test {
-  height: calc((var(--vh, 1vh) * 100) - 44px) !important;
+
+.mobile_height {
+  height: calc((var(--vh, 1vh) * 100) - 44px);
 }
 
 @layer components {
