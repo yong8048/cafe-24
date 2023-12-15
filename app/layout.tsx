@@ -30,6 +30,19 @@ export const metadata: Metadata = {
     description: "24시 운영하는 카페들을 모아 찾아보는 사이트",
     images: ["/Logo.png"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 const pretendard = localFont({
@@ -43,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" href="/favicon.png" />
         <meta name="viewport" content="width=device-width, minimal-ui, viewport-fit=cover" />
         <meta name="google-site-verification" content="q9x7v3OCZ9KTW_JeVWCs9PFKl3oQCviK82JokLkQmzY" />
+        <meta />
       </head>
       <body>
         <ReactQueryProvider>
