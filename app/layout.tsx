@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/Logo.png",
-        width: 800,
-        height: 600,
+        width: 600,
+        height: 450,
       },
     ],
     locale: "ko_KR",
