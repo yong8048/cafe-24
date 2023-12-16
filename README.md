@@ -38,43 +38,43 @@
 
 |**헤더 기능**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/30222adf-401e-4db2-ae62-4db95308e33c" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/30222adf-401e-4db2-ae62-4db95308e33c" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">원하는 카페타입에 선택해 카페들을 찾아볼 수 있습니다.</p>|
 
 |**로그인 및 매장정보**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/518738e1-4e5d-44c8-80fa-00d5505b32ea" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/518738e1-4e5d-44c8-80fa-00d5505b32ea" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">구글로그인을 진행하여 원하는 매장을 즐겨찾기에 추가/삭제할 수 있습니다.</br>즐겨찾기한 카페들만을 볼 수 있습니다.</p>|
 
 |**카페이미지 및 상세보기**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/ad873b44-5a08-4ccb-b1f6-a981f66007af" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/ad873b44-5a08-4ccb-b1f6-a981f66007af" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">카페사진을 볼 수 있고, 클릭하면 상세보기 모달이 열립니다.</p>|
 
 
 |**지도 재검색 및 현재위치**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/e1ca9bb4-eae8-4609-8a2e-3c0fa4e431a2" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/e1ca9bb4-eae8-4609-8a2e-3c0fa4e431a2" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">지도상에서 위치를 이동시, 재검색을 할 수 있습니다.</br>접속위치 버튼으로 현재 접속위치로 이동할 수 있습니다.</p>|
 
 |**제보하기**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/6ac47e2e-2dfc-4258-923e-66eedce50ffb" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/6ac47e2e-2dfc-4258-923e-66eedce50ffb" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">사이트에 없는 매장을 누구나 제보할 수 있는 기능입니다.</p>|
 
 |**백오피스 대시보드**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/a3595648-63ab-4808-8e83-99237846910a" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/a3595648-63ab-4808-8e83-99237846910a" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">관리자가 등록된 매장 및 제보리스트를 확인할 수 있는 대시보드 페이지입니다.</p>|
 
 |**백오피스 제보리스트**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/03a7733f-570c-4e76-9238-6a3b5a2b83a4" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/03a7733f-570c-4e76-9238-6a3b5a2b83a4" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">사용자들이 제보한 리스트들을 조회할 수 있는 페이지입니다.</br>관리자 검토 후, 데이터를 수정하거나 승인/반려를 진행할 수 있습니다.</p>|
 
 |**백오피스 매장추가**|
 | --- |
-|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/c5cc759b-3caa-47da-9358-96099bf6a319" width="950" height="500" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/c5cc759b-3caa-47da-9358-96099bf6a319" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">관리자가 매장을 추가할 수 있습니다.</p>|
 
 </div>
