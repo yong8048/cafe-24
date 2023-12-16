@@ -64,7 +64,9 @@ const ReportForm = () => {
     } else {
       const address = await GetAddrress(reportData.longitude, reportData.latitude);
       if (address?.length) {
-        const _address = `${address[0].region.area1.alias} ${address[0].region.area2.name} ${address[0].land.name} ${address[0].land.number1} ${address[0].land.number2}`;
+        const _address = `${address[0].region.area1.alias} ${address[0].region.area2.name} ${address[0].land.name} ${
+          address[0].land.number1
+        }${address[0].land.number2 ? `-${address[0].land.number2}` : ""}`;
         setReportData({ ...reportData, address: _address });
         const res = await PostReportInfo(reportData, _address);
         res && setIsReportClicked();
