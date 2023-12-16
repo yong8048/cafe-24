@@ -213,3 +213,12 @@ export const GetFavStore = async (userID: string) => {
     console.error("Error adding UserInfo: ", error);
   }
 };
+
+export const GetUpdateDate = async () => {
+  try {
+    const querySnapshot = await getDoc(doc(db, "UpdateDate", "Date"));
+    return querySnapshot.data();
+  } catch (error) {
+    console.error(error);
+  }
+};

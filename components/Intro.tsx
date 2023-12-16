@@ -2,6 +2,8 @@ import Image from "next/image";
 import intro from "../public/intro.png";
 import "../styles/intro.css";
 import React, { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { GetUpdateDate } from "@/utils/firebase";
 
 const subTitles = [
   "#새벽인데 커피 땡기네..",
@@ -16,6 +18,10 @@ const Intro = () => {
   const [sec, setSec] = useState(0);
   const time = useRef(TIMER_TIME);
   const timerId = useRef<NodeJS.Timeout>();
+  const { data: updateDate } = useQuery({
+    queryKey: ["updateDate"],
+    queryFn: GetUpdateDate,
+  });
 
   const startTimer = () => {
     time.current = TIMER_TIME;
@@ -65,7 +71,7 @@ const Intro = () => {
         <div className="absolute bottom-0 text-[9px] text-left left-2 leading-3">
           <h2>lbw3973@gmail.com</h2>
           <h2>sylee8048@gmail.com</h2>
-          <h2>Data Update : 2023.12.04</h2>
+          {updateDate && <h2>Data Update : {updateDate.ymd}</h2>}
         </div>
       </div>
     </div>
