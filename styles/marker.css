@@ -3,7 +3,6 @@
   position: relative;
   background-color: white;
   border-radius: 25px;
-  margin-left: 20px;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
@@ -29,4 +28,15 @@
   border-width: 11px 11px 0;
   border-style: solid;
   border-color: #3b82f6 transparent transparent transparent;
+}
+
+@media (max-width: 640px) {
+  .mobile-current-marker-border {
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    border: 2px solid white;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    background-color: red;
+  }
 }
