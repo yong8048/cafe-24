@@ -20,10 +20,9 @@
 | [@yong8048](https://github.com/yong8048) | [@lbw3973](https://github.com/lbw3973)  |                                                  |
 |📍로그인/로그아웃<br />📍네이버 맵<br />📍헤더<br />📍카페정보<br /> 📍백오피스 대시보드<br /> 📍백오피스 정보수정<br /> | 📍사이드바<br />📍매장 정보<br />📍제보하기<br />📍파이어베이스<br />📍백오피스 제보리스트<br/> 📍백오피스 매장추가<br /> | 
 
-<br><br>
-### Skills
+<br>
 
-
+### 🔧 Skills
 <img src="https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white">
 <img src="https://img.shields.io/badge/next.js-black?style=for-the-badge&logo=next.js&logoColor=white">
 <img src="https://img.shields.io/badge/typescript-2f74c0?style=for-the-badge&logo=typescript&logoColor=white"><br>
@@ -33,8 +32,11 @@
 <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
 <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white">
 <img src="https://img.shields.io/badge/zustand-black?style=for-the-badge">
+</br></br>
 
 ## 🖥 프로젝트 미리보기
+
+### 💻 PC
 
 |**헤더 기능**|
 | --- |
@@ -76,5 +78,15 @@
 | --- |
 |<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/c5cc759b-3caa-47da-9358-96099bf6a319" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">관리자가 매장을 추가할 수 있습니다.</p>|
+
+### 📱 Mobile
+
+|**메인**|**카페 정보**|
+| --- | --- |
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/62731cee-6357-4e33-a899-f3007e3ad73a" width="375" height="667" style="object-fit: cover; object-position: center;"></p>|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/88743e59-4bba-4536-ac1a-809879a77a96" width="375" height="667" style="object-fit: cover; object-position: center;"></p>|
+
+|**제보하기**|**현위치**|
+| --- | --- |
+|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/de152f35-cbfc-48ab-b61f-0e0f8cbb392f" width="375" height="667" style="object-fit: cover; object-position: center;"></p>|<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/03b5155f-cfb4-46b3-8445-dd282dc6a2e9" width="375" height="667" style="object-fit: cover; object-position: center;"></p>|
 
 </div>
