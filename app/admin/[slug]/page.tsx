@@ -6,11 +6,12 @@ import React, { useEffect } from "react";
 import AdminUploadForm from "@/components/admin/upload/AdminUploadForm";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { adminID } from "@/constants/admin";
+import AdminModify from "@/components/admin/modify/AdminModify";
 
 type Tsection = "modify" | "report" | "upload";
 
 const section = {
-  modify: <></>,
+  modify: <AdminModify />,
   report: (
     <>
       <AdminSidebar />

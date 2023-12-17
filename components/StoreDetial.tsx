@@ -122,14 +122,6 @@ function StoreDetial() {
         </div>
         <div className="relative w-full text-center">
           <p className="text-[#777]">{data.type} 카페</p>
-          {isAdmin(userInfo) && (
-            <button
-              className="absolute px-3 py-1 duration-300 -translate-y-1/2 border border-gray-300 rounded-lg top-1/2 right-20 hover:bg-gray-300"
-              onClick={handleClickAdminCopy}
-            >
-              ID 복사
-            </button>
-          )}
         </div>
       </div>
       <div className="pt-2 overscroll-y-auto">
