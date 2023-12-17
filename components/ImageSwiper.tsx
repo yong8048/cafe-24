@@ -65,6 +65,7 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
               navigation
               pagination={{ clickable: true }}
               className="relative h-full"
+              initialSlide={currentIndex - 1}
             >
               {urls.map(url => (
                 <SwiperSlide key={url.toString()} className="relative">

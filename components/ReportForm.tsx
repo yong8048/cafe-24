@@ -75,7 +75,7 @@ const ReportForm = () => {
   };
 
   return (
-    <section className="z-40 w-full px-2 pt-5">
+    <section className="z-40 w-full px-2 py-5">
       <div className="text-center">
         <h1 className="text-2xl">제보하기</h1>
       </div>
