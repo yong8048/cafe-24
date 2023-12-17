@@ -22,6 +22,7 @@ const Map = () => {
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
   const clickMarkerRef = useRef<any>(null);
+  const currentMarker = useRef<any>(null);
   const { setOpen } = useSidebarStore();
   const { setData } = useSelectedStore();
   const { setUrl, resetUrl } = useImageStore();
@@ -171,10 +172,11 @@ const Map = () => {
   };
 
   const handleCurrentClick = () => {
+    currentMarker.current?.setMap(null);
     setCurrentLocation();
     const _myLocation = new window.naver.maps.LatLng(myLocation?.latitude, myLocation?.longitude);
     mapRef.current.panTo(_myLocation);
-    new window.naver.maps.Marker({
+    currentMarker.current = new window.naver.maps.Marker({
       position: new window.naver.maps.LatLng(myLocation?.latitude, myLocation?.longitude),
       map: mapRef.current,
       icon: {
@@ -183,6 +185,7 @@ const Map = () => {
         anchor: new window.naver.maps.Point(32, 32),
       },
     });
+
     setIsHoverCurrentLocation(false);
   };
 
