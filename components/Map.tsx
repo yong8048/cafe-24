@@ -32,20 +32,7 @@ const Map = () => {
   const { setLocation, resetLocation } = useReportLocationStore();
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          setMyLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        error => {
-          setMyLocation({ latitude: 37.497952, longitude: 127.027619 });
-          console.error(error);
-        },
-      );
-    }
+    setCurrentLocation();
 
     const script = document.createElement("script");
     script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`;
@@ -166,9 +153,36 @@ const Map = () => {
     }
   };
 
+  const setCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setMyLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        error => {
+          setMyLocation({ latitude: 37.497952, longitude: 127.027619 });
+          console.error(error);
+        },
+      );
+    }
+  };
+
   const handleCurrentClick = () => {
+    setCurrentLocation();
     const _myLocation = new window.naver.maps.LatLng(myLocation?.latitude, myLocation?.longitude);
     mapRef.current.panTo(_myLocation);
+    new window.naver.maps.Marker({
+      position: new window.naver.maps.LatLng(myLocation?.latitude, myLocation?.longitude),
+      map: mapRef.current,
+      icon: {
+        content: `<div class="mobile-current-marker-border"></div>`,
+        size: new window.naver.maps.Size(128, 40),
+        anchor: new window.naver.maps.Point(32, 32),
+      },
+    });
     setIsHoverCurrentLocation(false);
   };
 
