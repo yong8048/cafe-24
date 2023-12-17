@@ -134,8 +134,8 @@ const Map = () => {
             <div class="marker-arrow-border"></div>
             <div class="marker-arrow"></div>
           </div>`,
-            size: new window.naver.maps.Size(128, 40),
-            anchor: new window.naver.maps.Point(32, 32),
+            size: new window.naver.maps.Size(110, 41),
+            anchor: new window.naver.maps.Point(20, 41),
           },
           data: data,
         });
@@ -181,8 +181,8 @@ const Map = () => {
       map: mapRef.current,
       icon: {
         content: `<div class="mobile-current-marker-border"></div>`,
-        size: new window.naver.maps.Size(128, 40),
-        anchor: new window.naver.maps.Point(32, 32),
+        size: new window.naver.maps.Size(15, 15),
+        anchor: new window.naver.maps.Point(7, 7),
       },
     });
 
