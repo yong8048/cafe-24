@@ -24,6 +24,7 @@ const AdminUploadForm = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File[]>([]);
+  const [isAddressClicked, setIsAddressClicked] = useState(false);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -40,6 +41,7 @@ const AdminUploadForm = () => {
   };
 
   const handleClickSearch = async () => {
+    setIsAddressClicked(true);
     const res = await GetGeoLocation(storeData.address);
     if (res) {
       setStoreData({ ...storeData, latitude: res.latitude, longitude: res.longitude });
@@ -47,8 +49,13 @@ const AdminUploadForm = () => {
   };
 
   const handleUpload = async () => {
-    const res = await PostStoreInfo(storeData, imageFile);
-    res && setImageFile([]);
+    if (isAddressClicked) {
+      const res = await PostStoreInfo(storeData, imageFile);
+      res && setImageFile([]);
+      setIsAddressClicked(false);
+    } else {
+      alert("지도 검색버튼이 클릭되지 않았습니다.");
+    }
   };
 
   const handleRemove = (removeIndex: number) => {
