@@ -50,7 +50,9 @@ export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
 
 export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
   try {
-    const docRef = await addDoc(collection(db, "StoreInfo"), storeData);
+    const date = new Date();
+    const data = { ...storeData, data: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+    const docRef = await addDoc(collection(db, "StoreInfo"), data);
     files.map(async (file, index) => {
       const imageRef = ref(storage, `${docRef.id}/${index + 1}`);
       await uploadBytes(imageRef, file);

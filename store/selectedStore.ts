@@ -20,6 +20,7 @@ const initialState = {
   table: "",
   toilet: "",
   type: "",
+  date: "",
 };
 
 const selectedStore = create<ISelectedStore>(set => ({
