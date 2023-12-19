@@ -11,6 +11,7 @@ export interface IStoreInfo {
   table: string;
   toilet: string;
   type: string;
+  date: string;
 }
 
 export interface IReportInfo {
