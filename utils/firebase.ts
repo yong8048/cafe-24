@@ -51,7 +51,7 @@ export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
 export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
   try {
     const date = new Date();
-    const data = { ...storeData, data: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+    const data = { ...storeData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
     const docRef = await addDoc(collection(db, "StoreInfo"), data);
     files.map(async (file, index) => {
       const imageRef = ref(storage, `${docRef.id}/${index + 1}`);
@@ -100,7 +100,7 @@ export const PostReportInfo = async (reportData: IReportInfo, address: string) =
 export const AcceptReportInfo = async (reportData: IReportInfo, files: File[]) => {
   const { id, ..._reportData } = reportData;
   const date = new Date();
-  const data = { ..._reportData, data: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+  const data = { ..._reportData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
   const res = await addDoc(collection(db, "StoreInfo"), data)
     .then(async result => {
       files.map(async (file, index) => {
