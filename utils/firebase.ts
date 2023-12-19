@@ -99,7 +99,9 @@ export const PostReportInfo = async (reportData: IReportInfo, address: string) =
 
 export const AcceptReportInfo = async (reportData: IReportInfo, files: File[]) => {
   const { id, ..._reportData } = reportData;
-  const res = await addDoc(collection(db, "StoreInfo"), _reportData)
+  const date = new Date();
+  const data = { ..._reportData, data: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+  const res = await addDoc(collection(db, "StoreInfo"), data)
     .then(async result => {
       files.map(async (file, index) => {
         const imageRef = ref(storage, `${result.id}/${index + 1}`);
