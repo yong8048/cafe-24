@@ -1,16 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { category } from "@/constants/admin";
 import CheckBox from "../upload/CheckBox";
-import { IReportInfo, IStoreInfo } from "@/types/firebase";
-import { useReportStore } from "@/store/reportStore";
-
-const InputGroup = ({ label }: { label: string }) => (
-  <div className="flex">
-    <h1 className="w-16 text-center">{label}</h1>
-    <input type="text" className="input-admin w-[340px]" />
-  </div>
-);
+import { IStoreInfo } from "@/types/firebase";
+import { CiCirclePlus as Plus } from "react-icons/ci";
+import Image from "next/image";
+import { GetGeoLocation } from "@/utils/naver";
+import { useImageStore } from "@/store/imageStore";
+import { DeleteStoreImage, ModifyStoreInfo, PostStoreInfo } from "@/utils/firebase";
 
 const AdminModifyStoreList = ({
   dataIndex,
@@ -21,15 +18,64 @@ const AdminModifyStoreList = ({
   clickIndex: string;
   storeData: IStoreInfo;
 }) => {
-  const { report, resetReport } = useReportStore();
-  const [reportData, setReportData] = useState<IReportInfo>(report);
+  const [store, setStore] = useState<IStoreInfo>(storeData);
+  const [imageFile, setImageFile] = useState<File[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { urls, setUrl } = useImageStore();
+  const [deleteImage, setDeleteImage] = useState<string[]>([]);
 
   //수정 버튼
-  const handleClickModify = () => {
-    if (confirm("수정하시겠습니까?")) alert("ok");
+  const handleClickModify = async () => {
+    console.log(store.id);
+
+    if (confirm("수정하시겠습니까?")) {
+      //삭제된 이미지부터 먼저 삭제
+      deleteImage.map(async url => {
+        await DeleteStoreImage(url);
+      });
+      //업로드
+      await ModifyStoreInfo(store, imageFile);
+    }
   };
+  console.log(urls);
+
   //검색 버튼
-  const handleClickAddressSearch = () => {};
+  const handleClickAddressSearch = async () => {
+    const res = await GetGeoLocation(store.address as string);
+    if (res) {
+      setStore({ ...store, latitude: res.latitude, longitude: res.longitude });
+    }
+  };
+  //인풋 체인지
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStore({
+      ...store,
+      [e.target.name]: e.target.value,
+    });
+  };
+  //이미지 추가
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files: File[] = Array.from(e.target.files);
+      setImageFile(prevPreviews => [...prevPreviews, ...files]);
+    }
+  };
+  //기존 이미지 삭제
+  const handleExistindRemove = (removeIndex: number) => {
+    if (confirm("삭제 하시겠습니까?")) {
+      setDeleteImage([...deleteImage, urls[removeIndex]]);
+      setUrl(urls.filter((_, index) => index !== removeIndex));
+    }
+  };
+  //신규 이미지 삭제
+  const handleNewRemove = (removeIndex: number) => {
+    if (confirm("삭제 하시겠습니까?")) {
+      setImageFile(prevPreviews => prevPreviews.filter((preview, index) => index !== removeIndex));
+      console.log(removeIndex);
+    }
+  };
+
+  const handleClickModifyRemove = () => {};
 
   return (
     <>
@@ -50,7 +96,39 @@ const AdminModifyStoreList = ({
         }`}
       >
         <div>
-          <div className=" h-48 m-5  border rounded-lg">image</div>
+          <div className=" h-48 m-5 p-3 border rounded-lg flex items-center gap-3">
+            {urls.map((url, index) => (
+              <div key={index} className="w-36 h-40 relative rounded-lg">
+                <Image
+                  id="existingImage"
+                  key={index}
+                  src={url.toString()}
+                  alt="preview"
+                  fill
+                  onClick={() => handleExistindRemove(index)}
+                />
+              </div>
+            ))}
+            {imageFile.map((image, index) => (
+              <div key={index} className="w-36 h-40 relative rounded-lg">
+                <Image
+                  id="newImage"
+                  key={index}
+                  src={URL.createObjectURL(image)}
+                  alt="preview"
+                  fill
+                  onClick={() => handleNewRemove(index)}
+                />
+              </div>
+            ))}
+            <button
+              onClick={() => inputRef.current?.click()}
+              className="text-gray-400 w-36 h-40 border  rounded-lg flex justify-center items-center"
+            >
+              <input type="file" multiple onChange={handleImageChange} className="hidden" ref={inputRef} />
+              <Plus size="70" />
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-2 mx-3 gap-2">
           {Object.entries(category).map(([key, value]) => (
@@ -62,13 +140,23 @@ const AdminModifyStoreList = ({
             >
               <p className=" text-center">{value.title}</p>
               {value.property && (
-                <CheckBox stateKey={key} property={value.property} setState={setReportData} state={reportData} />
+                <CheckBox stateKey={key} property={value.property} setState={setStore} state={store} />
               )}
               {value.placeholder && (
                 <>
-                  <input type="text" className="border" />
+                  <input
+                    type="text"
+                    className="border"
+                    name={key}
+                    onChange={handleChange}
+                    value={store[key as keyof IStoreInfo]}
+                    placeholder={value.placeholder}
+                  />
                   {key === "address" && (
-                    <button className="w-[40px] h-[24px] text-sm bg-[#3D7FFF] rounded-[20px] text-white ml-1">
+                    <button
+                      className="w-[40px] h-[24px] text-sm bg-[#3D7FFF] rounded-[20px] text-white ml-1"
+                      onClick={handleClickAddressSearch}
+                    >
                       검색
                     </button>
                   )}
@@ -81,6 +169,12 @@ const AdminModifyStoreList = ({
           <button className=" w-[60px] h-[32px] bg-[#3D7FFF] rounded-[20px] text-white" onClick={handleClickModify}>
             수정
           </button>
+          <button
+            className=" w-[60px] h-[32px] bg-[#3D7FFF] rounded-[20px] text-white ml-3"
+            onClick={handleClickModifyRemove}
+          >
+            삭제
+          </button>
         </div>
       </div>
     </>
@@ -88,44 +182,3 @@ const AdminModifyStoreList = ({
 };
 
 export default AdminModifyStoreList;
-
-// <div
-// id="storeListDetail"
-// className={`w-full cursor-default border  rounded-b-sm duration-300 ${
-//   dataIndex === clickIndex ? "h-[500px]" : "h-0 hidden"
-// }`}
-// >
-// <div>
-//   <div className=" h-48 m-5  border rounded-lg">image</div>
-// </div>
-// <div className="grid grid-cols-2 mx-3">
-//   <div className="flex flex-col gap-2">
-//     {labels.slice(0, 2).map(label => (
-//       <InputGroup key={label} label={label} />
-//     ))}
-//     <div className="flex">
-//       <h1 className="w-16 text-center">주소</h1>
-//       <input type="text" className="input-admin w-[340px]" />
-//       <button
-//         className="w-[40px] h-[24px] text-sm bg-[#3D7FFF] rounded-[20px] text-white ml-1"
-//         onClick={handleClickAddressSearch}
-//       >
-//         검색
-//       </button>
-//     </div>
-//     {labels.slice(2, 5).map(label => (
-//       <InputGroup key={label} label={label} />
-//     ))}
-//   </div>
-//   <div className="flex flex-col gap-2">
-//     {labels.slice(5).map(label => (
-//       <InputGroup key={label} label={label} />
-//     ))}
-//   </div>
-// </div>
-// <div className="text-right mr-10 mt-3">
-//   <button className=" w-[60px] h-[32px] bg-[#3D7FFF] rounded-[20px] text-white" onClick={handleClickModify}>
-//     수정
-//   </button>
-// </div>
-// </div>

@@ -1,5 +1,5 @@
 "use client";
-import { IReportInfo, IUploadInfo } from "@/types/firebase";
+import { IReportInfo, IStoreInfo, IUploadInfo } from "@/types/firebase";
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 const hasNone = ["parking", "toilet", "internet"];
@@ -12,8 +12,11 @@ const CheckBox = ({
 }: {
   stateKey: string;
   property: string[];
-  setState: Dispatch<SetStateAction<IUploadInfo>> | Dispatch<SetStateAction<IReportInfo>>;
-  state: IUploadInfo | IReportInfo;
+  setState:
+    | Dispatch<SetStateAction<IUploadInfo>>
+    | Dispatch<SetStateAction<IReportInfo>>
+    | Dispatch<SetStateAction<IStoreInfo>>;
+  state: IUploadInfo | IReportInfo | IStoreInfo;
 }) => {
   const handleClick = (e: ChangeEvent<HTMLInputElement>) => {
     const res = e.target.name === "none" ? "" : e.target.name === "first" ? property[0] : property[1];
