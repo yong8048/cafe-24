@@ -5,6 +5,8 @@ import { FaSearch as Search } from "react-icons/fa";
 import AdminModifyStoreList from "./AdminModifyStoreList";
 import { useQueryClient } from "@tanstack/react-query";
 import { IStoreInfo } from "@/types/firebase";
+import { useImageStore } from "@/store/imageStore";
+import { GetStoreImages } from "@/utils/firebase";
 
 const PROPS_H1 = {
   전체: "전체",
@@ -20,6 +22,7 @@ const AdminModify = () => {
   const addressRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const [storeList, setStoreList] = useState<IStoreInfo[]>();
+  const { setUrl, resetUrl } = useImageStore();
 
   //검색버튼이벤트
   const handleClickSearchCafe = () => {
@@ -36,16 +39,18 @@ const AdminModify = () => {
 
     setStoreList(resStore);
   };
-  console.log(storeList);
 
   //매장리스트클릭이벤트
-  const handleListClick = (index: string, e: MouseEvent<HTMLElement>) => {
+  const handleListClick = async (index: string, e: MouseEvent<HTMLElement>) => {
     const el = e.target as HTMLElement;
     const parent = el.closest("#storeListDetail");
-
     if (parent) return;
+
+    resetUrl();
+
     storeListClicked === index ? setStoreListClicked("") : setStoreListClicked(index);
-    console.log(el.className);
+    const image = await GetStoreImages(index);
+    setUrl(image as string[]);
   };
 
   const handleClickType = (e: React.MouseEvent<HTMLHeadingElement>) => {

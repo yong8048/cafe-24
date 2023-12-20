@@ -15,7 +15,7 @@ import {
   arrayRemove,
   deleteDoc,
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -57,6 +57,29 @@ export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
       const imageRef = ref(storage, `${docRef.id}/${index + 1}`);
       await uploadBytes(imageRef, file);
     });
+    alert("업로드 완료");
+    return true;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    alert("업로드 실패");
+    return "";
+  }
+};
+export const ModifyStoreInfo = async (storeData: IStoreInfo, files: File[]) => {
+  try {
+    let { id, ...modifyData } = storeData;
+    console.log(modifyData);
+
+    const date = new Date();
+    modifyData = { ...modifyData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+
+    const test = doc(db, "StoreInfo/" + storeData.id);
+    await updateDoc(test, modifyData);
+
+    // files.map(async (file, index) => {
+    //   const imageRef = ref(storage, `${storeData.id}/${index + 1}`);
+    //   await uploadBytes(imageRef, file);
+    // });
     alert("업로드 완료");
     return true;
   } catch (error) {
@@ -225,4 +248,18 @@ export const GetUpdateDate = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const DeleteStoreImage = async (url: string) => {
+  // let imageRef = storage.refFromURL(url);
+  let filePath = url.split("/o/")[1].split("?")[0];
+  let imageRef = ref(storage, decodeURIComponent(filePath));
+
+  deleteObject(imageRef)
+    .then(() => {
+      console.log("이미지삭제완료");
+    })
+    .catch(error => {
+      console.log("이미지삭제실패");
+    });
 };
