@@ -54,7 +54,11 @@ export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
     const data = { ...storeData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
     const docRef = await addDoc(collection(db, "StoreInfo"), data);
     files.map(async (file, index) => {
-      const imageRef = ref(storage, `${docRef.id}/${index + 1}`);
+      const uploadDate = new Date();
+      const _uploadDate = `${uploadDate.getFullYear()}-${
+        uploadDate.getMonth() + 1
+      }-${uploadDate.getDate()}-${uploadDate.getHours()}-${uploadDate.getMinutes()}-${uploadDate.getSeconds()}-${uploadDate.getMilliseconds()}`;
+      const imageRef = ref(storage, `${docRef.id}/${_uploadDate}---${index + 1}`);
       await uploadBytes(imageRef, file);
     });
     alert("업로드 완료");
@@ -76,11 +80,12 @@ export const ModifyStoreInfo = async (storeData: IStoreInfo, files: File[]) => {
     const test = doc(db, "StoreInfo/" + storeData.id);
     await updateDoc(test, modifyData);
 
-    const folderRef = ref(storage, storeData.id);
-    const imageListRef = await listAll(folderRef);
-
     files.map(async (file, index) => {
-      const imageRef = ref(storage, `${storeData.id}/${imageListRef.items.length + index + 1}`);
+      const uploadDate = new Date();
+      const _uploadDate = `${uploadDate.getFullYear()}-${
+        uploadDate.getMonth() + 1
+      }-${uploadDate.getDate()}-${uploadDate.getHours()}-${uploadDate.getMinutes()}-${uploadDate.getSeconds()}-${uploadDate.getMilliseconds()}`;
+      const imageRef = ref(storage, `${storeData.id}/${_uploadDate}---${index + 1}`);
       await uploadBytes(imageRef, file);
     });
 
@@ -156,7 +161,11 @@ export const AcceptReportInfo = async (reportData: IReportInfo, files: File[]) =
   const res = await addDoc(collection(db, "StoreInfo"), data)
     .then(async result => {
       files.map(async (file, index) => {
-        const imageRef = ref(storage, `${result.id}/${index + 1}`);
+        const uploadDate = new Date();
+        const _uploadDate = `${uploadDate.getFullYear()}-${
+          uploadDate.getMonth() + 1
+        }-${uploadDate.getDate()}-${uploadDate.getHours()}-${uploadDate.getMinutes()}-${uploadDate.getSeconds()}-${uploadDate.getMilliseconds()}`;
+        const imageRef = ref(storage, `${result.id}/${_uploadDate}---${index + 1}`);
         await uploadBytes(imageRef, file);
       });
       const deleteRes = await DeleteReportInfo(id, false);
