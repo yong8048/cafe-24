@@ -90,10 +90,12 @@ const AdminModifyStoreList = ({
   };
 
   const handleClickModifyRemove = async () => {
-    const res = await DeleteStoreInfo(store.id);
-    if (res) {
-      queryClient.refetchQueries({ queryKey: ["stores"] });
-      setClickIndex("");
+    if (confirm("매장을 삭제 하시겠습니까?")) {
+      const res = await DeleteStoreInfo(store.id);
+      if (res) {
+        queryClient.refetchQueries({ queryKey: ["stores"] });
+        setClickIndex("");
+      }
     }
   };
 
