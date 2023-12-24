@@ -3,12 +3,11 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { GetReportSize, GetTotalUser } from "@/utils/firebase";
 import { useGetStores } from "@/hooks/useGetStores";
-import { useReportStore } from "@/store/reportStore";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const unmannedCafeList = ["만월경", "데이롱", "커피에반하다", "카페일분", "프리헷", "터치카페", "나우커피"];
-const generalCafeList = ["The november", "탐앤탐스"];
+const generalCafeList = ["The november", "탐앤탐스", "할리스", "엔젤리너스", "파스쿠찌", "투썸플레이스", "스타벅스"];
 
 const AdminDashboard = () => {
   const { stores } = useGetStores();
@@ -48,7 +47,7 @@ const AdminDashboard = () => {
     datasets: [
       {
         data: [...unmannedcafes, calEtcCafes(unmanned, unmannedcafes)],
-        backgroundColor: ["#4bc0c0", "#36a2eb"],
+        backgroundColor: ["#12294d", "#3b251d", "#fea30b", "#7a6a54", "#3e5429", "#db0c1f", "#ce7d29", "#555555"],
         borderColor: ["#ffffff"],
         borderWidth: 1,
       },
@@ -63,7 +62,7 @@ const AdminDashboard = () => {
     datasets: [
       {
         data: generalCafes,
-        backgroundColor: ["#4bc0c0", "#36a2eb"],
+        backgroundColor: ["#070201", "#572a31", "#d91226", "#d3b070", "#9e2a43", "#e25076", "#007042"],
         borderColor: ["#ffffff"],
         borderWidth: 1,
       },
