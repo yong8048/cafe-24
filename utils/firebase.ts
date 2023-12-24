@@ -76,10 +76,14 @@ export const ModifyStoreInfo = async (storeData: IStoreInfo, files: File[]) => {
     const test = doc(db, "StoreInfo/" + storeData.id);
     await updateDoc(test, modifyData);
 
-    // files.map(async (file, index) => {
-    //   const imageRef = ref(storage, `${storeData.id}/${index + 1}`);
-    //   await uploadBytes(imageRef, file);
-    // });
+    const folderRef = ref(storage, storeData.id);
+    const imageListRef = await listAll(folderRef);
+
+    files.map(async (file, index) => {
+      const imageRef = ref(storage, `${storeData.id}/${imageListRef.items.length + index + 1}`);
+      await uploadBytes(imageRef, file);
+    });
+
     alert("업로드 완료");
     return true;
   } catch (error) {
@@ -87,6 +91,31 @@ export const ModifyStoreInfo = async (storeData: IStoreInfo, files: File[]) => {
     alert("업로드 실패");
     return "";
   }
+};
+
+export const DeleteStoreInfo = async (storeID: string) => {
+  const reportDoc = doc(db, "StoreInfo", storeID);
+  console.log(reportDoc);
+  const res = await deleteDoc(reportDoc)
+    .then(async () => {
+      const imageRef = ref(storage, storeID);
+      const imageListRef = await listAll(imageRef);
+
+      imageListRef.items.forEach(fileRef => {
+        deleteObject(fileRef).then(() => {
+          console.log("성공");
+        });
+      });
+
+      alert("삭제 완료");
+      return true;
+    })
+    .catch(error => {
+      console.error(error);
+      alert("에러 발생");
+      return false;
+    });
+  return res;
 };
 
 export const GetReportInfo = async (): Promise<IReportInfo[]> => {
