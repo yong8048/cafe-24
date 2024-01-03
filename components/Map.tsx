@@ -19,6 +19,7 @@ const Map = () => {
   const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number }>();
   const [research, setResearch] = useState(false);
   const [isHoverCurrentLocation, setIsHoverCurrentLocation] = useState(false);
+  const [mapZoom, setMapZoom] = useState(14);
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
   const clickMarkerRef = useRef<any>(null);
@@ -27,10 +28,10 @@ const Map = () => {
   const { setData } = useSelectedStore();
   const { setUrl, resetUrl } = useImageStore();
   const { type } = useCafeTypeStore();
-  const { stores, isLoading } = useGetStores();
   const { userInfo } = useUserInfoStore();
   const { isReportClicked, setIsReportClicked } = useReportClickStore();
   const { setLocation, resetLocation } = useReportLocationStore();
+  const { stores, isLoading } = useGetStores();
 
   useEffect(() => {
     setCurrentLocation();
@@ -73,7 +74,7 @@ const Map = () => {
       });
 
       const zoomChangedListener = window.naver.maps.Event.addListener(mapRef.current, "zoom_changed", () => {
-        setMarker();
+        setMapZoom(getMapZoom());
       });
 
       return () => {
@@ -86,7 +87,7 @@ const Map = () => {
 
   useEffect(() => {
     setMarker();
-  }, [type, isLoading]);
+  }, [type, isLoading, mapZoom]);
 
   const initMap = async () => {
     const mapOptions = {
