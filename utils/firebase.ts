@@ -51,7 +51,11 @@ export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
 export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
   try {
     const date = new Date();
-    const data = { ...storeData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+    const data = {
+      ...storeData,
+      date: `${date.getFullYear()}-${date.getMonth() < 9 && "0"}${date.getMonth() + 1}
+      -${date.getDate() < 10 && "0"}${date.getDate()}`,
+    };
     const docRef = await addDoc(collection(db, "StoreInfo"), data);
     files.map(async (file, index) => {
       const uploadDate = new Date();
@@ -75,7 +79,11 @@ export const ModifyStoreInfo = async (storeData: IStoreInfo, files: File[]) => {
     console.log(modifyData);
 
     const date = new Date();
-    modifyData = { ...modifyData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+    modifyData = {
+      ...modifyData,
+      date: `${date.getFullYear()}-${date.getMonth() < 9 && "0"}${date.getMonth() + 1}
+      -${date.getDate() < 10 && "0"}${date.getDate()}`,
+    };
 
     const test = doc(db, "StoreInfo/" + storeData.id);
     await updateDoc(test, modifyData);
@@ -157,7 +165,11 @@ export const PostReportInfo = async (reportData: IReportInfo, address: string) =
 export const AcceptReportInfo = async (reportData: IReportInfo, files: File[]) => {
   const { id, ..._reportData } = reportData;
   const date = new Date();
-  const data = { ..._reportData, date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` };
+  const data = {
+    ..._reportData,
+    date: `${date.getFullYear()}-${date.getMonth() < 10 && "0"}${date.getMonth() + 1}
+    -${date.getDate() < 10 && "0"}${date.getDate()}`,
+  };
   const res = await addDoc(collection(db, "StoreInfo"), data)
     .then(async result => {
       files.map(async (file, index) => {
