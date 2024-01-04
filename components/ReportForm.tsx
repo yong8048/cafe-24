@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CheckBox from "./admin/upload/CheckBox";
 import { IReportInfo } from "@/types/firebase";
 import { PostReportInfo } from "@/utils/firebase";
 import { useReportClickStore } from "@/store/ReportClickStore";
 import { useReportLocationStore } from "@/store/reportLocationStore";
 import { GetAddrress } from "@/utils/naver";
+import emailjs from "@emailjs/browser";
 
 const category: { [key: string]: { title: string; placeholder?: string; property?: string[] } } = {
   name: { title: "지점명*", placeholder: "만월경 위례점" },
@@ -69,7 +70,21 @@ const ReportForm = () => {
         }${address[0].land.number2 ? `-${address[0].land.number2}` : ""}`;
         setReportData({ ...reportData, address: _address });
         const res = await PostReportInfo(reportData, _address);
-        res && setIsReportClicked();
+        if (res) {
+          setIsReportClicked();
+          try {
+            emailjs.send(
+              process.env.NEXT_PUBLIC_EMAILJS_SERVICE_KEY as string,
+              process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string,
+              {
+                storeName: reportData.name,
+              },
+              process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string,
+            );
+          } catch (error) {
+            console.error(error);
+          }
+        }
       } else {
         alert("정확한 위치에 핀을 위치해야 합니다.\n핀을 매장이 위치한 '건물'위에 올려주세요.");
       }

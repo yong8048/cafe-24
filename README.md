@@ -31,7 +31,9 @@
 <img src="https://img.shields.io/badge/chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white"><br>
 <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
 <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white">
+<img src="https://img.shields.io/badge/emailJS-f49e4f?style=for-the-badge">
 <img src="https://img.shields.io/badge/zustand-black?style=for-the-badge">
+
 </br></br>
 
 ## 🖥 프로젝트 미리보기
@@ -78,6 +80,11 @@
 | --- |
 |<p align="center"><img src="https://github.com/lbw3973/cafe-24/assets/75530371/c5cc759b-3caa-47da-9358-96099bf6a319" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
 |<p align="center">관리자가 매장을 추가할 수 있습니다.</p>|
+
+|**백오피스 매장추가**|
+| --- |
+|<p align="center"><img src="https://github.com/cafe-24/cafe-24/assets/75530371/9b8c2e0f-fe7b-4419-97c0-e1737a8feb2f" width="750" height="400" style="object-fit: cover; object-position: center;"></p>|
+|<p align="center">관리자가 매장정보 및 매장사진을 수정, 삭제할 수 있습니다.</p>|
 
 ### 📱 Mobile
 

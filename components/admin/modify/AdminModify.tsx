@@ -1,5 +1,5 @@
 "use client";
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent, useEffect, useRef, useState } from "react";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { FaSearch as Search } from "react-icons/fa";
 import AdminModifyStoreList from "./AdminModifyStoreList";
@@ -23,6 +23,10 @@ const AdminModify = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const [storeList, setStoreList] = useState<IStoreInfo[]>();
   const { setUrl, resetUrl } = useImageStore();
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["stores"] });
+  }, []);
 
   //검색버튼이벤트
   const handleClickSearchCafe = () => {
@@ -62,12 +66,18 @@ const AdminModify = () => {
     setIsClicked(false);
   };
 
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleClickSearchCafe();
+    }
+  };
+
   return (
     <section className="w-full h-full flex flex-col items-center">
       <div className="min-w-[900px] w-2/5 h-20 flex justify-between items-center m-20 p-12 border rounded-lg">
         <div>
           <div
-            className="w-24 relative flex justify-end items-center cursor-pointer"
+            className="w-24 relative flex justify-evenly items-center cursor-pointer border rounded-md"
             onClick={() => {
               setIsClicked(!isClicked);
             }}
@@ -76,7 +86,7 @@ const AdminModify = () => {
             {isClicked ? <MdArrowDropUp size="30" /> : <MdArrowDropDown size="30" />}
             {isClicked && (
               <div
-                className="absolute right-0 z-50 w-20 text-base bg-white border border-gray-300 rounded top-full "
+                className="absolute top-full right-0 translate-y-1 z-50 w-24 text-base bg-white border border-gray-300 rounded  "
                 onClick={handleClickType}
               >
                 {Object.entries(PROPS_H1).map(([key, value], index) => (
@@ -97,11 +107,11 @@ const AdminModify = () => {
 
         <div className="flex">
           <h1>지역</h1>
-          <input type="text" className=" ml-4 border" ref={addressRef} />
+          <input type="text" className=" ml-4 border px-2" ref={addressRef} onKeyUp={handleKeyUp} />
         </div>
         <div className="flex">
           <h1>지점명</h1>
-          <input type="text" className=" ml-4 border" ref={nameRef} />
+          <input type="text" className=" ml-4 border px-2" ref={nameRef} onKeyUp={handleKeyUp} />
         </div>
         <div>
           <button className="border py-1.5 px-2 rounded-lg border-gray-400" onClick={handleClickSearchCafe}>
@@ -109,11 +119,16 @@ const AdminModify = () => {
           </button>
         </div>
       </div>
-      <div className="min-w-[1106px] w-3/5 flex justify-between items-center  px-12 pb-12 border rounded-lg">
+      <div className="min-w-[1106px] w-3/5 flex justify-between items-center px-12 pb-12 border rounded-lg">
         <ul className="w-full mx-10">
           {storeList?.map(store => (
             <li key={store.id} className="cursor-pointer" onClick={e => handleListClick(store.id, e)}>
-              <AdminModifyStoreList dataIndex={store.id} clickIndex={storeListClicked} storeData={store} />
+              <AdminModifyStoreList
+                dataIndex={store.id}
+                clickIndex={storeListClicked}
+                setClickIndex={setStoreListClicked}
+                storeData={store}
+              />
             </li>
           ))}
         </ul>

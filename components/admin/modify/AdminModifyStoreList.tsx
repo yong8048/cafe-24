@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { category } from "@/constants/admin";
 import CheckBox from "../upload/CheckBox";
 import { IStoreInfo } from "@/types/firebase";
@@ -7,15 +7,18 @@ import { CiCirclePlus as Plus } from "react-icons/ci";
 import Image from "next/image";
 import { GetGeoLocation } from "@/utils/naver";
 import { useImageStore } from "@/store/imageStore";
-import { DeleteStoreImage, ModifyStoreInfo, PostStoreInfo } from "@/utils/firebase";
+import { DeleteStoreImage, DeleteStoreInfo, ModifyStoreInfo, PostStoreInfo } from "@/utils/firebase";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AdminModifyStoreList = ({
   dataIndex,
   clickIndex,
+  setClickIndex,
   storeData,
 }: {
   dataIndex: string;
   clickIndex: string;
+  setClickIndex: Dispatch<SetStateAction<string>>;
   storeData: IStoreInfo;
 }) => {
   const [store, setStore] = useState<IStoreInfo>(storeData);
@@ -23,21 +26,32 @@ const AdminModifyStoreList = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const { urls, setUrl } = useImageStore();
   const [deleteImage, setDeleteImage] = useState<string[]>([]);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return () => {
+      if (dataIndex === clickIndex) {
+        setImageFile([]);
+        setDeleteImage([]);
+      }
+    };
+  }, [clickIndex]);
 
   //수정 버튼
   const handleClickModify = async () => {
-    console.log(store.id);
-
     if (confirm("수정하시겠습니까?")) {
       //삭제된 이미지부터 먼저 삭제
       deleteImage.map(async url => {
         await DeleteStoreImage(url);
       });
       //업로드
-      await ModifyStoreInfo(store, imageFile);
+      const res = await ModifyStoreInfo(store, imageFile);
+      if (res) {
+        queryClient.invalidateQueries({ queryKey: ["stores"] });
+        setClickIndex("");
+      }
     }
   };
-  console.log(urls);
 
   //검색 버튼
   const handleClickAddressSearch = async () => {
@@ -75,17 +89,31 @@ const AdminModifyStoreList = ({
     }
   };
 
-  const handleClickModifyRemove = () => {};
+  const handleClickModifyRemove = async () => {
+    if (confirm("매장을 삭제 하시겠습니까?")) {
+      const res = await DeleteStoreInfo(store.id);
+      if (res) {
+        queryClient.refetchQueries({ queryKey: ["stores"] });
+        setClickIndex("");
+      }
+    }
+  };
 
   return (
     <>
       <div className="w-full grid grid-cols-[40px_10px_minmax(300px,_2fr)_30px_minmax(450px,_3fr)_10px_90px] border p-2 my-2  rounded-sm ">
-        <h1>{storeData.type}</h1>
-        <div className="my-[5px] w-px bg-gray-300"></div>
+        <h1
+          className={`${
+            storeData.type === "무인" ? "bg-red-400" : "bg-blue-400"
+          } text-center text-[#242424] font-bold rounded-lg`}
+        >
+          {storeData.type}
+        </h1>
+        <div className="my-[5px] w-px"></div>
         <h1>{storeData.name}</h1>
         <div className="my-[5px] w-px bg-gray-300"></div>
 
-        <h1>{storeData.address}</h1>
+        <h1 className="overflow-hidden whitespace-nowrap text-ellipsis">{storeData.address}</h1>
         <div className="my-[5px] w-px bg-gray-300"></div>
         <h1>{storeData.date}</h1>
       </div>
