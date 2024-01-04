@@ -51,7 +51,10 @@ const AdminUploadForm = () => {
   const handleUpload = async () => {
     if (isAddressClicked) {
       const res = await PostStoreInfo(storeData, imageFile);
-      res && setImageFile([]);
+      if (res) {
+        setImageFile([]);
+        setStoreData({ ...storeData, name: "", address: "", latitude: "", longitude: "" });
+      }
       setIsAddressClicked(false);
     } else {
       alert("지도 검색버튼이 클릭되지 않았습니다.");
