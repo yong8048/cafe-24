@@ -11,3 +11,14 @@ export interface IMarkerInfo {
   setMap: any;
   setVisible: any;
 }
+
+export interface IMarkerOptions {
+  position: any;
+  map: any;
+  data: IStoreInfo;
+  icon?: {
+    content: string;
+    size: any;
+    anchor: any;
+  };
+}

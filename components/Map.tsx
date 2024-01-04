@@ -2,7 +2,7 @@
 import { useImageStore } from "@/store/imageStore";
 import { useSelectedStore } from "@/store/selectedStore";
 import { useSidebarStore } from "@/store/sidebarStore";
-import { IMarkerInfo } from "@/types/Map";
+import { IMarkerInfo, IMarkerOptions } from "@/types/Map";
 import { GetStoreImages } from "@/utils/firebase";
 import { useEffect, useRef, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
@@ -19,6 +19,7 @@ const Map = () => {
   const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number }>();
   const [research, setResearch] = useState(false);
   const [isHoverCurrentLocation, setIsHoverCurrentLocation] = useState(false);
+  const [mapZoom, setMapZoom] = useState(14);
   const mapRef = useRef<any | null>(null);
   const markerRef = useRef<IMarkerInfo[]>([]);
   const clickMarkerRef = useRef<any>(null);
@@ -27,10 +28,10 @@ const Map = () => {
   const { setData } = useSelectedStore();
   const { setUrl, resetUrl } = useImageStore();
   const { type } = useCafeTypeStore();
-  const { stores, isLoading } = useGetStores();
   const { userInfo } = useUserInfoStore();
   const { isReportClicked, setIsReportClicked } = useReportClickStore();
   const { setLocation, resetLocation } = useReportLocationStore();
+  const { stores, isLoading } = useGetStores();
 
   useEffect(() => {
     setCurrentLocation();
@@ -72,21 +73,21 @@ const Map = () => {
         }
       });
 
-      const pinchListener = window.naver.maps.Event.addListener(mapRef.current, "pinchend", () => {
-        !isReportClicked && setResearch(true);
+      const zoomChangedListener = window.naver.maps.Event.addListener(mapRef.current, "zoom_changed", () => {
+        setMapZoom(getMapZoom());
       });
 
       return () => {
         window.naver.maps.Event.removeListener(dragendListener);
         window.naver.maps.Event.removeListener(clickListener);
-        window.naver.maps.Event.removeListener(pinchListener);
+        window.naver.maps.Event.removeListener(zoomChangedListener);
       };
     }
   }, [mapRef.current, isReportClicked]);
 
   useEffect(() => {
     setMarker();
-  }, [type, isLoading]);
+  }, [type, isLoading, mapZoom]);
 
   const initMap = async () => {
     const mapOptions = {
@@ -124,21 +125,27 @@ const Map = () => {
       }
 
       boundsStores.map(data => {
-        const marker = new window.naver.maps.Marker({
+        const markerOptions: IMarkerOptions = {
           position: new window.naver.maps.LatLng(data.latitude, data.longitude),
           map: mapRef.current,
-          icon: {
+          data: data,
+        };
+
+        if (getMapZoom() > 12) {
+          markerOptions.icon = {
             content: `
-          <div class="marker-container">
-            ${data.name}
-            <div class="marker-arrow-border"></div>
-            <div class="marker-arrow"></div>
-          </div>`,
+              <div class="marker-container">
+                ${data.name}
+                <div class="marker-arrow-border"></div>
+                <div class="marker-arrow"></div>
+              </div>`,
             size: new window.naver.maps.Size(110, 41),
             anchor: new window.naver.maps.Point(20, 41),
-          },
-          data: data,
-        });
+          };
+        }
+
+        const marker = new window.naver.maps.Marker(markerOptions);
+
         markerRef.current.push(marker);
       });
       markerRef.current.map(marker => {
@@ -189,17 +196,13 @@ const Map = () => {
     setIsHoverCurrentLocation(false);
   };
 
+  const getMapZoom = () => {
+    return mapRef.current && mapRef.current.getZoom();
+  };
+
   return (
     <div className={`${isReportClicked && "bg-black opacity-80"}`}>
-      <div
-        id="map"
-        className="w-full sm:h-main_section_sm h-main_section mobile_height"
-        onWheelCapture={() => {
-          if (!isReportClicked) {
-            setResearch(true);
-          }
-        }}
-      ></div>
+      <div id="map" className="w-full sm:h-main_section_sm h-main_section mobile_height"></div>
       <div
         className={`${
           isReportClicked ? "bottom-5" : "bottom-20"

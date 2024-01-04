@@ -66,6 +66,12 @@ const AdminModify = () => {
     setIsClicked(false);
   };
 
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleClickSearchCafe();
+    }
+  };
+
   return (
     <section className="w-full h-full flex flex-col items-center">
       <div className="min-w-[900px] w-2/5 h-20 flex justify-between items-center m-20 p-12 border rounded-lg">
@@ -101,11 +107,11 @@ const AdminModify = () => {
 
         <div className="flex">
           <h1>지역</h1>
-          <input type="text" className=" ml-4 border" ref={addressRef} />
+          <input type="text" className=" ml-4 border px-2" ref={addressRef} onKeyUp={handleKeyUp} />
         </div>
         <div className="flex">
           <h1>지점명</h1>
-          <input type="text" className=" ml-4 border" ref={nameRef} />
+          <input type="text" className=" ml-4 border px-2" ref={nameRef} onKeyUp={handleKeyUp} />
         </div>
         <div>
           <button className="border py-1.5 px-2 rounded-lg border-gray-400" onClick={handleClickSearchCafe}>
