@@ -1,4 +1,4 @@
 User-Agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://cafe-24.vercel.app/sitemap.xml
+Sitemap: https://www.saebyeok-gamseong.com/sitemap.xml
