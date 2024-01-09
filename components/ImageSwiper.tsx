@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "@/styles/swiper.css";
+import { loadingImage } from "@/utils/base64";
 
 const ImageSwiper = ({ urls }: { urls: string[] }) => {
   const [showModal, setShowModal] = useState(false);
@@ -41,6 +42,7 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
                   setShowModal(true);
                 }}
                 className="object-cover cursor-pointer"
+                placeholder={loadingImage}
               />
             )}
           </SwiperSlide>
@@ -70,7 +72,7 @@ const ImageSwiper = ({ urls }: { urls: string[] }) => {
               {urls.map(url => (
                 <SwiperSlide key={url.toString()} className="relative">
                   <div className="w-full">
-                    <Image src={url.toString()} alt="카페 사진" width={1000} height={600} />
+                    <Image src={url.toString()} alt="카페 사진" width={1000} height={600} placeholder={loadingImage} />
                   </div>
                 </SwiperSlide>
               ))}

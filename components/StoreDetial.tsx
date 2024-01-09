@@ -19,7 +19,6 @@ import { PostFavStore } from "@/utils/firebase";
 import { useUserInfoStore } from "@/store/userInfoStore";
 import { CgClose as Close } from "react-icons/cg";
 import { useSidebarStore } from "@/store/sidebarStore";
-import { isAdmin } from "@/utils/admin";
 import "react-toastify/dist/ReactToastify.css";
 
 const category = {
@@ -85,11 +84,6 @@ function StoreDetial() {
     }
   };
 
-  const handleClickAdminCopy = () => {
-    navigator.clipboard.writeText(data.id);
-    copyNotify();
-  };
-
   return (
     <section className="relative w-full">
       <ToastContainer
@@ -136,7 +130,7 @@ function StoreDetial() {
           >
             <div className="relative py-1.5 flex gap-9 items-center ">
               <div className="flex items-center justify-center h-7 w-7">{value.icon}</div>
-              <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"}`}>
+              <p className={`${data[key as keyof IStoreInfo] || "text-gray-400"} break-keep`}>
                 {data[key as keyof IStoreInfo] || "정보 없음"}
               </p>
               {value.copy && (
