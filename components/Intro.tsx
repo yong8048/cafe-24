@@ -10,6 +10,7 @@ const subTitles = [
   "#밤산책하면서 커피 한잔하고 싶다!",
   "#편의점말고 매장에서 먹고 싶은데",
   "#새벽에 조용히 커피먹고 싶을 때!!",
+  "#새벽감성 #24시카페검색 #무인카페 #새벽카페검색",
 ];
 const TIMER_TIME = 2;
 
@@ -64,6 +65,7 @@ const Intro = () => {
               {subTitle}
             </h3>
           ))}
+
           <h2 className="px-3 mt-6 text-base font-[600] break-keep">
             이런 분들을 위한 <br /> 24시 운영하는 카페들을 모아 찾아보는 사이트
           </h2>
