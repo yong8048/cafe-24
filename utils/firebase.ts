@@ -54,7 +54,7 @@ export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
     const data = {
       ...storeData,
       date: `${date.getFullYear()}-${date.getMonth() < 9 && "0"}${date.getMonth() + 1}-${
-        date.getDate() < 10 && "0"
+        date.getDate() < 10 ? "0" : ""
       }${date.getDate()}`,
     };
     const docRef = await addDoc(collection(db, "StoreInfo"), data);
@@ -83,7 +83,7 @@ export const ModifyStoreInfo = async (storeData: IStoreInfo, files: File[]) => {
     modifyData = {
       ...modifyData,
       date: `${date.getFullYear()}-${date.getMonth() < 9 && "0"}${date.getMonth() + 1}-${
-        date.getDate() < 10 && "0"
+        date.getDate() < 10 ? "0" : ""
       }${date.getDate()}`,
     };
 
@@ -170,7 +170,7 @@ export const AcceptReportInfo = async (reportData: IReportInfo, files: File[]) =
   const data = {
     ..._reportData,
     date: `${date.getFullYear()}-${date.getMonth() < 10 && "0"}${date.getMonth() + 1}-${
-      date.getDate() < 10 && "0"
+      date.getDate() < 10 ? "0" : ""
     }${date.getDate()}`,
   };
   const res = await addDoc(collection(db, "StoreInfo"), data)
