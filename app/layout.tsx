@@ -56,7 +56,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" href="/favicon.png" />
         <meta name="viewport" content="width=device-width, minimal-ui, viewport-fit=cover" />
         <meta name="google-site-verification" content="q9x7v3OCZ9KTW_JeVWCs9PFKl3oQCviK82JokLkQmzY" />
-        <meta name="naver-site-verification" content="48411979cfd85761a5e57cb876e5d131fc7b1f06" />
+        <meta name="naver-site-verification" content="61c718a8f06eeaba81289acd4e5e5cc5ac894010" />
+        <meta name="google-adsense-account" content="ca-pub-7406057926683598"></meta>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7406057926683598"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body>
         <ReactQueryProvider>
