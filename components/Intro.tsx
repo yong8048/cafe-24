@@ -10,6 +10,7 @@ const subTitles = [
   "#밤산책하면서 커피 한잔하고 싶다!",
   "#편의점말고 매장에서 먹고 싶은데",
   "#새벽에 조용히 커피먹고 싶을 때!!",
+  "#눈치안보고 카공하고 싶을때 무인카페",
   "#새벽감성 #24시카페 #24시카페검색 #무인카페 #새벽카페검색",
 ];
 const TIMER_TIME = 2;
@@ -57,14 +58,19 @@ const Intro = () => {
       />
       <div className="text-sm text-center">
         <div className="flex flex-col items-center justify-center ">
-          <h1 id="intro_title" className="flex text-3xl">
+          {/* <h1 id="intro_title" className="flex text-3xl">
             새벽감성 24시 카페 검색
-          </h1>
+          </h1> */}
           {subTitles.map((subTitle, index) => (
             <h3 key={index} className={`${animationPriority === index && "animate-subtitle"} text-gray-400`}>
               {subTitle}
             </h3>
           ))}
+          <h3 className="hidden">
+            24시 24시카페 24시프랜차이즈카페 프랜차이즈 새벽감성 데이롱 만월경 나우커피 탐탐 탐앤탐스 커반 커피에반하다
+            카페일분 터치카페 프리햇 할리스 밤샘카페 카공 투썸 스타벅스 파스쿠찌 더노벰버 TheNovember 무인카페
+            엔젤리너스
+          </h3>
 
           <h2 className="px-3 mt-6 text-base font-[600] break-keep">
             이런 분들을 위한 <br /> 24시 운영하는 카페들을 모아 찾아보는 사이트
