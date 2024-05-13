@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import localFont from "next/font/local";
 import "./globals.css";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="relative">{children}</div>
           </main>
         </ReactQueryProvider>
+        <Analytics />
       </body>
     </html>
   );
