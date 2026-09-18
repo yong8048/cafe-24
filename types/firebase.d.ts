@@ -50,3 +50,7 @@ export interface IUploadInfo {
   toilet: string;
   type: string;
 }
+
+export interface IUpdateDate {
+  ymd: string;
+}
