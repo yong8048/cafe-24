@@ -1,0 +1,33 @@
+{
+  "fetchedAt": "2026-09-21",
+  "cafewhale": 396,
+  "coffeebanhada": 442,
+  "droppedNoCoords": 16,
+  "droppedNames": [
+    "더퍼스트타워평택점",
+    "김천혁신점",
+    "이천마장점",
+    "천안직산점",
+    "별내 로데오점",
+    "북수원자이렉스비아점",
+    "의왕오전점",
+    "영종하늘점",
+    "동탄2신도시점",
+    "전원마을점",
+    "장성DT점",
+    "진주점",
+    "구로개봉점",
+    "인천마전초점 스마트카페",
+    "인천드림파크점 스마트카페",
+    "상현역점"
+  ],
+  "combined": 838,
+  "withCoords": 838,
+  "seoulGyeonggi": 630,
+  "seoulGyeonggiUnmanned": 474,
+  "photos": {
+    "zero": 396,
+    "oneOrTwo": 90,
+    "three": 352
+  }
+}

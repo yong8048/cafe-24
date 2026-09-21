@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "firebase:emulators": "npx --yes firebase-tools emulators:start --only auth,firestore,storage --import=./emulator-data --export-on-exit=./emulator-data",
+    "firebase:seed": "node scripts/seed-firestore.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",

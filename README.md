@@ -34,6 +34,23 @@
 <img src="https://img.shields.io/badge/emailJS-f49e4f?style=for-the-badge">
 <img src="https://img.shields.io/badge/zustand-black?style=for-the-badge">
 
+<br>
+
+### 🔥 Firebase 재구성
+기존 Cloud Firestore 프로젝트(`cafe-24-2286c`)는 삭제되어 복구할 수 없습니다. 이 저장소에는 같은 컬렉션 구조(`StoreInfo`, `ReportInfo`, `UserInfo`, `UpdateDate`)를 다시 만드는 규칙, 시드 데이터, 로컬 에뮬레이터가 들어 있습니다.
+
+**로컬에서 DB 올리기**
+1. `.env.example`을 `.env.local`로 복사합니다.
+2. `yarn firebase:emulators`로 Auth/Firestore/Storage 에뮬레이터를 실행합니다.
+3. 다른 터미널에서 `FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 yarn firebase:seed`로 매장 데이터를 넣습니다.
+4. `yarn dev`로 앱을 실행합니다.
+
+**새 Firebase 프로젝트(배포용)**
+1. [Firebase Console](https://console.firebase.google.com/)에서 프로젝트를 만들고 Firestore(네이티브 모드), Authentication(Google), Storage를 활성화합니다.
+2. 웹 앱 설정값을 Vercel/`.env.local`의 `NEXT_PUBLIC_FIREBASE_*`에 넣습니다. `NEXT_PUBLIC_USE_FIREBASE_EMULATOR`는 비웁니다.
+3. `.firebaserc`의 `default` 프로젝트 ID를 새 프로젝트로 바꾼 뒤 `npx firebase-tools deploy --only firestore,storage`로 규칙을 배포합니다.
+4. 서비스 계정 키로 `GOOGLE_APPLICATION_CREDENTIALS=./serviceAccount.json yarn firebase:seed`를 실행해 시드 데이터를 넣습니다.
+
 </br></br>
 
 ## 🖥 프로젝트 미리보기

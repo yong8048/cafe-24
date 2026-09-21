@@ -1,10 +1,11 @@
-import { IReportInfo, IStoreInfo, IUploadInfo, IUserInfo } from "@/types/firebase";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { IReportInfo, IStoreInfo, IUpdateDate, IUploadInfo, IUserInfo } from "@/types/firebase";
+import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
+import { Auth, connectAuthEmulator, getAuth } from "firebase/auth";
 
 import {
   addDoc,
   arrayUnion,
+  connectFirestoreEmulator,
   doc,
   getDoc,
   getFirestore,
@@ -15,7 +16,15 @@ import {
   arrayRemove,
   deleteDoc,
 } from "firebase/firestore";
-import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
+import {
+  connectStorageEmulator,
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  listAll,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -25,27 +34,57 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
-const app = initializeApp(firebaseConfig);
+
+const getFirebaseApp = (): FirebaseApp => (getApps().length ? getApp() : initializeApp(firebaseConfig));
+
+const app = getFirebaseApp();
 const db = getFirestore(app);
 const storage = getStorage(app);
+const firebaseAuth = getAuth(app);
 
-export const auth = () => {
-  initializeApp(firebaseConfig);
-  return getAuth();
+const shouldUseEmulator = () =>
+  process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === "true" || Boolean(process.env.FIRESTORE_EMULATOR_HOST);
+
+const connectEmulators = () => {
+  const globalForFirebase = globalThis as typeof globalThis & { _cafe24EmulatorsConnected?: boolean };
+  if (!shouldUseEmulator() || globalForFirebase._cafe24EmulatorsConnected) {
+    return;
+  }
+
+  try {
+    connectFirestoreEmulator(db, "127.0.0.1", 8080);
+    connectAuthEmulator(firebaseAuth, "http://127.0.0.1:9099", { disableWarnings: true });
+    connectStorageEmulator(storage, "127.0.0.1", 9199);
+    globalForFirebase._cafe24EmulatorsConnected = true;
+  } catch (error) {
+    console.error("Failed to connect Firebase emulators: ", error);
+  }
+};
+
+connectEmulators();
+
+export const auth = (): Auth => {
+  getFirebaseApp();
+  return firebaseAuth;
 };
 
 export const GetStoreInfo = async (): Promise<IStoreInfo[]> => {
-  const querySnapshot = await getDocs(collection(db, "StoreInfo"));
-  const users: IStoreInfo[] = [];
+  try {
+    const querySnapshot = await getDocs(collection(db, "StoreInfo"));
+    const stores: IStoreInfo[] = [];
 
-  querySnapshot.forEach(doc => {
-    users.push({
-      id: doc.id,
-      ...doc.data(),
-    } as IStoreInfo);
-  });
+    querySnapshot.forEach(storeDoc => {
+      stores.push({
+        id: storeDoc.id,
+        ...storeDoc.data(),
+      } as IStoreInfo);
+    });
 
-  return users; // 배열 반환
+    return stores;
+  } catch (error) {
+    console.error("Error reading StoreInfo: ", error);
+    return [];
+  }
 };
 
 export const PostStoreInfo = async (storeData: IUploadInfo, files: File[]) => {
@@ -294,10 +333,10 @@ export const GetFavStore = async (userID: string) => {
   }
 };
 
-export const GetUpdateDate = async () => {
+export const GetUpdateDate = async (): Promise<IUpdateDate | undefined> => {
   try {
     const querySnapshot = await getDoc(doc(db, "UpdateDate", "Date"));
-    return querySnapshot.data();
+    return querySnapshot.data() as IUpdateDate | undefined;
   } catch (error) {
     console.error(error);
   }
