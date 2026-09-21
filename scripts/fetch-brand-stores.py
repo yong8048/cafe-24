@@ -29,6 +29,28 @@ BANHADA_TYPE = {
     "1,6": "무인",
     "2,6": "무인",
 }
+BANHADA_PHOTO_BASE = "https://coffeebanhada.com/data/store/"
+MAX_PHOTOS = 3
+
+
+def has_valid_coords(lat: str | None, lon: str | None) -> bool:
+    try:
+        latitude = float(lat or "")
+        longitude = float(lon or "")
+    except ValueError:
+        return False
+    return 33 <= latitude <= 39 and 124 <= longitude <= 132
+
+
+def banhada_photo_urls(filenames: list[str]) -> list[str]:
+    urls = []
+    for filename in filenames:
+        if not filename:
+            continue
+        urls.append(f"{BANHADA_PHOTO_BASE}{filename}")
+        if len(urls) >= MAX_PHOTOS:
+            break
+    return urls
 
 
 def fetch_text(url: str) -> str:
@@ -160,7 +182,8 @@ def parse_cafewhale(html: str) -> list[dict]:
                 "name": name,
                 "address": address,
                 "number": "" if tel in ("", "-") else tel,
-                "photo": grab(block, "photo"),
+                "photo": "",
+                "photos": [],
                 "naver": grab(block, "naver"),
                 "region": region_of(address),
                 "typeRaw": "무인",
@@ -181,7 +204,8 @@ def parse_banhada(html: str) -> list[dict]:
         if not name or not address:
             continue
         type_raw = str(row.get("s_type") or "1")
-        photos = [row.get(f"s_img{i}") for i in range(1, 11) if row.get(f"s_img{i}")]
+        photo_names = [row.get(f"s_img{i}") for i in range(1, 11) if row.get(f"s_img{i}")]
+        photos = banhada_photo_urls(photo_names)
         parking_raw = str(row.get("s_parking") or "").strip()
         parking = ""
         if parking_raw in ("유", "가능"):
@@ -233,8 +257,7 @@ def to_store_info(item: dict, today: str) -> dict:
         "region": item.get("region") or "",
         "hours": item.get("hours") or "",
         "naver": item.get("naver") or "",
-        "photo": item.get("photo") or "",
-        "photos": item.get("photos") or [],
+        "photos": (item.get("photos") or [])[:MAX_PHOTOS],
         "typeRaw": item.get("typeRaw") or "",
     }
 
@@ -298,10 +321,21 @@ def main() -> None:
     write_json(RAW_DIR / "cafewhale-stores.json", cafewhale)
     write_json(RAW_DIR / "coffeebanhada-stores.json", banhada)
 
-    combined = [to_store_info(item, today) for item in cafewhale + banhada]
+    dropped = sum(
+        1 for item in cafewhale + banhada if not has_valid_coords(item.get("latitude"), item.get("longitude"))
+    )
+    combined = [
+        to_store_info(item, today)
+        for item in cafewhale + banhada
+        if has_valid_coords(item.get("latitude"), item.get("longitude"))
+    ]
     seoul_gg = [item for item in combined if item["region"] in ("서울", "경기")]
     seoul_gg_unmanned = [item for item in seoul_gg if item["type"] == "무인"]
-    with_coords = [item for item in combined if item["latitude"] and item["longitude"]]
+    photo_counts = {
+        "zero": sum(1 for item in combined if not item["photos"]),
+        "oneOrTwo": sum(1 for item in combined if 1 <= len(item["photos"]) <= 2),
+        "three": sum(1 for item in combined if len(item["photos"]) >= 3),
+    }
 
     write_json(LOCAL_DIR / "stores.json", combined)
     write_json(LOCAL_DIR / "stores-seoul-gyeonggi.json", seoul_gg)
@@ -312,10 +346,12 @@ def main() -> None:
             "fetchedAt": today,
             "cafewhale": len(cafewhale),
             "coffeebanhada": len(banhada),
+            "droppedNoCoords": dropped,
             "combined": len(combined),
-            "withCoords": len(with_coords),
+            "withCoords": len(combined),
             "seoulGyeonggi": len(seoul_gg),
             "seoulGyeonggiUnmanned": len(seoul_gg_unmanned),
+            "photos": photo_counts,
         },
     )
     print(json.dumps(json.loads((LOCAL_DIR / "summary.json").read_text()), ensure_ascii=False, indent=2))
